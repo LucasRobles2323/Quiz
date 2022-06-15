@@ -1,0 +1,58 @@
+#include "struct_globalFuntion.h"
+
+// función para comparar claves de tipo string retorna 1 si son iguales
+int is_equal_string(void * key1, void * key2) {
+    if(strcmp((char*)key1, (char*)key2)==0) return 1;
+    return 0;
+}
+
+// función para comparar claves de tipo string retorna 1 si son key1<key2
+int lower_than_string(void * key1, void * key2) {
+    if(strcmp((char*)key1, (char*)key2) < 0) return 1;
+    return 0;
+}
+
+// función para comparar claves de tipo int retorna 1 si son iguales
+int is_equal_int(void * key1, void * key2) {
+    if(*(float*)key1 == *(float*)key2) return 1;
+    return 0;
+}
+
+// función para comparar claves de tipo long retorna 1 si son key1<key2
+int lower_than_int(void * key1, void * key2) {
+    if(*(float*)key1 > *(float*)key2) return 1;
+    return 0;
+}
+
+// función para comparar claves de tipo long retorna 1 si son iguales
+long is_equal_long(void * key1, void * key2) {
+    if(*(long*)key1 == *(long*)key2) return 1;
+    return 0;
+}
+
+// función para comparar claves de tipo int retorna 1 si son key1<key2
+long lower_than_long(void * key1, void * key2) {
+    if(*(long*)key1 < *(long*)key2) return 1;
+    return 0;
+}
+
+
+// función que retorna negativo si queremos que  key1 vaya antes que key2 en el mapa, retorna
+// 0 si consideramos que las dos claves son iguales y positivo si key1 debe ir antes.
+int compare(void * key1, void * key2) {
+    const int* Key1 = key1;
+    const int* Key2 = key2;
+    return (*Key1 - *Key2);
+}
+//-----------------------------------------//
+
+
+/*------- Copiar string en un nuevo espacio de memoria -------*/
+char * _strdup(const char * str){
+	// Recibe un string y la copia en una string nueva con una direccion de 
+	// memoria nueva y retorna la nueva string.
+    char * aux = (char *)malloc(strlen(str) + 1);
+    strcpy(aux, str);
+    return aux;
+}
+//-----------------------------------------//
