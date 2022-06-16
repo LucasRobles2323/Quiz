@@ -2,7 +2,7 @@
 #include "guardarDatos.h" //Incluye todas las librerias usadas, que estan en global.h
 
 #define MenuInicio 3
-#define MenuFin 9
+#define MenuFin 13
 #define LineaDeInicio 1
 #define TemaInicio 3
 #define TemaFin 9
@@ -120,7 +120,11 @@ void mostrarMenu(){
 	printf ("\n");
 	centrar ("Dificultad", 30,7);
 	printf ("\n");
-	centrar ("Salir", 30,9);
+	centrar ("Top", 30,9);
+	printf ("\n");
+	centrar ("Reglas", 30,11);
+	printf ("\n");
+	centrar ("Salir", 30,13);
 	printf ("\n\n");
 }
 
@@ -149,7 +153,7 @@ void descripcionDificultad(Dificultad *d){
 	}
 }
 
-void temasMostrar (Dificultad *d){
+void DificultadMostrar (Dificultad *d){
 	centrar (MAGENTA_T "Eliga la dificultad :", 8, 1);
 	if (d->easy){
 		centrar (VERDE_T "EASY", 30, 3);
@@ -177,11 +181,11 @@ void temasMostrar (Dificultad *d){
 	printf ("\n\n");
 }
 
-void temaMenu (Dificultad *d){
+void DificultadMenu (Dificultad *d){
 	int menu = 3;
 
 	while (menu != 10){
-		temasMostrar (d);
+		DificultadMostrar (d);
 
 		while (1)
 		{
@@ -258,21 +262,21 @@ int main(){
 	system ("cls");
 	
     
-	while (menu != 9){
+	while (menu != 14){
 		mostrarMenu();
 
 		menu = movimiento ();
 
-		if (menu == 9) break;
+		if (menu == 13) break; // opcion Salir
 
 		switch (menu){
-		case 3:
+		case 3://Comenzar partida
 		       system ("cls");
-			   printf ("\n anashe \n");
-			   system ("pause");
+			   centrar ("Pronto estara hecho esta funcion", 10,5);
+			   Sleep (1000);
 			   break;
 
-		case 5:
+		case 5://Cargar partida
 		       system ("cls");
 			   int SAVE = ExistePartida("./Save/Partida.txt"); // Resive 0 si no existe partida guardada y 1 en caso contrario
 
@@ -280,12 +284,25 @@ int main(){
 
 			   break;
 
-		case 7:
+		case 7://Dificultad
 		       system ("cls");
-			   temaMenu (d);
+			   DificultadMenu (d);
 			   break;
-	    }
+               
+		case 9://Top
+		       system ("cls");
+			   centrar ("Pronto estara hecho esta funcion", 10,5);
+			   Sleep (1000);
+			   break;			   
 
+		case 11://Reglas
+		       system ("cls");
+			   centrar ("Pronto estara hecho esta funcion", 10,5);
+			   Sleep (1000);
+			   break; 
+
+	    }
+		
 		system ("cls");
 		
 	}
