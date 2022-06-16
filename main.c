@@ -241,20 +241,11 @@ void DificultadMenu (Dificultad *d){
 
 }
 
-Dificultad *dificultBegins (Dificultad *d){
-	Dificultad *newHere = (Dificultad*) malloc (sizeof(Dificultad));
-    newHere->easy = false;
-	newHere->normal = true;
-	newHere->hard = false;
-	return newHere;
-}
-
 int main(){
 	int menu = 3;
 	HashMap *questionsHash = GuardarPreguntas("./Datos/Preguntas.txt",100);
 	VerdaderoFalso *comodinToF = GuardarToF("./Datos/TrueOrFalse.txt");
-	Dificultad *d;
-    d = dificultBegins(d);
+	Dificultad *d = leerDificult("./Save/DifSelec.txt");
 
 	system ("COLOR 7D");
 	bienvenida();
@@ -278,10 +269,8 @@ int main(){
 
 		case 5://Cargar partida
 		       system ("cls");
-			   int SAVE = ExistePartida("./Save/Partida.txt"); // Resive 0 si no existe partida guardada y 1 en caso contrario
-
-			   if (SAVE == 0){d->easy = false; d->hard = false; d->normal = true;}
-
+			   centrar ("Pronto estara hecho esta funcion", 10,5);
+			   Sleep (1000);
 			   break;
 
 		case 7://Dificultad

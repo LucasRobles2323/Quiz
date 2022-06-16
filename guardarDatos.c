@@ -43,20 +43,31 @@ HashMap *GuardarPreguntas(char *archive, int capacidad){
 	return new;
 }
 
-int ExistePartida(char *archive){
-	
+Dificultad *leerDificult(char *archive){
+	Dificultad *new = (Dificultad*) malloc (sizeof(Dificultad));
+
 	FILE *F = fopen(archive, "r"); // Abre el archivo con el nombre recibido en modo lectura
-	if (!F){return 3;}// Si no existe el archivo, cierra el programa
+	if (!F){return NULL;}// Si no existe el archivo, cierra el programa
 	
-	char partida[6];
+	char linea[60];
 
-	fgets(partida, 6, F);
-	deleteLineBreak(partida);
+	fgets(linea, 60, F);
+	List *auxList = separateLine(linea, ";");
+
+	char *aux = firstList(auxList);
+	if(strcmp(aux,"false") == 0) {new->easy = false;}
+	else{new->easy = true;}
+	
+	aux = nextList(auxList);
+	if(strcmp(aux,"false") == 0) {new->normal = false;}
+	else{new->normal = true;}
+	
+	aux = nextList(auxList);
+	if(strcmp(aux,"false") == 0) {new->hard = false;}
+	else{new->hard = true;}
+
 	fclose(F);
-
-	if(strcmp(partida,"false") == 0){return 0;}
-	else if (strcmp(partida,"true") == 0){return 1;}
-	return 2;
+	return new;
 }
 
 VerdaderoFalso *GuardarToF(char *archive){
