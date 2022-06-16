@@ -22,9 +22,10 @@ HashMap *GuardarPreguntas(char *archive, int capacidad){
 
 
 	HashMap *new = createHashMap(capacidad);
-	char pregunta[1024]; // Cadena de caracter para guardar una linea del archivo
+	char pregunta[1024];
 	char verdaderos[1024];
 	char falsos[1024];
+
 	Pregunta *QUESTION;
 
 	while (fgets(pregunta, 1023, F) != NULL) { 
@@ -47,7 +48,7 @@ int ExistePartida(char *archive){
 	FILE *F = fopen(archive, "r"); // Abre el archivo con el nombre recibido en modo lectura
 	if (!F){return 3;}// Si no existe el archivo, cierra el programa
 	
-	char partida[6]; // Cadena de caracter para guardar una linea del archivo
+	char partida[6];
 
 	fgets(partida, 6, F);
 	deleteLineBreak(partida);
@@ -56,4 +57,24 @@ int ExistePartida(char *archive){
 	if(strcmp(partida,"false") == 0){return 0;}
 	else if (strcmp(partida,"true") == 0){return 1;}
 	return 2;
+}
+
+VerdaderoFalso *GuardarToF(char *archive){
+	FILE *F = fopen(archive, "r"); // Abre el archivo con el nombre recibido en modo lectura
+	if (!F){return NULL;}// Si no existe el archivo, cierra el programa
+
+	printf("open");
+	VerdaderoFalso *new = (VerdaderoFalso*) malloc (sizeof(VerdaderoFalso));
+
+	char verdaderos[1024];
+	char falsos[1024];
+
+	fgets(verdaderos, 1023, F);
+	fgets(falsos, 1023, F);
+
+	new->Verdadero = separateLine(verdaderos, ";");
+	new->Falso = separateLine(falsos, ";");
+	fclose(F);
+
+	return new;
 }

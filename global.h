@@ -41,6 +41,11 @@ typedef struct{
 	Alternativa **alternatives;
 }Pregunta;
 
+typedef struct{
+	List *Verdadero;
+	List *Falso;
+}VerdaderoFalso;
+
 //------------------FUNCIONES-------------------------//
 int is_equal_string(void * key1, void * key2);
 

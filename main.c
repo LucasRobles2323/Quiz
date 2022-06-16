@@ -1,14 +1,3 @@
-#include <windows.h>
-#include <ctype.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <string.h>
-#include <dirent.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include "list.h"
-#include <conio.h>
 //Contiene las funciones para guardar los datos al comenzar el programa
 #include "guardarDatos.h" //Incluye todas las librerias usadas, que estan en global.h
 
@@ -22,12 +11,6 @@
 #define RESET_COLOR    "\x1b[0m"
 #define MAGENTA_T  "\x1b[35m"
 #define AZUL_T     "\x1b[34m"
-
-typedef struct {
-	bool easy;
-	bool normal;
-	bool hard;
-}Dificultad;
 
 void goy (int y){
 	HANDLE hConsole = GetStdHandle (STD_OUTPUT_HANDLE);
@@ -144,34 +127,25 @@ void mostrarMenu(){
 void descripcionDificultad(Dificultad *d){
 	if (d->easy){
 		centrar ("Dificultad: EASY", 1, 12);
-		centrar ("En esta dificultad habran solo habran 2 de los 7 temas presentes.", 1, 13);
-		centrar ("- Punteros y Struct", 3, 14);
-		centrar ("- TDAs, Listas y Listas Enlazadas", 3, 15);
-		centrar ("Las preguntas valdran 1 puntos (c/u)", 1, 17);
+		centrar ("En esta dificultad estaran disponibles para el usuario los 3 comodines y una segunda oportunidad.", 1, 13);
+		centrar ("Solo estaran los temas 1,2,3,4 presentes en el quiz . El quiz contendra solo 6 preguntas.", 1, 14);
+		centrar ("Las preguntas valdran 1 puntos (c/u) por el multiplicador de dificultad dicho en las reglas", 1, 16);
 	}
 
 	if (d->normal){
 		centrar ("Dificultad: NORMAL", 1, 12);
-		centrar ("En esta dificultad habran solo habran 5 de los 7 temas presentes.", 1, 13);
-		centrar ("- Punteros y Struct", 3, 14);
-		centrar ("- TDAs, Listas y Listas Enlazadas", 3, 15);
-		centrar ("- Implementacion de listas y arreglos", 3, 16);
-		centrar ("- Complejidad temporal y Tabla Hash", 3, 17);
-		centrar ("- Arbol binarios de busqueda", 3, 18);
-		centrar ("Las preguntas valdran 3 puntos (c/u)", 1, 20);
+		centrar ("En esta dificultad estaran disponibles para el usuario los 3 comodines y una segunda oportunidad.", 1, 13);
+		centrar ("Solo estaran los 7 temas presentes en el quiz. El quiz contendra 15 preguntas.", 1, 14);
+		centrar ("Las primeras 6 preguntas serna de los temas 1,2,3,4 y el resto seran de los temas 5,6,7", 1, 15);
+		centrar ("Las preguntas valdran 1 puntos (c/u) por el multiplicador de dificultad dicho en las reglas", 1, 17);
 	}
 
 	if (d->hard){
 		centrar ("Dificultad: HARD", 1, 12);
-		centrar ("En esta dificultad estan todos los temas.", 1, 13);
-		centrar ("- Punteros y Struct", 3, 14);
-		centrar ("- TDAs, Listas y Listas Enlazadas", 3, 15);
-		centrar ("- Implementacion de listas y arreglos", 3, 16);
-		centrar ("- Complejidad temporal y Tabla Hash", 3, 17);
-		centrar ("- Arbol binarios de busqueda", 3, 18);
-		centrar ("- Monticulo Binario y arbol B/B++", 3, 19);
-		centrar ("- Grafos", 3, 20);
-		centrar ("Las preguntas valdran 5 puntos (c/u)", 1, 22);
+		centrar ("En esta dificultad no estaran disponibles para el usuario los comodines y el usuario no contara con una segunda oportunidad.", 1, 13);
+		centrar ("Solo estaran los 7 temas presentes en el quiz. El quiz contendra 15 preguntas.", 1, 14);
+		centrar ("Las primeras 6 preguntas serna de los temas 1,2,3,4 y el resto seran de los temas 5,6,7", 1, 15);
+		centrar ("Las preguntas valdran 1 puntos (c/u) por el multiplicador de dificultad dicho en las reglas", 1, 17);
 	}
 }
 
@@ -257,7 +231,6 @@ void temaMenu (Dificultad *d){
 				   d->normal = false;
 			   }
 			   break;   
-			      	   	   
 	    }
 		system ("cls");
 	}
@@ -272,10 +245,10 @@ Dificultad *dificultBegins (Dificultad *d){
 	return newHere;
 }
 
-
 int main(){
 	int menu = 3;
 	HashMap *questionsHash = GuardarPreguntas("./Datos/Preguntas.txt",100);
+	VerdaderoFalso *comodinToF = GuardarToF("./Datos/TrueOrFalse.txt");
 	Dificultad *d;
     d = dificultBegins(d);
 
@@ -303,14 +276,14 @@ int main(){
 		       system ("cls");
 			   int SAVE = ExistePartida("./Save/Partida.txt"); // Resive 0 si no existe partida guardada y 1 en caso contrario
 
-			   if (SAVE == 0){dif->easy = false; dif->hard = false; dif->normal = true;}
+			   if (SAVE == 0){d->easy = false; d->hard = false; d->normal = true;}
 
 			   break;
 
 		case 7:
 		       system ("cls");
 			   temaMenu (d);
-			   break;   	   	   
+			   break;
 	    }
 
 		system ("cls");
