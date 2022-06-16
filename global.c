@@ -1,4 +1,4 @@
-#include "struct_globalFuntion.h"
+#include "global.h"
 
 // función para comparar claves de tipo string retorna 1 si son iguales
 int is_equal_string(void * key1, void * key2) {
@@ -54,5 +54,34 @@ char * _strdup(const char * str){
     char * aux = (char *)malloc(strlen(str) + 1);
     strcpy(aux, str);
     return aux;
+}
+//-----------------------------------------//
+
+/*----------------- Eliminar Salto de Linea -----------------*/
+void deleteLineBreak(char *beta){
+	//Elimina el salto de linea de la ultima palabra si es que lo contiene
+	int len;
+	len = strlen(beta);
+	if (beta[len - 1] == '\n')
+	{
+		beta = strtok(beta, "\n");
+	}
+}
+//-----------------------------------------//
+
+/*----------------- Lista con los text a abrir -----------------*/
+List *separateLine(char *line, char* excluir){
+	//Crea una lista con las palabras separadas por punto coma
+	List *newList = createList();
+    char *Text = strtok(line, excluir);
+	while (Text != NULL)
+	{
+        pushBack(newList, strdup(Text));
+		Text = strtok(NULL, excluir);
+	}
+	Text = lastList(newList);
+	deleteLineBreak(Text);
+
+    return newList;
 }
 //-----------------------------------------//
