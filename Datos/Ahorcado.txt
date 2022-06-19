@@ -1,0 +1,12 @@
+100;Estructura que requiere expandirse llegado a cierto umbral;Hash map;10
+101;Unidad de medida utilizada para medir complejidad temporal y espacial;O grande;10
+102;tipo de busqueda en arboles que visita todos los nodos de un arbol antes de ir al siguiente nivel del mismo;Anchura;13
+103;Estructura que puede implementar usando un arreglo;Lista;10
+104;Se puede usar para implementar lista, colas, pilas;Lista enlazada;11
+105;Factor que influye en la eficacia de las operaciones de un arbol de busqueda;Altura;12
+106;Antes de retornar un dato debe verificar que la clave coincida con la que se busca;Hash;12
+107;Complejidad espacial de una lista enlazada con n datos;O(n);10
+108;Sirven para representar informacion y modelar problemas complejos;Grafos;10
+109;El peor caso de busqueda en una lista enlazada tiene una complejidad temporal;O(n);11
+110;Al incrementar la capacidad de la tabla hash, es necesario volver a insertar todos los;Elementos;12
+111;Son utiles para realizar busquedas por rango;Arbol binario;13

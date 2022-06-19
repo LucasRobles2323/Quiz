@@ -275,16 +275,17 @@ void MostrarReglas(){
 
 int main(){
 	int menu = 3;
+	
 	HashMap *questionsHash = GuardarPreguntas("./Datos/Preguntas.txt",100);
 	VerdaderoFalso *comodinToF = GuardarToF("./Datos/TrueOrFalse.txt");
 	Dificultad *d = leerDificult("./Save/DifSelec.txt");
-
+	List *ahorcado = guardarMinijuegoAhorcado("./Datos/Ahorcado.txt");
+	
 	system ("COLOR 7D");
 	bienvenida();
 	Sleep (1000);
 	system ("cls");
-	
-    
+
 	while (menu != 14){
 		mostrarMenu();
 

@@ -9,3 +9,5 @@ VerdaderoFalso *GuardarToF(char *archive);
 void saveDificult(char *archive, Dificultad *guardar);
 
 bool existePartida(char *archive);
+
+List *guardarMinijuegoAhorcado(char *file);

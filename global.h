@@ -16,7 +16,7 @@ typedef struct{
 	char *user;
 	float pts;
 	HashMap *questionsSelected;
-	List *questionsList;
+	List *questionsAnsered;
 	int cantQuestion;
 	bool secondLife;
 	List *comodines;
@@ -34,8 +34,7 @@ typedef struct{
 }Alternativa;
 
 typedef struct{
-	int id;
-	char *ID;
+	char *id;
 	char *question;
 	List *answerTrue;
 	List *answerFalse;
@@ -46,6 +45,13 @@ typedef struct{
 	List *Verdadero;
 	List *Falso;
 }VerdaderoFalso;
+
+typedef struct{
+	int id;
+	char *enunciado;
+	char *palabra;
+	int time;
+}Ahorcado;
 
 //------------------FUNCIONES-------------------------//
 int is_equal_string(void * key1, void * key2);

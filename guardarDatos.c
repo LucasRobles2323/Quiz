@@ -4,8 +4,7 @@ Pregunta *crearPregunta(char *lineaPregunta, char *lineTrue, char *lineFalse){
 	Pregunta *new = (Pregunta*) malloc (sizeof(Pregunta));
 	
 	List *aux = separateLine(lineaPregunta, ";");
-	new->ID = _strdup(firstList(aux));
-	new->id = atoi(new->ID);
+	new->id = _strdup(firstList(aux));
 	new->question = _strdup(nextList(aux));
 
 	new->answerTrue = separateLine(lineTrue,";");
@@ -27,6 +26,7 @@ HashMap *GuardarPreguntas(char *archive, int capacidad){
 	char falsos[1024];
 
 	Pregunta *QUESTION;
+	int indice = 0;
 
 	while (fgets(pregunta, 1023, F) != NULL) { 
     	// Recorre el archivo leyendo linea por linea
@@ -35,7 +35,7 @@ HashMap *GuardarPreguntas(char *archive, int capacidad){
 		fgets(falsos, 1023, F);
 
 		QUESTION = crearPregunta(pregunta,verdaderos,falsos);
-		insertHashMap(new, QUESTION->ID, QUESTION);
+		insertHashMap(new, QUESTION->id, QUESTION);
 	}
 	
 	fclose(F);// Se cierra el archivo
@@ -73,8 +73,7 @@ Dificultad *leerDificult(char *archive){
 VerdaderoFalso *GuardarToF(char *archive){
 	FILE *F = fopen(archive, "r"); // Abre el archivo con el nombre recibido en modo lectura
 	if (!F){return NULL;}// Si no existe el archivo, cierra el programa
-
-	printf("open");
+	
 	VerdaderoFalso *new = (VerdaderoFalso*) malloc (sizeof(VerdaderoFalso));
 
 	char verdaderos[1024];
@@ -118,4 +117,42 @@ bool existePartida(char *archive){
 	if (strcmp(ToN, "No") == 0){return false;}
 
 	return true;
+}
+
+
+
+Ahorcado *createAhorcado(List *datos){
+	Ahorcado *new = (Ahorcado*) malloc (sizeof(Ahorcado));
+
+	new->id = atoi(firstList(datos));
+	new->enunciado = nextList(datos);
+	new->palabra = nextList(datos);
+	new->time = atoi(nextList(datos));
+
+	return new;
+}
+
+List *guardarMinijuegoAhorcado(char *file){
+	List *new = createList();
+
+	FILE *F = fopen(file, "r"); // Abre el archivo con el nombre recibido en modo lectura
+	if (!F){return NULL;}// Si no existe el archivo, cierra el programa
+	
+	Ahorcado *aux;
+	char linea[1024];
+	List *auxiliar; //Lista para las palabras de la linea
+
+	while (fgets(linea, 1023, F) != NULL) { 
+    	// Recorre el archivo leyendo linea por linea
+        // guardando los datos de cada linea en listas
+		
+		auxiliar = separateLine(linea, ";");
+		aux = createAhorcado(auxiliar);
+		pushBack(new, aux);
+	}
+	
+	fclose(F);// Se cierra el archivo
+
+
+	return new;
 }
