@@ -89,3 +89,33 @@ VerdaderoFalso *GuardarToF(char *archive){
 
 	return new;
 }
+
+void saveDificult(char *archive, Dificultad *guardar){
+	FILE *F = fopen(archive, "w"); // Abre el archivo con el nombre recibido en modo lectura
+	if (!F){return ;}// Si no existe el archivo, cierra el programa
+
+
+	if(guardar->easy) {fprintf(F, "%s", "true;");}
+	else{fprintf(F, "%s", "false;");}
+
+	if(guardar->normal) {fprintf(F, "%s", "true;");}
+	else{fprintf(F, "%s", "false;");}
+
+	if(guardar->hard) {fprintf(F, "%s", "true");}
+	else{fprintf(F, "%s", "false");}
+
+	fclose(F);
+}
+
+bool existePartida(char *archive){
+	FILE *F = fopen(archive, "w"); // Abre el archivo con el nombre recibido en modo lectura
+	if (!F){return false;}// Si no existe el archivo, cierra el programa
+
+	char ToN[100];
+
+	fgets(ToN, 99, F);
+	deleteLineBreak(ToN);
+	if (strcmp(ToN, "No") == 0){return false;}
+
+	return true;
+}

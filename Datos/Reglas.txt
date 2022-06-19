@@ -1,0 +1,106 @@
+                                REGLAS
+
+
+
+El usuario puede jugar una partida nueva con la dificultad que escoja o cargar una partida existente.
+Cargar partida solo se mostrara si existe una partida que cargar
+
+Si decide comenzar una nueva partida, debera escoger su nombre de usuario y comenzara el quiz,
+en el quiz le saldra una pregunta y 4 alternativas correspondientes a la pregunta de forma aleatoria,
+una de las alternativas sera correcta. El usuario debera escoger la alternativa correcta, o puede
+optar por escoger un comodin (se explicaran mas adelante) antes de responder. El usuario continuara 
+asi hasta que responda todas las preguntas correctamente, pero si responde incorrectamente una pregunta
+o puede optar por una segunda oportunidad (se explicara mas adelante). El usuario tendra la oportunidad
+de guardar partida y salir del quiz cada 3 preguntas respondidas correctamente, o puede continuar 
+el quiz sin guardar.
+
+Al guardar la partida, se guarda el estado del usuario, su puntaje, las preguntas que
+le han aparecido, el numero de pregunta en que va la dificultad escogida, el uso de comodines
+y si uso su segunda oportunidad. Solo se puede tener una partida guardada, asi que si el usuario
+guarda una nueva, la anterior sera eliminada.
+
+Si decide cargar partida entonces el usuario comenzara desde la pregunta siguiente a la
+que respondio antes de guardar. En caso de perder la partida, el guardado de la partida desaparecera. 
+
+DIFICULTAD
+    Se explica cada dificultad en mas detalle en el item Dificultad del menu principal.
+
+        Facil:
+            Las 15 preguntas trataran de los siguientes temmas:
+                - Punteros y Struct.
+                - TDAs, Listas y Listas Enlazadas.
+                - Implementacion de listas y arreglos.
+                - Complejidad temporal y Tabla Hash.
+
+        Normal
+            Las primeras 7 preguntas trataran de los siguientes temmas:
+                - Punteros y Struct.
+                - TDAs, Listas y Listas Enlazadas.
+                - Implementacion de listas y arreglos.
+                - Complejidad temporal y Tabla Hash.
+            Las siguientes 8 preguntas trataran de los siguientes temas
+                - Arbol binarios de búsqueda.
+                - Monticulo binario y arbol B/B+Cuestionario.
+                - Grafos.
+
+        Dificil
+            Las primeras 5 preguntas trataran de los siguientes temmas:
+                - Punteros y Struct.
+                - TDAs, Listas y Listas Enlazadas.
+                - Implementacion de listas y arreglos.
+                - Complejidad temporal y Tabla Hash.
+            Las siguientes 10 preguntas trataran de los siguientes temas
+                - Arbol binarios de búsqueda.
+                - Monticulo binario y arbol B/B+Cuestionario.
+                - Grafos.
+
+COMODINES
+    Hay tres comodines disponibles para el usuario en las dificultades facil y normal.
+    Durante el quiz el usuario solo podra usar solo una vez cada comodin, y tendra que ser
+    en diferentes preguntas, pues el usuario solo podra usar un comodin en cada pregunta.
+
+    Existen 3 comodines:
+
+        - Cambiar pregunta:
+            En este comodin se escogera una nueva pregunta al azar con nuevas alternativas
+            y se restablecera el tiempo para responder la nueva pregunta.
+        
+        - Cambiar alternativas:
+            En este comodin se escogeran nuevamente las 4 alternativas de la pregunta que
+            se le muestran al usuario, podrian quedar las mismas en distinta posicion o
+            conseguir 4 completamente diferentes.
+        
+        - Ayuda Profesor Araya !!!:
+            En este comodin el usuario se pone en contacto con el profesor de
+            ICI2240-1- ESTRUCTURA DE DATOS(1S2022).
+            El profesor le dira al estudiante(Usuario) dos alternativas que definitivamente
+            son incorrectas, haciendo que el usuario, solo tenga que escoger entre dos 
+            alternativas, de las cuales una sera la correcta.
+
+    
+SEGUNDA OPORTUNIDAD
+    Si el usuario esta en la dificultad normal o facil, tendra disponible una segunda
+    oportunidad. Esta segunda oportunidad consiste en superar un minijuego escogido al 
+    azar. Los posibles minijuegos que le podrian salir al usuario son los siguientes:
+    
+    Ahorcado:
+        En pantalla saldra una deficion de una estructura o un TDA, debajo saldra una 
+        estructura o TDA incompleta, el usuario debera ingresar letras SOLO en minusculas
+        y si pertenecen a la palabra, las letras apareceran en la palabra, si no, el
+        usuario estara mas cerca de perder el minijuego, si falla 3 letras, pierde el minijuego. 
+        Si completa la palabra sin perder, gana el minijuego.
+    
+    Pregunta flash:
+        Saldra una pregunta corta con 4 alternativas para que el usuario escoja.
+        Es igual a las preguntas del quiz, pero no se podra usar comodines. Para
+        aprobar el minijuego debe escoger la alternativa correcta.
+    
+    Verdadero o Falso:
+        Al usuario le aparecera un enunciado y debera escribir V/v si es verdadero,
+        o F/f si es falso. El usuario debe de responder correctamente a 4 enunciados
+        para aprobar el minijuego.
+    
+    Adivina el numero:
+        El usuario debera encontrar un numero al azar entre 1 y 1000, tendra un
+        tiempo especifico para encontrarlo, cada vez que falle, le saldra una indicacion
+        de que el numero indicado es mayor o menor dependiendo de la situacion.

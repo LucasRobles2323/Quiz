@@ -1,5 +1,5 @@
 //Contiene las funciones para guardar los datos al comenzar el programa
-#include "guardarDatos.h" //Incluye todas las librerias usadas, que estan en global.h
+#include "quiz.h" //Incluye todas las librerias usadas, que estan en global.h
 
 #define MenuInicio 3
 #define MenuFin 13
@@ -130,26 +130,36 @@ void mostrarMenu(){
 
 void descripcionDificultad(Dificultad *d){
 	if (d->easy){
-		centrar ("Dificultad: EASY", 1, 12);
-		centrar ("En esta dificultad estaran disponibles para el usuario los 3 comodines y una segunda oportunidad.", 1, 13);
-		centrar ("Solo estaran los temas 1,2,3,4 presentes en el quiz . El quiz contendra solo 6 preguntas.", 1, 14);
-		centrar ("Las preguntas valdran 1 puntos (c/u) por el multiplicador de dificultad dicho en las reglas", 1, 16);
+		centrar ("EASY", 1, 12);
+		centrar ("En esta dificultad el usuario solo recibira 6 preguntas.", 4, 13);
+		centrar ("Cada pregunta respondida correctamente equivale a 1 punto.", 4, 14);
+		centrar ("Cada pregunta respondida despues de usar su segunda oportunidad, vera reducido su puntaje en 0.3 puntos.", 4, 15);
+		centrar ("Cada pregunta respondida donde se use un comodin, vera reducido su puntaje en 0.15 puntos.", 4, 16);
+		centrar ("El usuario tendra disponible para un unico uso lo siguiente:", 4, 18);
+		centrar ("- Los 3 comodines: Ayuda Profesor!!!  ,  Cambiar Pregunta,  Cambiar Alternativa.", 6, 19);
+		centrar ("- La segunda oportunidad a traves de uno de los siguientes minijuegos:", 6, 20);
+		centrar ("Ahorcado, Pregunta Flash, Verdadero y Falso, Adivina el numero.", 7, 21);
 	}
 
 	if (d->normal){
-		centrar ("Dificultad: NORMAL", 1, 12);
-		centrar ("En esta dificultad estaran disponibles para el usuario los 3 comodines y una segunda oportunidad.", 1, 13);
-		centrar ("Solo estaran los 7 temas presentes en el quiz. El quiz contendra 15 preguntas.", 1, 14);
-		centrar ("Las primeras 6 preguntas serna de los temas 1,2,3,4 y el resto seran de los temas 5,6,7", 1, 15);
-		centrar ("Las preguntas valdran 1 puntos (c/u) por el multiplicador de dificultad dicho en las reglas", 1, 17);
+		centrar ("NORMAL", 1, 12);
+		centrar ("En esta dificultad el usuario recibira 15 preguntas.", 4, 13);
+		centrar ("Cada pregunta respondida correctamente equivale a 2 puntos.", 4, 14);
+		centrar ("Cada pregunta respondida despues de usar su segunda oportunidad, vera reducido su puntaje en 0.5 puntos.", 4, 15);
+		centrar ("Cada pregunta respondida donde se use un comodin, vera reducido su puntaje en 0.25 puntos.", 4, 16);
+		centrar ("El usuario tendra disponible para un unico uso lo siguiente:", 4, 18);
+		centrar ("- Los 3 comodines: Ayuda Profesor Araya!!!,  Cambiar Pregunta,  Cambiar Alternativa.", 6, 19);
+		centrar ("- La segunda oportunidad a traves de uno de los siguientes minijuegos:", 6, 20);
+		centrar ("Ahorcado, Pregunta Flash, Verdadero y Falso, Adivina el numero.", 7, 21);
 	}
 
 	if (d->hard){
-		centrar ("Dificultad: HARD", 1, 12);
-		centrar ("En esta dificultad no estaran disponibles para el usuario los comodines y el usuario no contara con una segunda oportunidad.", 1, 13);
-		centrar ("Solo estaran los 7 temas presentes en el quiz. El quiz contendra 15 preguntas.", 1, 14);
-		centrar ("Las primeras 6 preguntas serna de los temas 1,2,3,4 y el resto seran de los temas 5,6,7", 1, 15);
-		centrar ("Las preguntas valdran 1 puntos (c/u) por el multiplicador de dificultad dicho en las reglas", 1, 17);
+		centrar ("HARD", 1, 12);
+		centrar ("En esta dificultad el usuario recibira 15 preguntas dificiles.", 4, 13);
+		centrar ("Cada pregunta respondida correctamente equivale a 3 puntos.", 4, 14);
+		centrar ("El usuario NO tendra disponible para su uso lo siguiente:", 4, 16);
+		centrar ("- Los 3 comodines: Ayuda Profesor Araya!!!  ,  Cambiar Pregunta,  Cambiar Alternativa.", 6, 17);
+		centrar ("- La segunda oportunidad a traves de uno de los siguientes minijuegos:", 6, 18);
 	}
 }
 
@@ -241,6 +251,28 @@ void DificultadMenu (Dificultad *d){
 
 }
 
+void MostrarReglas(){
+	FILE *F = fopen("./Datos/Reglas.txt", "r"); // Abre el archivo con el nombre recibido en modo lectura
+	if (!F){return;}// Si no existe el archivo, cierra el programa
+
+	char  linea[2001];
+	int y=1, x=1;
+	int cont = 0;
+	while (fgets(linea, 2000, F) != NULL) { 
+    		// Recorre el archivo leyendo linea por linea e imprimiendolas en pantalla.
+
+			centrar (linea, x, y);
+			y++;
+			cont++;
+			if(cont == 10){cronometro(2); cont = 0;}
+	}
+	fclose(F);// Se cierra el archivo
+
+	cronometro(2);
+	printf("\n\n\n\n\n Espere 5 segundos para salir ...");
+	cronometro(5);
+}
+
 int main(){
 	int menu = 3;
 	HashMap *questionsHash = GuardarPreguntas("./Datos/Preguntas.txt",100);
@@ -258,7 +290,10 @@ int main(){
 
 		menu = movimiento ();
 
-		if (menu == 13) break; // opcion Salir
+		if (menu == 13){// opcion Salir
+			saveDificult("./Save/DifSelec.txt", d);
+			break; 
+		}
 
 		switch (menu){
 		case 3://Comenzar partida
@@ -269,7 +304,9 @@ int main(){
 
 		case 5://Cargar partida
 		       system ("cls");
-			   centrar ("Pronto estara hecho esta funcion", 10,5);
+			   if(existePartida("./Save/Partida.txt"))
+			   {centrar ("No existe partida guardada", 10,5);}
+			   else{centrar ("Pronto estara hecho esta funcion", 10,5);}
 			   Sleep (1000);
 			   break;
 
@@ -285,11 +322,12 @@ int main(){
 			   break;			   
 
 		case 11://Reglas
-		       system ("cls");
-			   centrar ("Pronto estara hecho esta funcion", 10,5);
-			   Sleep (1000);
-			   break; 
-
+		    	system ("cls");
+				MostrarReglas();
+				break;
+		
+		default:
+				break;
 	    }
 		
 		system ("cls");

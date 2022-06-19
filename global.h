@@ -15,7 +15,8 @@
 typedef struct{
 	char *user;
 	float pts;
-	HashMap *questionsList;
+	HashMap *questionsSelected;
+	List *questionsList;
 	int cantQuestion;
 	bool secondLife;
 	List *comodines;
@@ -66,3 +67,5 @@ char * _strdup(const char * str);
 void deleteLineBreak(char *beta);
 
 List *separateLine(char *line, char* excluir);
+
+void cronometro(int segundos);
