@@ -128,6 +128,24 @@ void mostrarMenu(){
 	printf ("\n\n");
 }
 
+void QuizStart(HashMap *questionsHash, Dificultad *d){
+	char *User;
+	centrar("Escriba su nombre de usuario." ,2,2);
+	centrar("...    ", 2,3);
+	fgets(User, 1024, stdin);
+	deleteLineBreak(User);
+	Usuario *new = crearUsuario(User, d);
+	
+	Pregunta *pre = firstHashMap(questionsHash);
+	while (new->cantQuestion < 18)
+	{
+		pre->alternatives = crearAlternativas(pre->answerTrue, pre->answerFalse);
+		insertHashMap(new->questionsSelected, pre->id, pre);
+		pre = nextHashMap(questionsHash);
+		new->cantQuestion++;
+	}
+}
+
 void descripcionDificultad(Dificultad *d){
 	if (d->easy){
 		centrar ("EASY", 1, 12);
@@ -289,7 +307,7 @@ int main(){
 	while (menu != 14){
 		mostrarMenu();
 
-		menu = movimiento ();
+		menu = movimiento();
 
 		if (menu == 13){// opcion Salir
 			saveDificult("./Save/DifSelec.txt", d);
@@ -299,6 +317,7 @@ int main(){
 		switch (menu){
 		case 3://Comenzar partida
 		       system ("cls");
+			   QuizStart(questionsHash, d);
 			   centrar ("Pronto estara hecho esta funcion", 10,5);
 			   Sleep (1000);
 			   break;

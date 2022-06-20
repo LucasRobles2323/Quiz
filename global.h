@@ -13,13 +13,19 @@
 
 //------------------STRUCT-------------------------//
 typedef struct{
+	bool questionChange;
+	bool alternativeChange;
+	bool HelpTeacher;
+}Comodin;
+
+typedef struct{
 	char *user;
 	float pts;
+	bool life;
 	HashMap *questionsSelected;
-	List *questionsAnsered;
 	int cantQuestion;
 	bool secondLife;
-	List *comodines;
+	Comodin *comodines;
 }Usuario;
 
 typedef struct{

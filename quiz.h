@@ -1,5 +1,5 @@
 #include "guardarDatos.h"
 
-char *idString(int id);
+Usuario *crearUsuario(char *user, Dificultad *dif);
 
-int idNum(char* id);
+Alternativa **crearAlternativas(List *T, List *F);
