@@ -9,3 +9,17 @@ void mostrarUsuario(Usuario *new, Dificultad *D){
 	printf("Puntaje Total del Usuario: %.3f", new->pts);
 	return ;
 }
+
+void comodinesDificultad(Comodin *cambiar, Dificultad *condicion){
+	if(condicion->hard)
+	{
+		cambiar->alternativeChange = false;
+		cambiar->HelpTeacher = false;
+		cambiar->questionChange = false;
+	}
+	else{
+		cambiar->alternativeChange = true;
+		cambiar->HelpTeacher = true;
+		cambiar->questionChange = true;
+	}
+}

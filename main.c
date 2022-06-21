@@ -527,14 +527,6 @@ void comenzarjuego(Comodin *com){
 	}
 }
 
-Comodin *crearcomodin(){
-	Comodin *new = (Comodin*) malloc (sizeof(Comodin));
-	new->alternativeChange = true;
-	new->HelpTeacher = true;
-	new->questionChange = true;
-	return new;
-}
-
 int main(){
 	int menu = 3;
 	
@@ -565,8 +557,8 @@ int main(){
 		case 3://Comenzar partida
 		    system ("cls");
 			QuizStart(user, questionsHash, d);
-			com = crearcomodin();
-			comenzarjuego(com);
+			comodinesDificultad(user->comodines,d);
+			comenzarjuego(user->comodines);
 			break;
 
 		case 5://Cargar partida
