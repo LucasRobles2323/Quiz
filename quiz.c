@@ -23,3 +23,39 @@ void comodinesDificultad(Comodin *cambiar, Dificultad *condicion){
 		cambiar->questionChange = true;
 	}
 }
+
+int is_valid(Pregunta* preg, Usuario* user){
+	
+	Pregunta* preguntasUsuario = firstList(user->selectedQuestions);
+
+	while(preguntasUsuario != NULL)
+	{
+		if(is_equal_string(preg->id, preguntasUsuario->id) == 1){return 1;}
+		else{preguntasUsuario = nextList(user->selectedQuestions);}
+	}
+
+	return 0;
+	
+}
+
+void azarQuestion(Usuario* user, HashMap* map){
+	Pregunta* preg;
+
+	int cont = 15;
+
+	while(cont != 0)
+	{
+		int azar = rand() % 30;
+		preg = firstHashMap(map);
+		while(azar != 0)
+		{
+			preg = nextHashMap(map);
+			azar--;
+		}
+		if(is_valid(preg, user) == 0){
+			pushBack(user->selectedQuestions, preg);
+			cont--;
+		}
+	}
+	
+}

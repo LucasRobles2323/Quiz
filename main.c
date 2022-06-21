@@ -113,7 +113,10 @@ void bienvenida(){
 	Sleep (200);
 	centrar (AZUL_T "PUCV", 20, 7);
 	Sleep (200);
-}
+} 
+
+
+
 
 void mostrarMenu(){
 	system ("COLOR 7D");
@@ -556,6 +559,7 @@ int main(){
 		switch (menu){
 		case 3://Comenzar partida
 		    system ("cls");
+			azarQuestion(user, questionsHash);	
 			QuizStart(user, questionsHash, d);
 			comodinesDificultad(user->comodines,d);
 			comenzarjuego(user->comodines);
@@ -565,7 +569,7 @@ int main(){
 		    system ("cls");
 			if(existePartida("./Save/Partida.txt"))
 			{centrar ("No existe partida guardada", 10,5);}
-			else{centrar ("Pronto estara hecho esta funcion", 10,5);}
+			else{centrar ("Pronto estara hecho esta funcion", 10,5);}	
 			Sleep (3000);
 			break;
 
