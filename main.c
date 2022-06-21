@@ -128,24 +128,6 @@ void mostrarMenu(){
 	printf ("\n\n");
 }
 
-void QuizStart(HashMap *questionsHash, Dificultad *d){
-	char *User;
-	centrar("Escriba su nombre de usuario." ,2,2);
-	centrar("...    ", 2,3);
-	fgets(User, 1024, stdin);
-	deleteLineBreak(User);
-	Usuario *new = crearUsuario(User, d);
-	
-	Pregunta *pre = firstHashMap(questionsHash);
-	while (new->cantQuestion < 18)
-	{
-		pre->alternatives = crearAlternativas(pre->answerTrue, pre->answerFalse);
-		insertHashMap(new->questionsSelected, pre->id, pre);
-		pre = nextHashMap(questionsHash);
-		new->cantQuestion++;
-	}
-}
-
 void descripcionDificultad(Dificultad *d){
 	if (d->easy){
 		centrar ("EASY", 1, 12);
@@ -269,6 +251,10 @@ void DificultadMenu (Dificultad *d){
 
 }
 
+void QuizStart(Usuario *user, HashMap *questionsHash, Dificultad *d){
+	mostrarUsuario(user, d);
+}
+
 void MostrarReglas(){
 	FILE *F = fopen("./Datos/Reglas.txt", "r"); // Abre el archivo con el nombre recibido en modo lectura
 	if (!F){return;}// Si no existe el archivo, cierra el programa
@@ -298,6 +284,8 @@ int main(){
 	VerdaderoFalso *comodinToF = GuardarToF("./Datos/TrueOrFalse.txt");
 	Dificultad *d = leerDificult("./Save/DifSelec.txt");
 	List *ahorcado = guardarMinijuegoAhorcado("./Datos/Ahorcado.txt");
+	char *userName = nombreUsuario("./Save/Usuario.txt");
+	Usuario *user = crearUsuario(userName, d);
 	
 	system ("COLOR 7D");
 	bienvenida();
@@ -316,19 +304,18 @@ int main(){
 
 		switch (menu){
 		case 3://Comenzar partida
-		       system ("cls");
-			   QuizStart(questionsHash, d);
-			   centrar ("Pronto estara hecho esta funcion", 10,5);
-			   Sleep (1000);
-			   break;
+		    system ("cls");
+			QuizStart(user, questionsHash, d);
+			Sleep(2000);
+			break;
 
 		case 5://Cargar partida
-		       system ("cls");
-			   if(existePartida("./Save/Partida.txt"))
-			   {centrar ("No existe partida guardada", 10,5);}
-			   else{centrar ("Pronto estara hecho esta funcion", 10,5);}
-			   Sleep (1000);
-			   break;
+		    system ("cls");
+			if(existePartida("./Save/Partida.txt"))
+			{centrar ("No existe partida guardada", 10,5);}
+			else{centrar ("Pronto estara hecho esta funcion", 10,5);}
+			Sleep (3000);
+			break;
 
 		case 7://Dificultad
 		       system ("cls");

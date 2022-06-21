@@ -89,6 +89,42 @@ VerdaderoFalso *GuardarToF(char *archive){
 	return new;
 }
 
+char *nombreUsuario(char *fileName){
+	FILE *F = fopen(fileName, "r");
+	char userName[1024];
+	fgets(userName, 1023, F);
+	deleteLineBreak(userName);
+	fclose(F);
+	return _strdup(userName);
+}
+
+Usuario *crearUsuario(char *userName, Dificultad *dif){
+	Usuario *new = (Usuario*) malloc (sizeof(Usuario));
+	new->cantQuestion = 0;
+	new->pts = 0;
+	new->user = _strdup(userName);
+	new->comodines = (Comodin*) malloc (sizeof(Comodin));
+
+	if (dif->hard){
+		new->secondLife = false;
+		new->comodines->alternativeChange = false;
+		new->comodines->HelpTeacher = false;
+		new->comodines->questionChange = false;
+	}
+	else{
+		new->secondLife = true;
+		new->comodines->alternativeChange = true;
+		new->comodines->HelpTeacher = true;
+		new->comodines->questionChange = true;
+	}
+	
+	new->life = true;
+	
+	new->selectedQuestions = createList();
+	
+	return new;
+}
+
 void saveDificult(char *archive, Dificultad *guardar){
 	FILE *F = fopen(archive, "w"); // Abre el archivo con el nombre recibido en modo lectura
 	if (!F){return ;}// Si no existe el archivo, cierra el programa

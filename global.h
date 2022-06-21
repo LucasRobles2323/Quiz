@@ -22,7 +22,7 @@ typedef struct{
 	char *user;
 	float pts;
 	bool life;
-	HashMap *questionsSelected;
+	List *selectedQuestions;
 	int cantQuestion;
 	bool secondLife;
 	Comodin *comodines;
