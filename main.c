@@ -6,11 +6,16 @@
 #define LineaDeInicio 1
 #define TemaInicio 3
 #define TemaFin 9
+#define QuizFin 11
+#define QuizInicio 3  
+#define exitFin 5
 #define ROJO_T     "\x1b[31m"
 #define VERDE_T        "\x1b[32m"
 #define RESET_COLOR    "\x1b[0m"
 #define MAGENTA_T  "\x1b[35m"
 #define AZUL_T     "\x1b[34m"
+
+#pragma comment(lib,"winmm.lib")
 
 void goy (int y){
 	HANDLE hConsole = GetStdHandle (STD_OUTPUT_HANDLE);
@@ -112,6 +117,7 @@ void bienvenida(){
 
 void mostrarMenu(){
 	system ("COLOR 7D");
+	sndPlaySound ("songs\\BetterCallSaul", SND_ASYNC | SND_LOOP);
 	centrar ("QUIEN QUIERE PASAR EL RAMO!!!!!!!!!!",24,0);
 	printf ("\n");
 	centrar ("Comenzar Juego", 30,3);
@@ -277,6 +283,258 @@ void MostrarReglas(){
 	cronometro(5);
 }
 
+int quizMove(){
+	int menu = 3;
+	while (1)
+	{
+		Sleep(200);
+
+		if (GetAsyncKeyState(VK_UP)){
+			menu = menu == QuizInicio ? QuizFin: menu-2;
+			printf ("\r                           ");
+			goy (LineaDeInicio + menu - 1);
+			printf ("---->");
+		} else if (GetAsyncKeyState(VK_DOWN)){
+			menu = menu == QuizFin ? QuizInicio: 2+menu;
+			printf ("\r                           ");
+			goy (LineaDeInicio + menu - 1);
+			printf ("---->");
+		 } else if (GetAsyncKeyState(VK_RETURN)){
+			break;
+		}
+	}
+
+	return menu;
+}
+
+
+void pregunta(int contador){
+	gotoxy(0,0);
+	printf ("Pregunta : %i", contador);
+	centrar ("Aqui iria la pregunta ", 15, 0);
+	centrar ("Respuesta 1", 30, 3);
+	centrar ("Respuesta 2", 30, 5);
+	centrar ("Respuesta 3", 30, 7);
+	centrar ("Respuesta 4", 30, 9);
+	centrar ("Comodin", 30, 11);
+}
+
+void menuEXIT (){
+	centrar ("Punto seguro :) elija la opcion que desee :", 25,0);
+	centrar ("Seguir Partida",30,3);
+	centrar ("Guardar y Salir", 30, 5);
+}
+
+void comodinMenu(Comodin *com){
+	centrar ("Comodines  (Si esta en rojo es que ya lo uso):", 15,0);
+	if (com->HelpTeacher){
+		centrar (VERDE_T"Ayuda Profe Araya",30,3);
+	}else{
+		centrar (ROJO_T"Ayuda Profe Araya",30,3);
+	}
+
+	if (com->alternativeChange){
+		centrar (VERDE_T"Cambiar las alternativas",30,5);
+	}else{
+		centrar (ROJO_T"Cambiar las alternativas",30,5);
+	}
+
+	if (com->questionChange){
+		centrar (VERDE_T"Cambiar la pregunta",30,7);
+	}else{
+		centrar (ROJO_T"Cambiar la pregunta",30,7);
+	}
+	
+	centrar (MAGENTA_T"Volver", 30, 9);
+}
+
+void saveORexit (int *exit){
+	int menu = 3;
+
+	while (menu != 9){
+		menuEXIT();
+
+		while (1){
+		    Sleep(200);
+
+		   if (GetAsyncKeyState(VK_UP)){
+			   menu = menu == TemaInicio ? exitFin: menu-2;
+			   printf ("\r                           ");
+			   goy (LineaDeInicio + menu - 1);
+			   printf ("---->");
+		    } else if (GetAsyncKeyState(VK_DOWN)){
+			   menu = menu == exitFin ? TemaInicio: 2+menu;
+			   printf ("\r                           ");
+			   goy (LineaDeInicio + menu - 1);
+			   printf ("---->");
+		    } else if (GetAsyncKeyState(VK_RETURN)){
+			   break;
+		    }
+	    }
+
+		switch (menu){
+			case 3://SeguirPartida
+			system("cls");
+			centrar ("ELEGISTE LA OPCION GUARDAR PARTIDA", 5,5);
+			Sleep(1000);
+			menu = 1;
+			break;
+
+			case 5://GuardarYsalir
+			system ("cls");
+			centrar ("Elejiste Seguir Jugando",5,5);
+			Sleep (1000);
+			menu = 0;
+			break;
+
+		}
+
+		if (menu == 0){
+			(*exit) = 1;
+			break;
+		}else{
+			break;
+		}
+		
+	}
+
+	system ("cls");
+}
+
+void comodin (Comodin *com){
+	int menu = 3;
+
+	system ("cls");
+
+	while (menu != 10){
+		comodinMenu(com);
+
+		while (1){
+		    Sleep(200);
+
+		   if (GetAsyncKeyState(VK_UP)){
+			   menu = menu == TemaInicio ? TemaFin: menu-2;
+			   printf ("\r                           ");
+			   goy (LineaDeInicio + menu - 1);
+			   printf ("---->");
+		    } else if (GetAsyncKeyState(VK_DOWN)){
+			   menu = menu == TemaFin ? TemaInicio: 2+menu;
+			   printf ("\r                           ");
+			   goy (LineaDeInicio + menu - 1);
+			   printf ("---->");
+		    } else if (GetAsyncKeyState(VK_RETURN)){
+			   break;
+		    }
+	    }
+
+		if (menu == 9)break;
+
+		switch (menu){
+			case 3://Ayuda profe araya
+			    if (!com->HelpTeacher)break;
+			    system("cls");
+			    centrar ("Ayudeme profesor aaaaaaaaaaaaaa", 5,5);
+				com->HelpTeacher = false;
+			    Sleep(1000);
+			    menu = 0;
+			    break;
+
+			case 5://50/50
+			    if (!com->alternativeChange)break;
+			    system ("cls");
+			    centrar ("FIFTY FIFTY MAI BRUDA",5,5);
+				com->alternativeChange = false;
+			    Sleep (1000);
+			    menu = 0;
+			    break;
+
+			case 7://pregunta nueva
+			    if (!com->questionChange)break;
+			    system ("cls");
+			    centrar ("NEXT",5,5);
+				com->questionChange = false;
+			    Sleep (1000);
+			    menu = 0;
+			    break;
+
+		}
+        system("cls");
+		if (menu == 0)break;
+		
+	}
+
+	system ("cls");
+}
+
+void comenzarjuego(Comodin *com){
+	Sleep (1500);
+	int menu = 5, preguntas = 0, contador = 0, exit = 0;
+	system("cls");
+
+	while (1){
+		preguntas++;
+		contador++;
+		pregunta(preguntas);
+		
+		menu = quizMove();
+
+		switch(menu){
+			case 3://Opcion A
+			      //verificacion();
+				  system ("cls");
+                  centrar ("Eligio la opcion A", 10,5);
+				  Sleep(300);
+				  break;
+                  
+			case 5://Opcion B
+			      //verificacion();
+				  system ("cls");
+                  centrar ("Eligio la opcion B", 10,5);
+				  Sleep(300);
+				  break;
+
+			case 7://Opcion C
+			      //verificacion();
+				  system ("cls");
+                  centrar ("Eligio la opcion C", 10,5);
+				  Sleep(300);
+				  break;
+
+			case 9://Opcion D
+                  //verificacion();
+				  system ("cls");
+                  centrar ("Eligio la opcion D", 10,5);
+				  Sleep(300);
+				  break;
+
+			case 11://Comodin
+                  comodin (com);
+				  break;
+
+		}
+
+		system ("cls");
+
+		if (contador == 5 & preguntas != 15){
+			contador = 0;
+		    saveORexit(&exit);
+
+			if (exit == 1)return;
+		}
+
+		if (preguntas == 15)break;
+
+	}
+}
+
+Comodin *crearcomodin(){
+	Comodin *new = (Comodin*) malloc (sizeof(Comodin));
+	new->alternativeChange = true;
+	new->HelpTeacher = true;
+	new->questionChange = true;
+	return new;
+}
+
 int main(){
 	int menu = 3;
 	
@@ -286,6 +544,7 @@ int main(){
 	List *ahorcado = guardarMinijuegoAhorcado("./Datos/Ahorcado.txt");
 	char *userName = nombreUsuario("./Save/Usuario.txt");
 	Usuario *user = crearUsuario(userName, d);
+	Comodin *com;
 	
 	system ("COLOR 7D");
 	bienvenida();
@@ -306,7 +565,8 @@ int main(){
 		case 3://Comenzar partida
 		    system ("cls");
 			QuizStart(user, questionsHash, d);
-			Sleep(2000);
+			com = crearcomodin();
+			comenzarjuego(com);
 			break;
 
 		case 5://Cargar partida
@@ -340,7 +600,5 @@ int main(){
 		system ("cls");
 		
 	}
-	//sndPlaySound ("C:\\Users\\Dante\\Desktop\\intento de menu\\menusound", 0);
-	//PlaySound ("C:\\Users\\Dante\\Desktop\\intento de menu\\menusound", NULL, SND_FILENAME);
 	return EXIT_SUCCESS;
 }
