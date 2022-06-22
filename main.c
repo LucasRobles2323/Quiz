@@ -261,7 +261,16 @@ void DificultadMenu (Dificultad *d){
 }
 
 void QuizStart(Usuario *user, HashMap *questionsHash, Dificultad *d){
-	mostrarUsuario(user, d);
+	gotoxy(10,10);
+	printf("Nombre de Usuario:         %s\n", user->user);
+	gotoxy(10,11);
+	printf("Dificultad seleccionada:   ");
+	if (d->easy){printf("Facil\n");}
+	else if (d->normal){printf("Normal\n");}
+	else{printf("Dificil\n");}
+	gotoxy(10,12);
+	printf("Puntaje Total del Usuario: %.3f", user->pts);
+	return ;
 }
 
 void MostrarReglas(){
@@ -294,14 +303,14 @@ int quizMove(){
 
 		if (GetAsyncKeyState(VK_UP)){
 			menu = menu == QuizInicio ? QuizFin: menu-3;
-			printf ("\r            ");
+			printf ("\r                    ");
 			gotoxy (15, LineaDeInicio + menu - 1);
-			printf ("--->");
+			printf ("->");
 		} else if (GetAsyncKeyState(VK_DOWN)){
 			menu = menu == QuizFin ? QuizInicio: 3+menu;
-			printf ("\r            ");
+			printf ("\r                    ");
 			gotoxy (15, LineaDeInicio + menu - 1);
-			printf ("--->");
+			printf ("->");
 		 } else if (GetAsyncKeyState(VK_RETURN)){
 			break;
 		}
@@ -316,13 +325,13 @@ void pregunta(int contador, Pregunta *questionForNow){
 	printf ("Pregunta : %i", contador);
 	centrar (questionForNow->question, 15, 0);
 	
-	centrar ("a.", 20, 4);
+	centrar ("A.", 20, 4);
 	centrar (firstList(questionForNow->answerTrue), 25, 4);
-	centrar ("b.", 20, 7);
+	centrar ("B.", 20, 7);
 	centrar (firstList(questionForNow->answerFalse), 25, 7);
-	centrar ("c.", 20, 10);
+	centrar ("C.", 20, 10);
 	centrar (nextList(questionForNow->answerFalse), 25, 10);
-	centrar ("d.", 20, 13);
+	centrar ("D.", 20, 13);
 	centrar (nextList(questionForNow->answerFalse), 25, 13);
 	
 	centrar ("Comodin", 25, 16);
@@ -384,7 +393,7 @@ void saveORexit (int *exit){
 		switch (menu){
 			case 3://SeguirPartida
 			system("cls");
-			centrar ("Elejiste Seguir Jugando", 5,5);
+			centrar ("ELEGISTE LA OPCION SEGUIR JUGANDO", 5,5);
 			Sleep(1000);
 			menu = 1;
 			break;
@@ -498,28 +507,37 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 			      //verificacion();
 				  system ("cls");
                   centrar ("Eligio la opcion A", 10,5);
-				  Sleep(300);
+				  Sleep(1000);
+				  centrar ("La alternativa correcta es la A", 10,7);
+				  Sleep(1000); return;
 				  break;
                   
 			case 7://Opcion B
 			      //verificacion();
 				  system ("cls");
                   centrar ("Eligio la opcion B", 10,5);
-				  Sleep(300);
+				  Sleep(1000);
+				  centrar ("La alternativa correcta es la A", 10,7);
+				  Sleep(1000); return;
 				  break;
 
 			case 10://Opcion C
 			      //verificacion();
 				  system ("cls");
                   centrar ("Eligio la opcion C", 10,5);
-				  Sleep(300);
+				  Sleep(1000);
+				  centrar ("La alternativa correcta es la A", 10,7);
+				  Sleep(1000); return;
 				  break;
 
 			case 13://Opcion D
                   //verificacion();
 				  system ("cls");
                   centrar ("Eligio la opcion D", 10,5);
-				  Sleep(300);
+				  Sleep(1000);
+				  centrar ("La alternativa correcta es la A", 10,7);
+				  Sleep(1000);
+				  return;
 				  break;
 
 			case 16://Comodin
