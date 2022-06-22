@@ -6,8 +6,8 @@
 #define LineaDeInicio 1
 #define TemaInicio 3
 #define TemaFin 9
-#define QuizFin 11
-#define QuizInicio 3  
+#define QuizFin 16
+#define QuizInicio 4 
 #define exitFin 5
 #define ROJO_T     "\x1b[31m"
 #define VERDE_T        "\x1b[32m"
@@ -287,21 +287,21 @@ void MostrarReglas(){
 }
 
 int quizMove(){
-	int menu = 3;
+	int menu = 4;
 	while (1)
 	{
 		Sleep(200);
 
 		if (GetAsyncKeyState(VK_UP)){
-			menu = menu == QuizInicio ? QuizFin: menu-2;
-			printf ("\r                           ");
-			goy (LineaDeInicio + menu - 1);
-			printf ("---->");
+			menu = menu == QuizInicio ? QuizFin: menu-3;
+			printf ("\r            ");
+			gotoxy (15, LineaDeInicio + menu - 1);
+			printf ("--->");
 		} else if (GetAsyncKeyState(VK_DOWN)){
-			menu = menu == QuizFin ? QuizInicio: 2+menu;
-			printf ("\r                           ");
-			goy (LineaDeInicio + menu - 1);
-			printf ("---->");
+			menu = menu == QuizFin ? QuizInicio: 3+menu;
+			printf ("\r            ");
+			gotoxy (15, LineaDeInicio + menu - 1);
+			printf ("--->");
 		 } else if (GetAsyncKeyState(VK_RETURN)){
 			break;
 		}
@@ -311,15 +311,21 @@ int quizMove(){
 }
 
 
-void pregunta(int contador){
+void pregunta(int contador, Pregunta *questionForNow){
 	gotoxy(0,0);
 	printf ("Pregunta : %i", contador);
-	centrar ("Aqui iria la pregunta ", 15, 0);
-	centrar ("Respuesta 1", 30, 3);
-	centrar ("Respuesta 2", 30, 5);
-	centrar ("Respuesta 3", 30, 7);
-	centrar ("Respuesta 4", 30, 9);
-	centrar ("Comodin", 30, 11);
+	centrar (questionForNow->question, 15, 0);
+	
+	centrar ("a.", 20, 4);
+	centrar (firstList(questionForNow->answerTrue), 25, 4);
+	centrar ("b.", 20, 7);
+	centrar (firstList(questionForNow->answerFalse), 25, 7);
+	centrar ("c.", 20, 10);
+	centrar (nextList(questionForNow->answerFalse), 25, 10);
+	centrar ("d.", 20, 13);
+	centrar (nextList(questionForNow->answerFalse), 25, 13);
+	
+	centrar ("Comodin", 25, 16);
 }
 
 void menuEXIT (){
@@ -378,14 +384,14 @@ void saveORexit (int *exit){
 		switch (menu){
 			case 3://SeguirPartida
 			system("cls");
-			centrar ("ELEGISTE LA OPCION GUARDAR PARTIDA", 5,5);
+			centrar ("Elejiste Seguir Jugando", 5,5);
 			Sleep(1000);
 			menu = 1;
 			break;
 
 			case 5://GuardarYsalir
 			system ("cls");
-			centrar ("Elejiste Seguir Jugando",5,5);
+			centrar ("ELEGISTE LA OPCION GUARDAR PARTIDA",5,5);
 			Sleep (1000);
 			menu = 0;
 			break;
@@ -469,48 +475,54 @@ void comodin (Comodin *com){
 	system ("cls");
 }
 
-void comenzarjuego(Comodin *com){
+void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 	Sleep (1500);
+	Comodin *com = quizUser->comodines;
 	int menu = 5, preguntas = 0, contador = 0, exit = 0;
 	system("cls");
+	char *idQuestion = firstList(quizUser->selectedQuestions);
+	Pregunta *aux;
+	bool election = false;
 
 	while (1){
 		preguntas++;
 		contador++;
-		pregunta(preguntas);
+		aux = searchHashMap(preguntasQuiz, idQuestion);
+		pregunta(preguntas, aux);
+		idQuestion = nextList(quizUser->selectedQuestions);
 		
 		menu = quizMove();
 
 		switch(menu){
-			case 3://Opcion A
+			case 4://Opcion A
 			      //verificacion();
 				  system ("cls");
                   centrar ("Eligio la opcion A", 10,5);
 				  Sleep(300);
 				  break;
                   
-			case 5://Opcion B
+			case 7://Opcion B
 			      //verificacion();
 				  system ("cls");
                   centrar ("Eligio la opcion B", 10,5);
 				  Sleep(300);
 				  break;
 
-			case 7://Opcion C
+			case 10://Opcion C
 			      //verificacion();
 				  system ("cls");
                   centrar ("Eligio la opcion C", 10,5);
 				  Sleep(300);
 				  break;
 
-			case 9://Opcion D
+			case 13://Opcion D
                   //verificacion();
 				  system ("cls");
                   centrar ("Eligio la opcion D", 10,5);
 				  Sleep(300);
 				  break;
 
-			case 11://Comodin
+			case 16://Comodin
                   comodin (com);
 				  break;
 
@@ -562,7 +574,7 @@ int main(){
 			azarQuestion(user, questionsHash);	
 			QuizStart(user, questionsHash, d);
 			comodinesDificultad(user->comodines,d);
-			comenzarjuego(user->comodines);
+			comenzarjuego(user, questionsHash);
 			break;
 
 		case 5://Cargar partida
@@ -582,7 +594,7 @@ int main(){
 		       system ("cls");
 			   centrar ("Pronto estara hecho esta funcion", 10,5);
 			   Sleep (1000);
-			   break;			   
+			   break;
 
 		case 11://Reglas
 		    	system ("cls");

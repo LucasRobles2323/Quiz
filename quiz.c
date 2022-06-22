@@ -24,14 +24,14 @@ void comodinesDificultad(Comodin *cambiar, Dificultad *condicion){
 	}
 }
 
-int is_valid(Pregunta* preg, Usuario* user){
+int is_valid(char *pregId, Usuario* user){
 	
-	Pregunta* preguntasUsuario = firstList(user->selectedQuestions);
+	char* idPregUsuario = firstList(user->selectedQuestions);
 
-	while(preguntasUsuario != NULL)
+	while(idPregUsuario != NULL)
 	{
-		if(is_equal_string(preg->id, preguntasUsuario->id) == 1){return 1;}
-		else{preguntasUsuario = nextList(user->selectedQuestions);}
+		if(is_equal_string(pregId, idPregUsuario) == 1){return 1;}
+		else{idPregUsuario = nextList(user->selectedQuestions);}
 	}
 
 	return 0;
@@ -52,8 +52,8 @@ void azarQuestion(Usuario* user, HashMap* map){
 			preg = nextHashMap(map);
 			azar--;
 		}
-		if(is_valid(preg, user) == 0){
-			pushBack(user->selectedQuestions, preg);
+		if(is_valid(preg->id, user) == 0){
+			pushBack(user->selectedQuestions, preg->id);
 			cont--;
 		}
 	}
