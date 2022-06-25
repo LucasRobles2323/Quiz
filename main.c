@@ -509,7 +509,7 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
                   centrar ("Eligio la opcion A", 10,5);
 				  Sleep(1000);
 				  centrar ("La alternativa correcta es la A", 10,7);
-				  Sleep(1000); return;
+				  Sleep(1000);
 				  break;
                   
 			case 7://Opcion B
