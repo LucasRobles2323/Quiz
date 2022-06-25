@@ -12,6 +12,10 @@ Usuario *crearUsuario(char *fileName, Dificultad *dif);
 
 void saveDificult(char *archive, Dificultad *guardar);
 
-bool existePartida(char *archive);
+bool noExistePartida(char *archive);
 
 List *guardarMinijuegoAhorcado(char *file);
+
+void partidaExiste(char *archive, bool existe);
+
+void guardarPartida(Usuario *USER, Dificultad *dif, char *archive);

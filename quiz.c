@@ -42,6 +42,7 @@ void azarQuestion(Usuario* user, HashMap* map){
 	Pregunta* preg;
 
 	int cont = 15;
+	user->selectedQuestions = createList();
 
 	while(cont != 0)
 	{

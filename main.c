@@ -484,20 +484,29 @@ void comodin (Comodin *com){
 	system ("cls");
 }
 
-void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
+bool comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 	Sleep (1500);
 	Comodin *com = quizUser->comodines;
-	int menu = 5, preguntas = 0, contador = 0, exit = 0;
+	int menu = 5, contador = 0, exit = 0;
 	system("cls");
 	char *idQuestion = firstList(quizUser->selectedQuestions);
+	if (quizUser->cantQuestion != 0)
+	{
+		int cont = 1;
+		while (cont != quizUser->cantQuestion)
+		{
+			idQuestion = nextList(quizUser->selectedQuestions);
+			cont++;
+		}
+	}
+	
 	Pregunta *aux;
-	bool election = false;
 
 	while (1){
-		preguntas++;
+		quizUser->cantQuestion++;
 		contador++;
 		aux = searchHashMap(preguntasQuiz, idQuestion);
-		pregunta(preguntas, aux);
+		pregunta(quizUser->cantQuestion, aux);
 		idQuestion = nextList(quizUser->selectedQuestions);
 		
 		menu = quizMove();
@@ -518,7 +527,7 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
                   centrar ("Eligio la opcion B", 10,5);
 				  Sleep(1000);
 				  centrar ("La alternativa correcta es la A", 10,7);
-				  Sleep(1000); return;
+				  Sleep(1000); return false;
 				  break;
 
 			case 10://Opcion C
@@ -527,7 +536,7 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
                   centrar ("Eligio la opcion C", 10,5);
 				  Sleep(1000);
 				  centrar ("La alternativa correcta es la A", 10,7);
-				  Sleep(1000); return;
+				  Sleep(1000); return false;
 				  break;
 
 			case 13://Opcion D
@@ -537,7 +546,7 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 				  Sleep(1000);
 				  centrar ("La alternativa correcta es la A", 10,7);
 				  Sleep(1000);
-				  return;
+				  return false;
 				  break;
 
 			case 16://Comodin
@@ -548,16 +557,17 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 
 		system ("cls");
 
-		if (contador == 5 & preguntas != 15){
+		if (contador == 5 & quizUser->cantQuestion != 15){
 			contador = 0;
 		    saveORexit(&exit);
 
-			if (exit == 1)return;
+			if (exit == 1)return true;
 		}
 
-		if (preguntas == 15)break;
+		if (quizUser->cantQuestion == 15)break;
 
 	}
+	return false;
 }
 
 int main(){
@@ -570,6 +580,7 @@ int main(){
 	char *userName = nombreUsuario("./Save/Usuario.txt");
 	Usuario *user = crearUsuario(userName, d);
 	Comodin *com;
+	bool guardar = false;
 	
 	system ("COLOR 7D");
 	bienvenida();
@@ -582,42 +593,51 @@ int main(){
 		menu = movimiento();
 
 		if (menu == 13){// opcion Salir
-			saveDificult("./Save/DifSelec.txt", d);
 			break; 
 		}
 
 		switch (menu){
 		case 3://Comenzar partida
 		    system ("cls");
+			
 			azarQuestion(user, questionsHash);	
+			
 			QuizStart(user, questionsHash, d);
+			
 			comodinesDificultad(user->comodines,d);
-			comenzarjuego(user, questionsHash);
+			if(d->hard){user->secondLife = false;}
+			guardar = comenzarjuego(user, questionsHash);
+			
+			if(guardar){
+				partidaExiste("./Save/ExistePartida.txt", guardar);
+				guardarPartida(user, d, "./Save/Partida.txt");
+			}
 			break;
 
 		case 5://Cargar partida
 		    system ("cls");
-			if(existePartida("./Save/Partida.txt"))
+			if(noExistePartida("./Save/ExistePartida.txt"))
 			{centrar ("No existe partida guardada", 10,5);}
 			else{centrar ("Pronto estara hecho esta funcion", 10,5);}	
 			Sleep (3000);
 			break;
 
 		case 7://Dificultad
-		       system ("cls");
-			   DificultadMenu (d);
-			   break;
+			system ("cls");
+			DificultadMenu (d);
+			saveDificult("./Save/DifSelec.txt", d);
+			break;
                
 		case 9://Top
-		       system ("cls");
-			   centrar ("Pronto estara hecho esta funcion", 10,5);
-			   Sleep (1000);
-			   break;
+			system ("cls");
+			centrar ("Pronto estara hecho esta funcion", 10,5);
+			Sleep (1000);
+			break;
 
 		case 11://Reglas
-		    	system ("cls");
-				MostrarReglas();
-				break;
+		    system ("cls");
+			MostrarReglas();
+			break;
 		
 		default:
 				break;

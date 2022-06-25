@@ -10,7 +10,11 @@ Pregunta *crearPregunta(char *lineaPregunta, char *lineTrue, char *lineFalse){
 	new->answerTrue = separateLine(lineTrue,";");
 	new->answerFalse = separateLine(lineFalse,";");
 	
-	new->alternatives = (Alternativa**) calloc (4, sizeof(Alternativa*));
+	new->A = (Alternativa*) malloc (sizeof(Alternativa*));
+	new->B = (Alternativa*) malloc (sizeof(Alternativa*));
+	new->C = (Alternativa*) malloc (sizeof(Alternativa*));
+	new->D = (Alternativa*) malloc (sizeof(Alternativa*));
+	
 	return new;
 }
 
@@ -142,17 +146,17 @@ void saveDificult(char *archive, Dificultad *guardar){
 	fclose(F);
 }
 
-bool existePartida(char *archive){
-	FILE *F = fopen(archive, "w"); // Abre el archivo con el nombre recibido en modo lectura
-	if (!F){return false;}// Si no existe el archivo, cierra el programa
+bool noExistePartida(char *archive){
+	FILE *F = fopen(archive, "r"); // Abre el archivo con el nombre recibido en modo lectura
+	if (!F){return true;}// Si no existe el archivo, cierra el programa
 
 	char ToN[100];
 
 	fgets(ToN, 99, F);
 	deleteLineBreak(ToN);
-	if (strcmp(ToN, "No") == 0){return false;}
+	if (strcmp(ToN, "No") == 0){return true;}
 
-	return true;
+	return false;
 }
 
 
@@ -191,4 +195,53 @@ List *guardarMinijuegoAhorcado(char *file){
 
 
 	return new;
+}
+
+void partidaExiste(char *archive, bool existe){
+	FILE *F = fopen(archive, "w"); // Abre el archivo con el nombre recibido en modo escritura
+	if (!F){return ;}// Si no existe el archivo, cierra el programa
+
+	if(existe){
+		fprintf(F, "Yes");
+	}
+	else{fprintf(F, "No");}
+	
+	fclose(F);// Se cierra el archivo
+}
+
+void guardarPartida(Usuario *USER, Dificultad *dif, char *archive){
+	FILE *F = fopen(archive, "w"); // Abre el archivo con el nombre recibido en modo lectura
+	if (!F){return ;}// Si no existe el archivo, cierra el programa
+
+	fprintf(F, "%s;", USER->user);
+	fprintf(F, "%d;", USER->cantQuestion);
+	fprintf(F, "%.3f\n", USER->pts);
+
+	char *id = firstList(USER->selectedQuestions);
+	fprintf(F, "%s", id);
+	while (id)
+	{
+		fprintf(F, ";%s", id);
+		id = nextList(USER->selectedQuestions);
+	}
+	fprintf(F, "\n");
+
+	if(dif->easy){fprintf(F, "true;");}
+	else{fprintf(F, "false;");}
+	if(dif->normal){fprintf(F, "true;");}
+	else{fprintf(F, "false;");}
+	if(dif->hard){fprintf(F, "true\n");}
+	else{fprintf(F, "false\n");}
+
+	if(USER->secondLife){fprintf(F, "true\n");}
+	else{fprintf(F, "false\n");}
+
+	if(USER->comodines->questionChange){fprintf(F, "true;");}
+	else{fprintf(F, "false;");}
+	if(USER->comodines->alternativeChange){fprintf(F, "true;");}
+	else{fprintf(F, "false;");}
+	if(USER->comodines->HelpTeacher){fprintf(F, "true\n");}
+	else{fprintf(F, "false\n");}
+
+	fclose(F);// Se cierra el archivo
 }
