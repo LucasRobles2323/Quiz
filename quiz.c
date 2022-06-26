@@ -10,17 +10,20 @@ void mostrarUsuario(Usuario *new, Dificultad *D){
 	return ;
 }
 
-void comodinesDificultad(Comodin *cambiar, Dificultad *condicion){
+void comodinesDificultad(Usuario *user, Dificultad *condicion){
+	Comodin *cambiar = user->comodines;
 	if(condicion->hard)
 	{
 		cambiar->alternativeChange = false;
 		cambiar->HelpTeacher = false;
 		cambiar->questionChange = false;
+		user->secondLife = false;
 	}
 	else{
 		cambiar->alternativeChange = true;
 		cambiar->HelpTeacher = true;
 		cambiar->questionChange = true;
+		user->secondLife = true;
 	}
 }
 

@@ -1,5 +1,5 @@
 #include "guardarDatos.h"
 
-void comodinesDificultad(Comodin *cambiar, Dificultad *condicion);
+void comodinesDificultad(Usuario *user, Dificultad *condicion);
 
 void azarQuestion(Usuario* user, HashMap* map);

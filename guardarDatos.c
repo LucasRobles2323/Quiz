@@ -10,10 +10,7 @@ Pregunta *crearPregunta(char *lineaPregunta, char *lineTrue, char *lineFalse){
 	new->answerTrue = separateLine(lineTrue,";");
 	new->answerFalse = separateLine(lineFalse,";");
 	
-	new->A = (Alternativa*) malloc (sizeof(Alternativa*));
-	new->B = (Alternativa*) malloc (sizeof(Alternativa*));
-	new->C = (Alternativa*) malloc (sizeof(Alternativa*));
-	new->D = (Alternativa*) malloc (sizeof(Alternativa*));
+	new->alternatives = (Alternativa**) malloc (sizeof(Alternativa*));
 	
 	return new;
 }
@@ -217,15 +214,6 @@ void guardarPartida(Usuario *USER, Dificultad *dif, char *archive){
 	fprintf(F, "%d;", USER->cantQuestion);
 	fprintf(F, "%.3f\n", USER->pts);
 
-	char *id = firstList(USER->selectedQuestions);
-	fprintf(F, "%s", id);
-	while (id)
-	{
-		fprintf(F, ";%s", id);
-		id = nextList(USER->selectedQuestions);
-	}
-	fprintf(F, "\n");
-
 	if(dif->easy){fprintf(F, "true;");}
 	else{fprintf(F, "false;");}
 	if(dif->normal){fprintf(F, "true;");}
@@ -243,5 +231,75 @@ void guardarPartida(Usuario *USER, Dificultad *dif, char *archive){
 	if(USER->comodines->HelpTeacher){fprintf(F, "true\n");}
 	else{fprintf(F, "false\n");}
 
+	char *id = firstList(USER->selectedQuestions);
+	fprintf(F, "%s", id);
+	while (id)
+	{
+		fprintf(F, ";%s", id);
+		id = nextList(USER->selectedQuestions);
+	}
+
+	fclose(F);// Se cierra el archivo
+}
+
+void cargarPartida(char *fileName, Usuario *user, Dificultad *d){
+	FILE *F = fopen(fileName, "r"); // Abre el archivo con el nombre recibido en modo lectura
+	if (!F){return ;}// Si no existe el archivo, cierra el programa
+
+	char linea[1024];
+	List *aux;
+
+	//nombre ; preguntas respondidas correctamente ; puntos del usuario
+	fgets(linea, 1023, F);
+	aux = separateLine(linea, ";");
+	// guarda el nombre de usuario, las cantidad de respondidas y el puntaje obtenido
+	user->user = _strdup(firstList(aux));
+	user->cantQuestion = atoi(nextList(aux));
+	List *ptj = separateLine(nextList(aux), ".");
+	user->pts = atoi(firstList(ptj));
+	user->pts += ( (float)atoi(nextList(ptj)) / 1000);
+
+
+	//dificultad: 	facil ; normal ; dificil
+	fgets(linea, 1023, F);
+	aux = separateLine(linea, ";");
+	// Guarda la dificultad de la partida guardada
+	if (strcmp(firstList(aux), "true") == 0){d->easy = true;}
+	else{d->easy = false;}
+	if (strcmp(nextList(aux), "true") == 0){d->normal = true;}
+	else{d->normal = false;}
+	if (strcmp(nextList(aux), "true") == 0){d->hard = true;}
+	else{d->hard = false;}
+
+	// segunda vida
+	fgets(linea, 1023, F);
+	deleteLineBreak(linea);
+	// Guarda si el usuario tiene disponible una segunda vida
+	if (strcmp(linea, "true") == 0){user->secondLife = true;}
+	else{user->secondLife = false;}
+
+	// Comodines: Cambiar pregunta ; Cambiar alternativas ; Ayuda Profe
+	fgets(linea, 1023, F);
+	aux = separateLine(linea, ";");
+	// Guarda si el usuario tiene disponible una segunda vida
+	if (strcmp(firstList(aux), "true") == 0){user->comodines->questionChange = true;}
+	else{user->comodines->questionChange = false;}
+	if (strcmp(nextList(aux), "true") == 0){user->comodines->alternativeChange = true;}
+	else{user->comodines->alternativeChange = false;}
+	if (strcmp(nextList(aux), "true") == 0){user->comodines->HelpTeacher = true;}
+	else{user->comodines->HelpTeacher = false;}
+
+	// id Pregunta ; id Pregunta ; id Pregunta ; ... ; id Pregunta
+	fgets(linea, 1023, F);
+	aux = separateLine(linea, ";");
+	// Guarda las id de las preguntas hechas y por hacer al usuario
+	user->selectedQuestions = createList(); //Para vaciar la lista
+	char *id = firstList(aux);
+	while (id)
+	{
+		pushBack(user->selectedQuestions, id);
+		id = nextList(aux);
+	}
+	
 	fclose(F);// Se cierra el archivo
 }

@@ -137,9 +137,51 @@ void mostrarMenu(){
 	printf ("\n\n");
 }
 
+void mostrarDatosUsuario(Usuario *user, Dificultad *d){
+	gotoxy(10,5);
+	printf("Usuario                   : %s", user->user);
+	
+	gotoxy(10,6);
+	printf("Preguntas Respondidas     : %d", user->cantQuestion);
+	
+	gotoxy(10,7);
+	printf("Puntaje Usuario           : %.3f", user->pts);
+	
+	gotoxy(10,8);
+	if(d->easy){printf("Dificultad Quiz           : Facil");}
+	else if(d->normal){printf("Dificultad Quiz           : Normal");}
+	else if(d->hard){printf("Dificultad Quiz           : Dificil");}
+	
+	gotoxy(11,9);
+	if(user->secondLife){printf("Segunda Oportunidad       : Si");}
+	else {printf("Segunda Oportunidad       : No");}
+
+	gotoxy(13,10);
+	if(user->comodines->questionChange){printf("Cambiar Pregunta          : Si");}
+	else {printf("Cambiar Pregunta          : No");}
+	
+
+	gotoxy(13,11);
+	if(user->comodines->alternativeChange){printf("Cambiar Alternativas      : Si");}
+	else {printf("Cambiar Alternativas      : No");}
+	
+	gotoxy(13,12);
+	if(user->comodines->HelpTeacher){printf("Ayuda Profesor            : Si");}
+	else {printf("Ayuda Profesor            : No");}
+
+	char *id = firstList(user->selectedQuestions);
+	gotoxy(10,13);
+	while (id)
+	{
+		printf("%3s||", id);
+		id = nextList(user->selectedQuestions);
+	}
+	
+}
+
 void descripcionDificultad(Dificultad *d){
 	if (d->easy){
-		centrar ("EASY", 1, 12);
+		centrar ("FACIL", 1, 12);
 		centrar ("En esta dificultad el usuario solo recibira 6 preguntas.", 4, 13);
 		centrar ("Cada pregunta respondida correctamente equivale a 1 punto.", 4, 14);
 		centrar ("Cada pregunta respondida despues de usar su segunda oportunidad, vera reducido su puntaje en 0.3 puntos.", 4, 15);
@@ -163,7 +205,7 @@ void descripcionDificultad(Dificultad *d){
 	}
 
 	if (d->hard){
-		centrar ("HARD", 1, 12);
+		centrar ("DIFICIL", 1, 12);
 		centrar ("En esta dificultad el usuario recibira 15 preguntas dificiles.", 4, 13);
 		centrar ("Cada pregunta respondida correctamente equivale a 3 puntos.", 4, 14);
 		centrar ("El usuario NO tendra disponible para su uso lo siguiente:", 4, 16);
@@ -175,10 +217,10 @@ void descripcionDificultad(Dificultad *d){
 void DificultadMostrar (Dificultad *d){
 	centrar (MAGENTA_T "Eliga la dificultad :", 8, 1);
 	if (d->easy){
-		centrar (VERDE_T "EASY", 30, 3);
+		centrar (VERDE_T "FACIL", 30, 3);
 	    printf ("\n");
 	}else{
-		centrar (ROJO_T "EASY", 30, 3);
+		centrar (ROJO_T "FACIL", 30, 3);
 	    printf ("\n");
 	}
 	if (d->normal){
@@ -189,10 +231,10 @@ void DificultadMostrar (Dificultad *d){
 	    printf ("\n");
 	}
 	if (d->hard){
-		centrar (VERDE_T "HARD", 30, 7);
+		centrar (VERDE_T "DIFICIL", 30, 7);
 	    printf ("\n");
 	}else{
-		centrar (ROJO_T "HARD", 30, 7);
+		centrar (ROJO_T "DIFICIL", 30, 7);
 	    printf ("\n");
 	}
 	centrar (MAGENTA_T "Volver", 30, 9);
@@ -260,7 +302,7 @@ void DificultadMenu (Dificultad *d){
 
 }
 
-void QuizStart(Usuario *user, HashMap *questionsHash, Dificultad *d){
+void PresentarUser(Usuario *user, Dificultad *d){
 	gotoxy(10,10);
 	printf("Nombre de Usuario:         %s\n", user->user);
 	gotoxy(10,11);
@@ -268,8 +310,6 @@ void QuizStart(Usuario *user, HashMap *questionsHash, Dificultad *d){
 	if (d->easy){printf("Facil\n");}
 	else if (d->normal){printf("Normal\n");}
 	else{printf("Dificil\n");}
-	gotoxy(10,12);
-	printf("Puntaje Total del Usuario: %.3f", user->pts);
 	return ;
 }
 
@@ -484,7 +524,7 @@ void comodin (Comodin *com){
 	system ("cls");
 }
 
-bool comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
+void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 	Sleep (1500);
 	Comodin *com = quizUser->comodines;
 	int menu = 5, contador = 0, exit = 0;
@@ -527,7 +567,7 @@ bool comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
                   centrar ("Eligio la opcion B", 10,5);
 				  Sleep(1000);
 				  centrar ("La alternativa correcta es la A", 10,7);
-				  Sleep(1000); return false;
+				  Sleep(1000); quizUser->life = false;
 				  break;
 
 			case 10://Opcion C
@@ -536,7 +576,7 @@ bool comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
                   centrar ("Eligio la opcion C", 10,5);
 				  Sleep(1000);
 				  centrar ("La alternativa correcta es la A", 10,7);
-				  Sleep(1000); return false;
+				  Sleep(1000); quizUser->life = false;
 				  break;
 
 			case 13://Opcion D
@@ -545,8 +585,7 @@ bool comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
                   centrar ("Eligio la opcion D", 10,5);
 				  Sleep(1000);
 				  centrar ("La alternativa correcta es la A", 10,7);
-				  Sleep(1000);
-				  return false;
+				  Sleep(1000); quizUser->life = false;
 				  break;
 
 			case 16://Comodin
@@ -556,18 +595,20 @@ bool comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 		}
 
 		system ("cls");
+		
+		if (!quizUser->life){return;}
 
 		if (contador == 5 & quizUser->cantQuestion != 15){
 			contador = 0;
 		    saveORexit(&exit);
 
-			if (exit == 1)return true;
+			if (exit == 1) break;
 		}
 
 		if (quizUser->cantQuestion == 15)break;
 
 	}
-	return false;
+	quizUser->life = true;
 }
 
 int main(){
@@ -577,11 +618,9 @@ int main(){
 	VerdaderoFalso *comodinToF = GuardarToF("./Datos/TrueOrFalse.txt");
 	Dificultad *d = leerDificult("./Save/DifSelec.txt");
 	List *ahorcado = guardarMinijuegoAhorcado("./Datos/Ahorcado.txt");
-	char *userName = nombreUsuario("./Save/Usuario.txt");
-	Usuario *user = crearUsuario(userName, d);
+	Usuario *user = crearUsuario(nombreUsuario("./Save/Usuario.txt"), d);
 	Comodin *com;
-	bool guardar = false;
-	
+
 	system ("COLOR 7D");
 	bienvenida();
 	Sleep (1000);
@@ -600,16 +639,20 @@ int main(){
 		case 3://Comenzar partida
 		    system ("cls");
 			
+			comodinesDificultad(user, d);
 			azarQuestion(user, questionsHash);	
+			user->user = _strdup(nombreUsuario("./Save/Usuario.txt"));
+			user->life = true;
 			
-			QuizStart(user, questionsHash, d);
+			PresentarUser(user, d);
 			
-			comodinesDificultad(user->comodines,d);
-			if(d->hard){user->secondLife = false;}
-			guardar = comenzarjuego(user, questionsHash);
+			comodinesDificultad(user, d);
 			
-			if(guardar){
-				partidaExiste("./Save/ExistePartida.txt", guardar);
+			user->cantQuestion = 0;
+			comenzarjuego(user, questionsHash);
+			
+			if(user->life && user->cantQuestion != 15){
+				partidaExiste("./Save/ExistePartida.txt", user->life);
 				guardarPartida(user, d, "./Save/Partida.txt");
 			}
 			break;
@@ -617,8 +660,12 @@ int main(){
 		case 5://Cargar partida
 		    system ("cls");
 			if(noExistePartida("./Save/ExistePartida.txt"))
-			{centrar ("No existe partida guardada", 10,5);}
-			else{centrar ("Pronto estara hecho esta funcion", 10,5);}	
+			{centrar ("No existe partida guardada", 10,5); Sleep (3000); break;}
+
+			cargarPartida("./Save/Partida.txt", user, d);
+
+			mostrarDatosUsuario(user, d);
+
 			Sleep (3000);
 			break;
 

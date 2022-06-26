@@ -44,10 +44,7 @@ typedef struct{
 	char *question;
 	List *answerTrue;
 	List *answerFalse;
-	Alternativa *A;
-	Alternativa *B;
-	Alternativa *C;
-	Alternativa *D;
+	Alternativa **alternatives;
 }Pregunta;
 
 typedef struct{

@@ -71,7 +71,7 @@ void deleteLineBreak(char *beta){
 
 /*----------------- Lista con los text a abrir -----------------*/
 List *separateLine(char *line, char* excluir){
-	//Crea una lista con las palabras separadas por punto coma
+	//Crea una lista con las palabras separadas por el caracter excluido que se recibe (generalmente ';')
 	List *newList = createList();
     char *Text = strtok(line, excluir);
 	while (Text != NULL)
