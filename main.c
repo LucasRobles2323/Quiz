@@ -666,7 +666,16 @@ int main(){
 
 			mostrarDatosUsuario(user, d);
 
-			Sleep (3000);
+			comenzarjuego(user, questionsHash);
+
+			if(user->life && user->cantQuestion != 15){
+				partidaExiste("./Save/ExistePartida.txt", user->life);
+				guardarPartida(user, d, "./Save/Partida.txt");
+			}
+			else if (!user->life || user->cantQuestion == 15)
+			{
+				partidaExiste("./Save/ExistePartida.txt", false);
+			}
 			break;
 
 		case 7://Dificultad
