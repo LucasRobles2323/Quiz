@@ -10,6 +10,7 @@
 #include <conio.h>
 #include "list.h"
 #include "hashmap.h"
+#include "treemap.h"
 
 //------------------STRUCT-------------------------//
 typedef struct{
@@ -59,6 +60,12 @@ typedef struct{
 	int time;
 }Ahorcado;
 
+typedef struct{
+	int posicion;
+	char *usuario;
+	float puntaje;
+}Top;
+
 //------------------FUNCIONES-------------------------//
 int is_equal_string(void * key1, void * key2);
 
@@ -68,9 +75,9 @@ int is_equal_int(void * key1, void * key2);
 
 int lower_than_int(void * key1, void * key2);
 
-long is_equal_long(void * key1, void * key2);
+int is_equal_float(void * key1, void * key2);
 
-long lower_than_long(void * key1, void * key2);
+int lower_than_float(void * key1, void * key2);
 
 int compare(void * key1, void * key2);
 

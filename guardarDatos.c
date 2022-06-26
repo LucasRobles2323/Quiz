@@ -303,3 +303,31 @@ void cargarPartida(char *fileName, Usuario *user, Dificultad *d){
 	
 	fclose(F);// Se cierra el archivo
 }
+
+TreeMap *crearTop(char *file){
+	TreeMap *new = createTreeMap(lower_than_float);
+	List *aux;
+	Top *top;
+	List *ptj;
+
+	FILE *F = fopen(file, "r"); // Abre el archivo con el nombre recibido en modo lectura
+	if (!F){return NULL;}// Si no existe el archivo, cierra el programa
+
+	char linea[1024];
+	while (fgets(linea, 1023, F))
+	{
+		aux = separateLine(linea, ";");
+		top = (Top*) malloc (sizeof(Top));
+		top->usuario = _strdup(firstList(aux));
+
+		ptj = separateLine(nextList(aux), ".");
+		top->puntaje = atoi(firstList(ptj));
+		top->puntaje += ( (float)atoi(nextList(ptj)) / 1000);
+
+		insertTreeMap(new, (void*)(&top->puntaje), top);
+	}
+	
+	fclose(F);
+
+	return new;
+}

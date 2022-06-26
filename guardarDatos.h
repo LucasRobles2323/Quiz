@@ -21,3 +21,5 @@ void partidaExiste(char *archive, bool existe);
 void guardarPartida(Usuario *USER, Dificultad *dif, char *archive);
 
 void cargarPartida(char *fileName, Usuario *user, Dificultad *d);
+
+TreeMap *crearTop(char *file);

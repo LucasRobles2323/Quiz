@@ -18,21 +18,21 @@ int is_equal_int(void * key1, void * key2) {
     return 0;
 }
 
-// función para comparar claves de tipo long retorna 1 si son key1<key2
+// función para comparar claves de tipo int retorna 1 si son key1<key2
 int lower_than_int(void * key1, void * key2) {
     if(*(float*)key1 > *(float*)key2) return 1;
     return 0;
 }
 
-// función para comparar claves de tipo long retorna 1 si son iguales
-long is_equal_long(void * key1, void * key2) {
-    if(*(long*)key1 == *(long*)key2) return 1;
+// función para comparar claves de tipo float retorna 1 si son iguales
+int is_equal_float(void * key1, void * key2) {
+    if(*(float*)key1 == *(float*)key2) return 1;
     return 0;
 }
 
-// función para comparar claves de tipo int retorna 1 si son key1<key2
-long lower_than_long(void * key1, void * key2) {
-    if(*(long*)key1 < *(long*)key2) return 1;
+// función para comparar claves de tipo float retorna 1 si son key1>key2
+int lower_than_float(void * key1, void * key2) {
+    if(*(float*)key1 > *(float*)key2) return 1;
     return 0;
 }
 

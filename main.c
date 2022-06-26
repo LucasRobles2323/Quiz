@@ -611,6 +611,25 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 	quizUser->life = true;
 }
 
+void mostrarTop(TreeMap *top){
+	int y = 5;
+	int pos = 1;
+	Pair *auxiliar = firstTreeMap(top);
+	Top *aux = auxiliar->value;
+	while (aux)
+	{
+		gotoxy(10, y);
+		printf("%d.- %s %.3f", pos, aux->usuario, aux->puntaje);
+		y++;
+		pos++;
+		if (pos == 6){break;}
+		auxiliar = nextTreeMap(top);
+		aux = auxiliar->value;
+		Sleep(500);
+	}
+	Sleep(2000);
+}
+
 int main(){
 	int menu = 3;
 	
@@ -619,7 +638,7 @@ int main(){
 	Dificultad *d = leerDificult("./Save/DifSelec.txt");
 	List *ahorcado = guardarMinijuegoAhorcado("./Datos/Ahorcado.txt");
 	Usuario *user = crearUsuario(nombreUsuario("./Save/Usuario.txt"), d);
-	Comodin *com;
+	TreeMap *top = crearTop("./Save/Top.txt");
 
 	system ("COLOR 7D");
 	bienvenida();
@@ -686,8 +705,7 @@ int main(){
                
 		case 9://Top
 			system ("cls");
-			centrar ("Pronto estara hecho esta funcion", 10,5);
-			Sleep (1000);
+			mostrarTop(top);
 			break;
 
 		case 11://Reglas
