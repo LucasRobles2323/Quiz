@@ -459,8 +459,8 @@ void saveORexit (int *exit){
 	system ("cls");
 }
 
-void comodin (Comodin *com){
-	int menu = 3;
+int comodin (Comodin *com){
+	int menu = 3, wildcard = 0;
 
 	system ("cls");
 
@@ -489,35 +489,29 @@ void comodin (Comodin *com){
 
 		switch (menu){
 			case 3://Ayuda profe araya
-			    if (!com->HelpTeacher)break;
-			    system("cls");
-			    centrar ("Ayudeme profesor aaaaaaaaaaaaaa", 5,5);
+			    if (!com->HelpTeacher)return 0;
 				com->HelpTeacher = false;
-			    Sleep(1000);
+				wildcard = 1;
 			    menu = 0;
 			    break;
 
 			case 5://50/50
-			    if (!com->alternativeChange)break;
-			    system ("cls");
-			    centrar ("FIFTY FIFTY MAI BRUDA",5,5);
+			    if (!com->alternativeChange)return 0;
 				com->alternativeChange = false;
-			    Sleep (1000);
+				wildcard = 2;
 			    menu = 0;
 			    break;
 
 			case 7://pregunta nueva
-			    if (!com->questionChange)break;
-			    system ("cls");
-			    centrar ("NEXT",5,5);
+			    if (!com->questionChange)return 0;
 				com->questionChange = false;
-			    Sleep (1000);
+				wildcard = 3;
 			    menu = 0;
 			    break;
 
 		}
         system("cls");
-		if (menu == 0)break;
+		if (menu == 0)return wildcard;
 		
 	}
 
@@ -527,7 +521,7 @@ void comodin (Comodin *com){
 void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 	Sleep (1500);
 	Comodin *com = quizUser->comodines;
-	int menu = 5, contador = 0, exit = 0;
+	int menu = 5, contador = 0, exit = 0, wildcard = 0;
 	system("cls");
 	char *idQuestion = firstList(quizUser->selectedQuestions);
 	if (quizUser->cantQuestion != 0)
@@ -589,8 +583,32 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 				  break;
 
 			case 16://Comodin
-                  comodin (com);
-				  break;
+                  wildcard = comodin (com);
+
+				  if (wildcard == 0){
+					system ("cls");
+					centrar ("Ya Ocupaste ese comodin", 5,5);
+					Sleep (2000);
+					break;
+				  }else if (wildcard == 1)
+				  {
+					system ("cls");
+					centrar ("Ayudame profe aaaaaaaaaaaaaaaaaaaaaaaaaaa esta en la funcion comenzar partida", 5,5);
+					Sleep (2000);
+					break;
+				  }else if (wildcard == 2)
+				  {
+					system ("cls");
+					centrar ("Cambio de alternativa", 5,5);
+					Sleep (2000);
+					break;
+				  }else if (wildcard == 3)
+				  {
+					system ("cls");
+					centrar ("Cambio de Pregunta", 5,5);
+					Sleep (2000);
+					break;
+				  }
 
 		}
 

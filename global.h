@@ -61,7 +61,6 @@ typedef struct{
 }Ahorcado;
 
 typedef struct{
-	int posicion;
 	char *usuario;
 	float puntaje;
 }Top;
