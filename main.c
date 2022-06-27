@@ -308,21 +308,37 @@ void MostrarReglas(){
 	if (!F){return;}// Si no existe el archivo, cierra el programa
 
 	char  linea[2001];
-	int y=1, x=1;
-	int cont = 0;
+	int y=1, x=2;
 	while (fgets(linea, 2000, F) != NULL) { 
     		// Recorre el archivo leyendo linea por linea e imprimiendolas en pantalla.
-
-			centrar (linea, x, y);
+			gotoxy(x, y);
+			printf(AZUL_T "%s", linea);
 			y++;
-			cont++;
-			if(cont == 10){cronometro(2); cont = 0;}
 	}
 	fclose(F);// Se cierra el archivo
+	y+= 10; x += 25;
+	gotoxy(x, y);
+	printf(MAGENTA_T "Salir");
+	int menu = y, inicio, final=y;
 
-	cronometro(2);
-	printf("\n\n\n\n\n Espere 5 segundos para salir ...");
-	cronometro(5);
+	while (1)
+	{
+		Sleep(200);
+
+		if (GetAsyncKeyState(VK_UP)){
+			menu = menu == inicio ? final: menu;
+			printf ("\r            ");
+			gotoxy (x-3, LineaDeInicio + menu - 1);
+			printf ("->");
+		} else if (GetAsyncKeyState(VK_DOWN)){
+			menu = menu == inicio ? final: menu;
+			printf ("\r            ");
+			gotoxy (x-3, LineaDeInicio + menu - 1);
+			printf ("->");
+		 } else if (GetAsyncKeyState(VK_RETURN)){
+			break;
+		}
+	}
 }
 
 int quizMove(){
