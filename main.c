@@ -789,18 +789,12 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 
 	while (1){
 		
-		if (volver == 0){
-			quizUser->cantQuestion++;
-		    contador++;
-		    aux = searchHashMap(preguntasQuiz, idQuestion);
-			AzarAlternatives(aux);
-		    pregunta(quizUser->cantQuestion, aux);
-			idQuestion = nextList(quizUser->selectedQuestions);
-		    
-		}else{
-			volver = 0;
-			pregunta(quizUser->cantQuestion, aux);
-		}
+		quizUser->cantQuestion++;
+		contador++;
+		aux = searchHashMap(preguntasQuiz, idQuestion);
+		AzarAlternatives(aux);
+		pregunta(quizUser->cantQuestion, aux);
+		idQuestion = nextList(quizUser->selectedQuestions);
 		
 		menu = quizMove();
 
@@ -810,7 +804,6 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 				  if(aux->A->answer == false)quizUser->life = false;
 				  else{quizUser->life = true;}
 				  break;
-                  
 			case 7://Opcion B
                   preguntaCorrecta (aux, 1, aux->B->answer);
 				  if(aux->B->answer == false)quizUser->life = false;
@@ -886,7 +879,7 @@ void mostrarTop(TreeMap *top){
 		if (pos == 6){break;}
 		auxiliar = nextTreeMap(top);
 		aux = auxiliar->value;
-		Sleep(500);
+		Sleep(250);
 	}
 	Sleep(2000);
 }

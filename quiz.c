@@ -130,6 +130,11 @@ int is_valid_alt(int* repe, int azar)
 void AzarAlternatives(Pregunta* preg)
 {
 	// cuenta numero de respuestas presentes según la pregunta
+	preg->A = (Alternativa*) calloc (1,sizeof(Alternativa));
+	preg->B = (Alternativa*) calloc (1,sizeof(Alternativa));
+	preg->C = (Alternativa*) calloc (1,sizeof(Alternativa));
+	preg->D = (Alternativa*) calloc (1,sizeof(Alternativa));
+
 	preg->contFalse = 0;
 	preg->contTrue = 0;
 	char* Altt;
@@ -153,6 +158,7 @@ void AzarAlternatives(Pregunta* preg)
 	{
 		Altt = nextList(preg->answerTrue);
 		azar--;
+		if(!Altt){Altt = firstList(preg->answerTrue);}
 	}
 
 	azar = rand() % 4;
@@ -200,14 +206,15 @@ void AzarAlternatives(Pregunta* preg)
 		int comprobador;
 		if(is_valid_alt(repe, azar) == 1)
 		{
-		comprobador = is_valid_alt(repe, azar);
+			comprobador = is_valid_alt(repe, azar);
 		
-		repe[azar] = azar; 
-		while(azar != 0)
+			repe[azar] = azar; 
+			while(azar != 0)
 			{	
-			pasa = TRUE;
-			Altt = nextList(preg->answerFalse);
-			azar--;	
+				pasa = TRUE;
+				Altt = nextList(preg->answerFalse);
+				azar--;	
+				if(!Altt){Altt = firstList(preg->answerTrue);}
 			}	
 					
 		}
