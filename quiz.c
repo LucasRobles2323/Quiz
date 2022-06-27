@@ -17,13 +17,11 @@ void comodinesDificultad(Usuario *user, Dificultad *condicion){
 		cambiar->alternativeChange = false;
 		cambiar->HelpTeacher = false;
 		cambiar->questionChange = false;
-		user->secondLife = false;
 	}
 	else{
 		cambiar->alternativeChange = true;
 		cambiar->HelpTeacher = true;
 		cambiar->questionChange = true;
-		user->secondLife = true;
 	}
 }
 

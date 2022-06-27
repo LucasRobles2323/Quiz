@@ -151,15 +151,10 @@ void mostrarDatosUsuario(Usuario *user, Dificultad *d){
 	if(d->easy){printf("Dificultad Quiz           : Facil");}
 	else if(d->normal){printf("Dificultad Quiz           : Normal");}
 	else if(d->hard){printf("Dificultad Quiz           : Dificil");}
-	
-	gotoxy(11,9);
-	if(user->secondLife){printf("Segunda Oportunidad       : Si");}
-	else {printf("Segunda Oportunidad       : No");}
 
 	gotoxy(13,10);
 	if(user->comodines->questionChange){printf("Cambiar Pregunta          : Si");}
 	else {printf("Cambiar Pregunta          : No");}
-	
 
 	gotoxy(13,11);
 	if(user->comodines->alternativeChange){printf("Cambiar Alternativas      : Si");}
@@ -652,9 +647,7 @@ int main(){
 	int menu = 3;
 	
 	HashMap *questionsHash = GuardarPreguntas("./Datos/Preguntas.txt",100);
-	VerdaderoFalso *comodinToF = GuardarToF("./Datos/TrueOrFalse.txt");
 	Dificultad *d = leerDificult("./Save/DifSelec.txt");
-	List *ahorcado = guardarMinijuegoAhorcado("./Datos/Ahorcado.txt");
 	Usuario *user = crearUsuario(nombreUsuario("./Save/Usuario.txt"), d);
 	TreeMap *top = crearTop("./Save/Top.txt");
 
@@ -676,7 +669,6 @@ int main(){
 		case 3://Comenzar partida
 		    system ("cls");
 			
-			comodinesDificultad(user, d);
 			azarQuestion(user, questionsHash);	
 			user->user = _strdup(nombreUsuario("./Save/Usuario.txt"));
 			user->life = true;

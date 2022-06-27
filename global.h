@@ -25,7 +25,6 @@ typedef struct{
 	bool life;
 	List *selectedQuestions;
 	int cantQuestion;
-	bool secondLife;
 	Comodin *comodines;
 }Usuario;
 
@@ -47,18 +46,6 @@ typedef struct{
 	List *answerFalse;
 	Alternativa **alternatives;
 }Pregunta;
-
-typedef struct{
-	List *Verdadero;
-	List *Falso;
-}VerdaderoFalso;
-
-typedef struct{
-	int id;
-	char *enunciado;
-	char *palabra;
-	int time;
-}Ahorcado;
 
 typedef struct{
 	char *usuario;

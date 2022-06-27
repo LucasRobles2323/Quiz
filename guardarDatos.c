@@ -71,25 +71,6 @@ Dificultad *leerDificult(char *archive){
 	return new;
 }
 
-VerdaderoFalso *GuardarToF(char *archive){
-	FILE *F = fopen(archive, "r"); // Abre el archivo con el nombre recibido en modo lectura
-	if (!F){return NULL;}// Si no existe el archivo, cierra el programa
-	
-	VerdaderoFalso *new = (VerdaderoFalso*) malloc (sizeof(VerdaderoFalso));
-
-	char verdaderos[1024];
-	char falsos[1024];
-
-	fgets(verdaderos, 1023, F);
-	fgets(falsos, 1023, F);
-
-	new->Verdadero = separateLine(verdaderos, ";");
-	new->Falso = separateLine(falsos, ";");
-	fclose(F);
-
-	return new;
-}
-
 char *nombreUsuario(char *fileName){
 	FILE *F = fopen(fileName, "r");
 	char userName[1024];
@@ -107,13 +88,11 @@ Usuario *crearUsuario(char *userName, Dificultad *dif){
 	new->comodines = (Comodin*) malloc (sizeof(Comodin));
 
 	if (dif->hard){
-		new->secondLife = false;
 		new->comodines->alternativeChange = false;
 		new->comodines->HelpTeacher = false;
 		new->comodines->questionChange = false;
 	}
 	else{
-		new->secondLife = true;
 		new->comodines->alternativeChange = true;
 		new->comodines->HelpTeacher = true;
 		new->comodines->questionChange = true;
@@ -156,44 +135,6 @@ bool noExistePartida(char *archive){
 	return false;
 }
 
-
-
-Ahorcado *createAhorcado(List *datos){
-	Ahorcado *new = (Ahorcado*) malloc (sizeof(Ahorcado));
-
-	new->id = atoi(firstList(datos));
-	new->enunciado = nextList(datos);
-	new->palabra = nextList(datos);
-	new->time = atoi(nextList(datos));
-
-	return new;
-}
-
-List *guardarMinijuegoAhorcado(char *file){
-	List *new = createList();
-
-	FILE *F = fopen(file, "r"); // Abre el archivo con el nombre recibido en modo lectura
-	if (!F){return NULL;}// Si no existe el archivo, cierra el programa
-	
-	Ahorcado *aux;
-	char linea[1024];
-	List *auxiliar; //Lista para las palabras de la linea
-
-	while (fgets(linea, 1023, F) != NULL) { 
-    	// Recorre el archivo leyendo linea por linea
-        // guardando los datos de cada linea en listas
-		
-		auxiliar = separateLine(linea, ";");
-		aux = createAhorcado(auxiliar);
-		pushBack(new, aux);
-	}
-	
-	fclose(F);// Se cierra el archivo
-
-
-	return new;
-}
-
 void partidaExiste(char *archive, bool existe){
 	FILE *F = fopen(archive, "w"); // Abre el archivo con el nombre recibido en modo escritura
 	if (!F){return ;}// Si no existe el archivo, cierra el programa
@@ -219,9 +160,6 @@ void guardarPartida(Usuario *USER, Dificultad *dif, char *archive){
 	if(dif->normal){fprintf(F, "true;");}
 	else{fprintf(F, "false;");}
 	if(dif->hard){fprintf(F, "true\n");}
-	else{fprintf(F, "false\n");}
-
-	if(USER->secondLife){fprintf(F, "true\n");}
 	else{fprintf(F, "false\n");}
 
 	if(USER->comodines->questionChange){fprintf(F, "true;");}
@@ -270,13 +208,6 @@ void cargarPartida(char *fileName, Usuario *user, Dificultad *d){
 	else{d->normal = false;}
 	if (strcmp(nextList(aux), "true") == 0){d->hard = true;}
 	else{d->hard = false;}
-
-	// segunda vida
-	fgets(linea, 1023, F);
-	deleteLineBreak(linea);
-	// Guarda si el usuario tiene disponible una segunda vida
-	if (strcmp(linea, "true") == 0){user->secondLife = true;}
-	else{user->secondLife = false;}
 
 	// Comodines: Cambiar pregunta ; Cambiar alternativas ; Ayuda Profe
 	fgets(linea, 1023, F);
