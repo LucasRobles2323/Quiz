@@ -475,25 +475,25 @@ int comodin (Comodin *com){
 		    }
 	    }
 
-		if (menu == 9)break;
+		if (menu == 9)return 10;
 
 		switch (menu){
 			case 3://Ayuda profe araya
-			    if (!com->HelpTeacher)return 0;
+			    if (!com->HelpTeacher)break;
 				com->HelpTeacher = false;
 				wildcard = 1;
 			    menu = 0;
 			    break;
 
 			case 5://50/50
-			    if (!com->alternativeChange)return 0;
+			    if (!com->alternativeChange)break;
 				com->alternativeChange = false;
 				wildcard = 2;
 			    menu = 0;
 			    break;
 
 			case 7://pregunta nueva
-			    if (!com->questionChange)return 0;
+			    if (!com->questionChange)break;
 				com->questionChange = false;
 				wildcard = 3;
 			    menu = 0;
@@ -511,7 +511,7 @@ int comodin (Comodin *com){
 void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 	Sleep (1500);
 	Comodin *com = quizUser->comodines;
-	int menu = 5, contador = 0, exit = 0, wildcard = 0;
+	int menu = 5, contador = 0, exit = 0, wildcard = 0, volver = 0;
 	system("cls");
 	char *idQuestion = firstList(quizUser->selectedQuestions);
 	if (quizUser->cantQuestion != 0)
@@ -527,11 +527,18 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 	Pregunta *aux;
 
 	while (1){
-		quizUser->cantQuestion++;
-		contador++;
-		aux = searchHashMap(preguntasQuiz, idQuestion);
-		pregunta(quizUser->cantQuestion, aux);
-		idQuestion = nextList(quizUser->selectedQuestions);
+		
+		if (volver == 0){
+			quizUser->cantQuestion++;
+		    contador++;
+		    aux = searchHashMap(preguntasQuiz, idQuestion);
+		    pregunta(quizUser->cantQuestion, aux);
+			idQuestion = nextList(quizUser->selectedQuestions);
+		    
+		}else{
+			volver = 0;
+			pregunta(quizUser->cantQuestion, aux);
+		}
 		
 		menu = quizMove();
 
@@ -575,25 +582,19 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 			case 16://Comodin
                   wildcard = comodin (com);
 
-				  if (wildcard == 0){
-					system ("cls");
-					centrar ("Ya Ocupaste ese comodin", 5,5);
-					Sleep (2000);
+				  if (wildcard == 10){
+					volver = 1;
 					break;
-				  }else if (wildcard == 1)
-				  {
-					system ("cls");
+				  }else if (wildcard == 1){
 					centrar ("Ayudame profe aaaaaaaaaaaaaaaaaaaaaaaaaaa esta en la funcion comenzar partida", 5,5);
 					Sleep (2000);
 					break;
-				  }else if (wildcard == 2)
-				  {
+				  }else if (wildcard == 2){
 					system ("cls");
 					centrar ("Cambio de alternativa", 5,5);
 					Sleep (2000);
 					break;
-				  }else if (wildcard == 3)
-				  {
+				  }else if (wildcard == 3){
 					system ("cls");
 					centrar ("Cambio de Pregunta", 5,5);
 					Sleep (2000);
@@ -603,18 +604,20 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 		}
 
 		system ("cls");
-		
-		if (!quizUser->life){return;}
 
-		if (contador == 5 & quizUser->cantQuestion != 15){
-			contador = 0;
-		    saveORexit(&exit);
+		if (volver == 0){
+			if (!quizUser->life){return;}
 
-			if (exit == 1) break;
+		    if (contador == 5 & quizUser->cantQuestion != 15){
+			     contador = 0;
+		         saveORexit(&exit);
+
+			     if (exit == 1) break;
+		     }
+
+		    if (quizUser->cantQuestion == 15)break;
+			
 		}
-
-		if (quizUser->cantQuestion == 15)break;
-
 	}
 	quizUser->life = true;
 }
