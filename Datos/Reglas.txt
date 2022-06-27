@@ -9,15 +9,14 @@ Si decide comenzar una nueva partida, debera escoger su nombre de usuario y come
 en el quiz le saldra una pregunta y 4 alternativas correspondientes a la pregunta de forma aleatoria,
 una de las alternativas sera correcta. El usuario debera escoger la alternativa correcta, o puede
 optar por escoger un comodin (se explicaran mas adelante) antes de responder. El usuario continuara 
-asi hasta que responda todas las preguntas correctamente, pero si responde incorrectamente una pregunta
-o puede optar por una segunda oportunidad (se explicara mas adelante). El usuario tendra la oportunidad
-de guardar partida y salir del quiz cada 3 preguntas respondidas correctamente, o puede continuar 
+asi hasta que responda todas las preguntas correctamente. El usuario tendra la oportunidad
+de guardar partida y salir del quiz cada 5 preguntas respondidas correctamente, o puede continuar 
 el quiz sin guardar.
 
 Al guardar la partida, se guarda el estado del usuario, su puntaje, las preguntas que
-le han aparecido, el numero de pregunta en que va la dificultad escogida, el uso de comodines
-y si uso su segunda oportunidad. Solo se puede tener una partida guardada, asi que si el usuario
-guarda una nueva, la anterior sera eliminada.
+le han aparecido, el numero de pregunta en que va la dificultad escogida, el uso de comodines.
+Solo se puede tener una partida guardada, asi que si el usuario guarda una nueva, la 
+anterior sera eliminada.
 
 Si decide cargar partida entonces el usuario comenzara desde la pregunta siguiente a la
 que respondio antes de guardar. En caso de perder la partida, el guardado de la partida desaparecera. 
@@ -76,31 +75,3 @@ COMODINES
             El profesor le dira al estudiante(Usuario) dos alternativas que definitivamente
             son incorrectas, haciendo que el usuario, solo tenga que escoger entre dos 
             alternativas, de las cuales una sera la correcta.
-
-    
-SEGUNDA OPORTUNIDAD
-    Si el usuario esta en la dificultad normal o facil, tendra disponible una segunda
-    oportunidad. Esta segunda oportunidad consiste en superar un minijuego escogido al 
-    azar. Los posibles minijuegos que le podrian salir al usuario son los siguientes:
-    
-    Ahorcado:
-        En pantalla saldra una deficion de una estructura o un TDA, debajo saldra una 
-        estructura o TDA incompleta, el usuario debera ingresar letras SOLO en minusculas
-        y si pertenecen a la palabra, las letras apareceran en la palabra, si no, el
-        usuario estara mas cerca de perder el minijuego, si falla 3 letras, pierde el minijuego. 
-        Si completa la palabra sin perder, gana el minijuego.
-    
-    Pregunta flash:
-        Saldra una pregunta corta con 4 alternativas para que el usuario escoja.
-        Es igual a las preguntas del quiz, pero no se podra usar comodines. Para
-        aprobar el minijuego debe escoger la alternativa correcta.
-    
-    Verdadero o Falso:
-        Al usuario le aparecera un enunciado y debera escribir V/v si es verdadero,
-        o F/f si es falso. El usuario debe de responder correctamente a 4 enunciados
-        para aprobar el minijuego.
-    
-    Adivina el numero:
-        El usuario debera encontrar un numero al azar entre 1 y 1000, tendra un
-        tiempo especifico para encontrarlo, cada vez que falle, le saldra una indicacion
-        de que el numero indicado es mayor o menor dependiendo de la situacion.

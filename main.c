@@ -183,8 +183,6 @@ void descripcionDificultad(Dificultad *d){
 		centrar ("Cada pregunta respondida donde se use un comodin, vera reducido su puntaje en 0.15 puntos.", 4, 16);
 		centrar ("El usuario tendra disponible para un unico uso lo siguiente:", 4, 18);
 		centrar ("- Los 3 comodines: Ayuda Profesor!!!  ,  Cambiar Pregunta,  Cambiar Alternativa.", 6, 19);
-		centrar ("- La segunda oportunidad a traves de uno de los siguientes minijuegos:", 6, 20);
-		centrar ("Ahorcado, Pregunta Flash, Verdadero y Falso, Adivina el numero.", 7, 21);
 	}
 
 	if (d->normal){
@@ -195,8 +193,6 @@ void descripcionDificultad(Dificultad *d){
 		centrar ("Cada pregunta respondida donde se use un comodin, vera reducido su puntaje en 0.25 puntos.", 4, 16);
 		centrar ("El usuario tendra disponible para un unico uso lo siguiente:", 4, 18);
 		centrar ("- Los 3 comodines: Ayuda Profesor Araya!!!,  Cambiar Pregunta,  Cambiar Alternativa.", 6, 19);
-		centrar ("- La segunda oportunidad a traves de uno de los siguientes minijuegos:", 6, 20);
-		centrar ("Ahorcado, Pregunta Flash, Verdadero y Falso, Adivina el numero.", 7, 21);
 	}
 
 	if (d->hard){
@@ -205,7 +201,6 @@ void descripcionDificultad(Dificultad *d){
 		centrar ("Cada pregunta respondida correctamente equivale a 3 puntos.", 4, 14);
 		centrar ("El usuario NO tendra disponible para su uso lo siguiente:", 4, 16);
 		centrar ("- Los 3 comodines: Ayuda Profesor Araya!!!  ,  Cambiar Pregunta,  Cambiar Alternativa.", 6, 17);
-		centrar ("- La segunda oportunidad a traves de uno de los siguientes minijuegos:", 6, 18);
 	}
 }
 
