@@ -78,6 +78,7 @@ void SelectPlace(Pregunta* preg, char* Altt)
 			if(preg->A->alternative == NULL)
 			{
 				preg->A->alternative = _strdup(Altt);
+				preg->A->answer = false;	
 				return;
 			}
 			break;
@@ -86,6 +87,7 @@ void SelectPlace(Pregunta* preg, char* Altt)
 			if(preg->B->alternative == NULL)
 			{
 				preg->B->alternative = _strdup(Altt);
+				preg->B->answer = false;	
 				return;
 			}
 
@@ -95,6 +97,7 @@ void SelectPlace(Pregunta* preg, char* Altt)
 			if(preg->C->alternative == NULL)
 			{
 				preg->C->alternative = _strdup(Altt);
+				preg->C->answer = false;	
 				return;
 			}
 
@@ -103,6 +106,7 @@ void SelectPlace(Pregunta* preg, char* Altt)
 			if(preg->D->alternative == NULL)
 			{
 				preg->D->alternative = _strdup(Altt);
+				preg->D->answer = false;	
 				return;
 			}
 
@@ -157,17 +161,21 @@ void AzarAlternatives(Pregunta* preg)
 	{	
 		case 0:
 			preg->A->alternative = _strdup(Altt);
+			preg->A->answer = true;	
 			break;
 		case 1:
 			preg->B->alternative = _strdup(Altt);
+			preg->B->answer = true;	
 	
 			break;
 		case 2:
 			preg->C->alternative = _strdup(Altt);
+			preg->C->answer = true;	
 			
 			break;
 		case 3:
 			preg->D->alternative = _strdup(Altt);
+			preg->D->answer = true;	
 			break;
 	}
 
