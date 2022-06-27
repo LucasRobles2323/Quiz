@@ -10,7 +10,13 @@ Pregunta *crearPregunta(char *lineaPregunta, char *lineTrue, char *lineFalse){
 	new->answerTrue = separateLine(lineTrue,";");
 	new->answerFalse = separateLine(lineFalse,";");
 	
-	new->alternatives = (Alternativa**) malloc (sizeof(Alternativa*));
+	new->contFalse = 0;
+	new->contTrue = 0;
+	
+	new->A = (Alternativa*) malloc (sizeof(Alternativa));
+	new->B = (Alternativa*) malloc (sizeof(Alternativa));
+	new->C = (Alternativa*) malloc (sizeof(Alternativa));
+	new->D = (Alternativa*) malloc (sizeof(Alternativa));
 	
 	return new;
 }

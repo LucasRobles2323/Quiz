@@ -354,15 +354,16 @@ void pregunta(int contador, Pregunta *questionForNow){
 	gotoxy(0,0);
 	printf ("Pregunta : %i", contador);
 	centrar (questionForNow->question, 15, 0);
+
 	
 	centrar ("A.", 20, 4);
-	centrar (firstList(questionForNow->answerTrue), 25, 4);
+	centrar (questionForNow->A->alternative, 25, 4);
 	centrar ("B.", 20, 7);
-	centrar (firstList(questionForNow->answerFalse), 25, 7);
+	centrar (questionForNow->B->alternative, 25, 7);
 	centrar ("C.", 20, 10);
-	centrar (nextList(questionForNow->answerFalse), 25, 10);
+	centrar (questionForNow->C->alternative, 25, 10);
 	centrar ("D.", 20, 13);
-	centrar (nextList(questionForNow->answerFalse), 25, 13);
+	centrar (questionForNow->D->alternative, 25, 13);
 	
 	centrar ("Comodin", 25, 16);
 }
@@ -532,6 +533,7 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 			quizUser->cantQuestion++;
 		    contador++;
 		    aux = searchHashMap(preguntasQuiz, idQuestion);
+			AzarAlternatives(aux);
 		    pregunta(quizUser->cantQuestion, aux);
 			idQuestion = nextList(quizUser->selectedQuestions);
 		    
@@ -548,7 +550,8 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 				  system ("cls");
                   centrar ("Eligio la opcion A", 10,5);
 				  Sleep(1000);
-				  centrar ("La alternativa correcta es la A", 10,7);
+				  if(aux->A->answer == false)quizUser->life = false;
+				  else{quizUser->life = true;}
 				  Sleep(1000);
 				  break;
                   
@@ -557,8 +560,9 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 				  system ("cls");
                   centrar ("Eligio la opcion B", 10,5);
 				  Sleep(1000);
-				  centrar ("La alternativa correcta es la A", 10,7);
-				  Sleep(1000); quizUser->life = false;
+				  if(aux->B->answer == false)quizUser->life = false;
+				  else{quizUser->life = true;}
+				  Sleep(1000); 
 				  break;
 
 			case 10://Opcion C
@@ -566,8 +570,9 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 				  system ("cls");
                   centrar ("Eligio la opcion C", 10,5);
 				  Sleep(1000);
-				  centrar ("La alternativa correcta es la A", 10,7);
-				  Sleep(1000); quizUser->life = false;
+				  if(aux->C->answer == false)quizUser->life = false;
+				  else{quizUser->life = true;}
+				  Sleep(1000); 
 				  break;
 
 			case 13://Opcion D
@@ -575,8 +580,9 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 				  system ("cls");
                   centrar ("Eligio la opcion D", 10,5);
 				  Sleep(1000);
-				  centrar ("La alternativa correcta es la A", 10,7);
-				  Sleep(1000); quizUser->life = false;
+				  if(aux->D->answer == false)quizUser->life = false;
+				  else{quizUser->life = true;}
+				  Sleep(1000); 
 				  break;
 
 			case 16://Comodin
