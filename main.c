@@ -886,6 +886,8 @@ void mostrarTop(TreeMap *top){
 
 int main(){
 	int menu = 3;
+	srand(time(NULL));
+
 	
 	HashMap *questionsHash = GuardarPreguntas("./Datos/Preguntas.txt",100);
 	Dificultad *d = leerDificult("./Save/DifSelec.txt");

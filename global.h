@@ -8,6 +8,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <conio.h>
+#include <time.h>
 #include "list.h"
 #include "hashmap.h"
 #include "treemap.h"
