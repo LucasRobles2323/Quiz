@@ -181,7 +181,6 @@ void descripcionDificultad(Dificultad *d){
 		centrar ("FACIL", 1, 12);
 		centrar ("En esta dificultad el usuario solo recibira 6 preguntas.", 4, 13);
 		centrar ("Cada pregunta respondida correctamente equivale a 1 punto.", 4, 14);
-		centrar ("Cada pregunta respondida despues de usar su segunda oportunidad, vera reducido su puntaje en 0.3 puntos.", 4, 15);
 		centrar ("Cada pregunta respondida donde se use un comodin, vera reducido su puntaje en 0.15 puntos.", 4, 16);
 		centrar ("El usuario tendra disponible para un unico uso lo siguiente:", 4, 18);
 		centrar ("- Los 3 comodines: Ayuda Profesor!!!  ,  Cambiar Pregunta,  Cambiar Alternativa.", 6, 19);
@@ -191,7 +190,6 @@ void descripcionDificultad(Dificultad *d){
 		centrar ("NORMAL", 1, 12);
 		centrar ("En esta dificultad el usuario recibira 15 preguntas.", 4, 13);
 		centrar ("Cada pregunta respondida correctamente equivale a 2 puntos.", 4, 14);
-		centrar ("Cada pregunta respondida despues de usar su segunda oportunidad, vera reducido su puntaje en 0.5 puntos.", 4, 15);
 		centrar ("Cada pregunta respondida donde se use un comodin, vera reducido su puntaje en 0.25 puntos.", 4, 16);
 		centrar ("El usuario tendra disponible para un unico uso lo siguiente:", 4, 18);
 		centrar ("- Los 3 comodines: Ayuda Profesor Araya!!!,  Cambiar Pregunta,  Cambiar Alternativa.", 6, 19);
@@ -199,7 +197,7 @@ void descripcionDificultad(Dificultad *d){
 
 	if (d->hard){
 		centrar ("DIFICIL", 1, 12);
-		centrar ("En esta dificultad el usuario recibira 15 preguntas dificiles.", 4, 13);
+		centrar ("En esta dificultad el usuario recibira 15 preguntas.", 4, 13);
 		centrar ("Cada pregunta respondida correctamente equivale a 3 puntos.", 4, 14);
 		centrar ("El usuario NO tendra disponible para su uso lo siguiente:", 4, 16);
 		centrar ("- Los 3 comodines: Ayuda Profesor Araya!!!  ,  Cambiar Pregunta,  Cambiar Alternativa.", 6, 17);
@@ -873,7 +871,7 @@ void mostrarTop(TreeMap *top){
 	while (aux)
 	{
 		gotoxy(10, y);
-		printf("%d.- %s %.3f", pos, aux->usuario, aux->puntaje);
+		printf(AZUL_T "%d.- %s %.3f", pos, aux->usuario, aux->puntaje);
 		y++;
 		pos++;
 		if (pos == 6){break;}
@@ -881,7 +879,30 @@ void mostrarTop(TreeMap *top){
 		aux = auxiliar->value;
 		Sleep(250);
 	}
-	Sleep(2000);
+
+	y+= 10; int x = 35;
+	gotoxy(x, y);
+	printf(MAGENTA_T "Salir");
+	int menu = y, inicio, final=y;
+
+	while (1)
+	{
+		Sleep(200);
+
+		if (GetAsyncKeyState(VK_UP)){
+			menu = menu == inicio ? final: menu;
+			printf ("\r            ");
+			gotoxy (x-3, LineaDeInicio + menu - 1);
+			printf ("->");
+		} else if (GetAsyncKeyState(VK_DOWN)){
+			menu = menu == inicio ? final: menu;
+			printf ("\r            ");
+			gotoxy (x-3, LineaDeInicio + menu - 1);
+			printf ("->");
+		 } else if (GetAsyncKeyState(VK_RETURN)){
+			break;
+		}
+	}
 }
 
 int main(){

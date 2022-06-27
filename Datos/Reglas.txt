@@ -23,36 +23,17 @@ Si decide cargar partida entonces el usuario comenzara desde la pregunta siguien
 que respondio antes de guardar. En caso de perder la partida, el guardado de la partida desaparecera. 
 
 DIFICULTAD
-    Se explica cada dificultad en mas detalle en el item Dificultad del menu principal.
+    Se explica cada dificultad en mas detalle en el item Dificultad del menu principal y sus 
+    puntajes en el apartado Dificultad del menu.
 
         Facil:
-            Las 15 preguntas trataran de los siguientes temmas:
-                - Punteros y Struct.
-                - TDAs, Listas y Listas Enlazadas.
-                - Implementacion de listas y arreglos.
-                - Complejidad temporal y Tabla Hash.
+            Contendra solo 6 preguntas con comodines.
 
         Normal
-            Las primeras 7 preguntas trataran de los siguientes temmas:
-                - Punteros y Struct.
-                - TDAs, Listas y Listas Enlazadas.
-                - Implementacion de listas y arreglos.
-                - Complejidad temporal y Tabla Hash.
-            Las siguientes 8 preguntas trataran de los siguientes temas
-                - Arbol binarios de búsqueda.
-                - Monticulo binario y arbol B/B+Cuestionario.
-                - Grafos.
+            Quiz de 15 preguntas con comodines.
 
         Dificil
-            Las primeras 5 preguntas trataran de los siguientes temmas:
-                - Punteros y Struct.
-                - TDAs, Listas y Listas Enlazadas.
-                - Implementacion de listas y arreglos.
-                - Complejidad temporal y Tabla Hash.
-            Las siguientes 10 preguntas trataran de los siguientes temas
-                - Arbol binarios de búsqueda.
-                - Monticulo binario y arbol B/B+Cuestionario.
-                - Grafos.
+            Quiz de 15 preguntas sin comodines.
 
 COMODINES
     Hay tres comodines disponibles para el usuario en las dificultades facil y normal.
