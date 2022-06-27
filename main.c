@@ -110,9 +110,11 @@ void bienvenida(){
 	Sleep (500);
 	system ("cls");
 	centrar (ROJO_T "Grande Huachipato", 20, 5);
-	Sleep (200);
-	centrar (AZUL_T "PUCV", 20, 7);
-	Sleep (200);
+	centrar (AZUL_T "      PUCV", 20, 7);
+	Sleep (300);
+	centrar (MAGENTA_T"Se recomienda bajar el volumen para que el sonido no le moleste", 20, 9);
+	centrar ("Se recomienda agrandar la consola para leer mejor las preguntas", 20, 10);
+	Sleep (2000);
 } 
 
 
@@ -525,6 +527,248 @@ int comodin (Comodin *com){
 	system ("cls");
 }
 
+void preguntaCorrecta(Pregunta *questionForNow, int respuesta, bool correcto){
+
+	//si la correcta es la A
+	if (respuesta == 0){
+		if (correcto){
+	        centrar (VERDE_T"A.", 20, 4);
+	        centrar (questionForNow->A->alternative, 25, 4);
+	        centrar (ROJO_T "B.", 20, 7);
+	        centrar (questionForNow->B->alternative, 25, 7);
+	        centrar ("C.", 20, 10);
+	        centrar (questionForNow->C->alternative, 25, 10);
+	        centrar ("D.", 20, 13);
+	        centrar (questionForNow->D->alternative, 25, 13);
+			centrar (MAGENTA_T"LA RESPUESTA ES CORRECTA", 25, 16);
+			Sleep (3000);
+		}else{
+
+			if (questionForNow->B->answer){
+				centrar (ROJO_T"A.", 20, 4);
+	            centrar (questionForNow->A->alternative, 25, 4);
+	            centrar (VERDE_T "B.", 20, 7);
+	            centrar (questionForNow->B->alternative, 25, 7);
+	            centrar (ROJO_T"C.", 20, 10);
+	            centrar (questionForNow->C->alternative, 25, 10);
+	            centrar ("D.", 20, 13);
+	            centrar (questionForNow->D->alternative, 25, 13);
+				centrar (MAGENTA_T"LA RESPUESTA ES INCORRECTA", 25, 16);
+				Sleep (3000);
+			    return;
+			}
+
+			if (questionForNow->C->answer){
+				centrar (ROJO_T"A.", 20, 4);
+	            centrar (questionForNow->A->alternative, 25, 4);
+	            centrar ("B.", 20, 7);
+	            centrar (questionForNow->B->alternative, 25, 7);
+	            centrar (VERDE_T"C.", 20, 10);
+	            centrar (questionForNow->C->alternative, 25, 10);
+	            centrar (ROJO_T"D.", 20, 13);
+	            centrar (questionForNow->D->alternative, 25, 13);
+				centrar (MAGENTA_T"LA RESPUESTA ES INCORRECTA", 25, 16);
+				Sleep (3000);
+			    return;
+			}
+
+			if (questionForNow->D->answer){
+				centrar (ROJO_T"A.", 20, 4);
+	            centrar (questionForNow->A->alternative, 25, 4);
+	            centrar ("B.", 20, 7);
+	            centrar (questionForNow->A->alternative, 25, 7);
+	            centrar ("C.", 20, 10);
+	            centrar (questionForNow->A->alternative, 25, 10);
+	            centrar (VERDE_T"D.", 20, 13);
+	            centrar (questionForNow->A->alternative, 25, 13);
+				centrar (MAGENTA_T"LA RESPUESTA ES INCORRECTA", 25, 16);
+				Sleep (3000);
+			    return;
+			}			
+		}
+	}
+
+	//si la respusta es la B
+	if (respuesta == 1){
+		if (correcto){
+			centrar (ROJO_T"A.", 20, 4);
+	        centrar (questionForNow->A->alternative, 25, 4);
+	        centrar (VERDE_T "B.", 20, 7);
+	        centrar (questionForNow->B->alternative, 25, 7);
+	        centrar (ROJO_T"C.", 20, 10);
+	        centrar (questionForNow->C->alternative, 25, 10);
+	        centrar ("D.", 20, 13);
+	        centrar (questionForNow->D->alternative, 25, 13);
+			centrar (MAGENTA_T"LA RESPUESTA ES CORRECTA", 25, 16);
+			Sleep (3000);
+			return;
+		}else{
+
+			if (questionForNow->A->answer){
+				centrar (VERDE_T"A.", 20, 4);
+	            centrar (questionForNow->A->alternative, 25, 4);
+	            centrar (ROJO_T "B.", 20, 7);
+	            centrar (questionForNow->B->alternative, 25, 7);
+	            centrar ("C.", 20, 10);
+	            centrar (questionForNow->C->alternative, 25, 10);
+	            centrar ("D.", 20, 13);
+	            centrar (questionForNow->D->alternative, 25, 13);
+				centrar (MAGENTA_T"LA RESPUESTA ES INCORRECTA", 25, 16);
+				Sleep (3000);
+			    return;
+			}
+
+			if (questionForNow->C->answer){
+				centrar (ROJO_T"A.", 20, 4);
+	            centrar (questionForNow->A->alternative, 25, 4);
+	            centrar ("B.", 20, 7);
+	            centrar (questionForNow->B->alternative, 25, 7);
+	            centrar (VERDE_T"C.", 20, 10);
+	            centrar (questionForNow->C->alternative, 25, 10);
+	            centrar (ROJO_T"D.", 20, 13);
+	            centrar (questionForNow->D->alternative, 25, 13);
+				centrar (MAGENTA_T"LA RESPUESTA ES INCORRECTA", 25, 16);
+				Sleep (3000);
+			    return;
+			}
+
+			if (questionForNow->D->answer){
+				centrar (ROJO_T"A.", 20, 4);
+	            centrar (questionForNow->A->alternative, 25, 4);
+	            centrar ("B.", 20, 7);
+	            centrar (questionForNow->B->alternative, 25, 7);
+	            centrar ("C.", 20, 10);
+	            centrar (questionForNow->C->alternative, 25, 10);
+	            centrar (VERDE_T"D.", 20, 13);
+	            centrar (questionForNow->D->alternative, 25, 13);
+				centrar (MAGENTA_T"LA RESPUESTA ES INCORRECTA", 25, 16);
+				Sleep (3000);
+			    return;
+			}		
+		}
+	}
+
+	//si la respuesta es la C
+	if (respuesta == 2){
+		if (correcto){
+			centrar (ROJO_T "A.", 20, 4);
+	        centrar (questionForNow->A->alternative, 25, 4);
+	        centrar ("B.", 20, 7);
+	        centrar (questionForNow->B->alternative, 25, 7);
+	        centrar (VERDE_T"C.", 20, 10);
+	        centrar (questionForNow->C->alternative, 25, 10);
+	        centrar (ROJO_T"D.", 20, 13);
+	        centrar (questionForNow->D->alternative, 25, 13);
+			centrar (MAGENTA_T"LA RESPUESTA ES CORRECTA", 25, 16);
+			Sleep (3000);
+			return;
+		}else{
+
+			if (questionForNow->A->answer){
+				centrar (VERDE_T"A.", 20, 4);
+	            centrar (questionForNow->A->alternative, 25, 4);
+	            centrar (ROJO_T "B.", 20, 7);
+	            centrar (questionForNow->B->alternative, 25, 7);
+	            centrar ("C.", 20, 10);
+	            centrar (questionForNow->C->alternative, 25, 10);
+	            centrar ("D.", 20, 13);
+	            centrar (questionForNow->D->alternative, 25, 13);
+				centrar (MAGENTA_T"LA RESPUESTA ES INCORRECTA", 25, 16);
+				Sleep (3000);
+			    return;
+			}
+
+			if (questionForNow->B->answer){
+				centrar (ROJO_T"A.", 20, 4);
+	            centrar (questionForNow->A->alternative, 25, 4);
+	            centrar (VERDE_T"B.", 20, 7);
+	            centrar (questionForNow->B->alternative, 25, 7);
+	            centrar (ROJO_T"C.", 20, 10);
+	            centrar (questionForNow->C->alternative, 25, 10);
+	            centrar ("D.", 20, 13);
+	            centrar (questionForNow->D->alternative, 25, 13);
+				centrar (MAGENTA_T"LA RESPUESTA ES INCORRECTA", 25, 16);
+				Sleep (3000);
+			    return;
+			}
+
+			if (questionForNow->D->answer){
+				centrar (ROJO_T"A.", 20, 4);
+	            centrar (questionForNow->A->alternative, 25, 4);
+	            centrar ("B.", 20, 7);
+	            centrar (questionForNow->B->alternative, 25, 7);
+	            centrar ("C.", 20, 10);
+	            centrar (questionForNow->C->alternative, 25, 10);
+	            centrar (VERDE_T"D.", 20, 13);
+	            centrar (questionForNow->D->alternative, 25, 13);
+				centrar (MAGENTA_T"LA RESPUESTA ES INCORRECTA", 25, 16);
+				Sleep (3000);
+			    return;
+			}
+		}
+	}
+
+	//si la respuesta es la D
+	if (respuesta == 3){
+		if (correcto){
+			centrar (ROJO_T "A.", 20, 4);
+	        centrar (questionForNow->A->alternative, 25, 4);
+	        centrar ( "B.", 20, 7);
+	        centrar (questionForNow->B->alternative, 25, 7);
+	        centrar ("C.", 20, 10);
+	        centrar (questionForNow->C->alternative, 25, 10);
+	        centrar (VERDE_T"D.", 20, 13);
+	        centrar (questionForNow->D->alternative, 25, 13);
+			centrar (MAGENTA_T"LA RESPUESTA ES CORRECTA", 25, 16);
+			Sleep (3000);
+			return;
+		}else{
+
+			if (questionForNow->A->answer){
+				centrar (VERDE_T"A.", 20, 4);
+	            centrar (questionForNow->A->alternative, 25, 4);
+	            centrar (ROJO_T "B.", 20, 7);
+	            centrar (questionForNow->B->alternative, 25, 7);
+	            centrar ("C.", 20, 10);
+	            centrar (questionForNow->C->alternative, 25, 10);
+	            centrar ("D.", 20, 13);
+	            centrar (questionForNow->D->alternative, 25, 13);
+				centrar (MAGENTA_T"LA RESPUESTA ES INCORRECTA", 25, 16);
+				Sleep (3000);
+			    return;
+			}
+
+			if (questionForNow->B->answer){
+				centrar (ROJO_T"A.", 20, 4);
+	            centrar (questionForNow->A->alternative, 25, 4);
+	            centrar (VERDE_T"B.", 20, 7);
+	            centrar (questionForNow->B->alternative, 25, 7);
+	            centrar (ROJO_T"C.", 20, 10);
+	            centrar (questionForNow->C->alternative, 25, 10);
+	            centrar ("D.", 20, 13);
+	            centrar (questionForNow->D->alternative, 25, 13);
+				centrar (MAGENTA_T"LA RESPUESTA ES INCORRECTA", 25, 16);
+				Sleep (3000);
+			    return;
+			}
+
+			if (questionForNow->C->answer){
+				centrar (ROJO_T"A.", 20, 4);
+	            centrar (questionForNow->A->alternative, 25, 4);
+	            centrar ("B.", 20, 7);
+	            centrar (questionForNow->B->alternative, 25, 7);
+	            centrar (VERDE_T"C.", 20, 10);
+	            centrar (questionForNow->C->alternative, 25, 10);
+	            centrar (ROJO_T"D.", 20, 13);
+	            centrar (questionForNow->D->alternative, 25, 13);
+				centrar (MAGENTA_T"LA RESPUESTA ES INCORRECTA", 25, 16);
+				Sleep (3000);
+			    return;
+			}
+		}
+	}
+}
+
 void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 	Sleep (1500);
 	Comodin *com = quizUser->comodines;
@@ -562,43 +806,27 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 
 		switch(menu){
 			case 4://Opcion A
-			      //verificacion();
-				  system ("cls");
-                  centrar ("Eligio la opcion A", 10,5);
-				  Sleep(1000);
+				  preguntaCorrecta (aux, 0, aux->A->answer);
 				  if(aux->A->answer == false)quizUser->life = false;
 				  else{quizUser->life = true;}
-				  Sleep(1000);
 				  break;
                   
 			case 7://Opcion B
-			      //verificacion();
-				  system ("cls");
-                  centrar ("Eligio la opcion B", 10,5);
-				  Sleep(1000);
+                  preguntaCorrecta (aux, 1, aux->B->answer);
 				  if(aux->B->answer == false)quizUser->life = false;
 				  else{quizUser->life = true;}
-				  Sleep(1000); 
 				  break;
 
 			case 10://Opcion C
-			      //verificacion();
-				  system ("cls");
-                  centrar ("Eligio la opcion C", 10,5);
-				  Sleep(1000);
+                  preguntaCorrecta (aux, 2, aux->C->answer);
 				  if(aux->C->answer == false)quizUser->life = false;
 				  else{quizUser->life = true;}
-				  Sleep(1000); 
 				  break;
 
 			case 13://Opcion D
-                  //verificacion();
-				  system ("cls");
-                  centrar ("Eligio la opcion D", 10,5);
-				  Sleep(1000);
+                  preguntaCorrecta (aux, 3, aux->D->answer);
 				  if(aux->D->answer == false)quizUser->life = false;
 				  else{quizUser->life = true;}
-				  Sleep(1000); 
 				  break;
 
 			case 16://Comodin
