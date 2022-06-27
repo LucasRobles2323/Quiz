@@ -14,9 +14,10 @@ de guardar partida y salir del quiz cada 5 preguntas respondidas correctamente, 
 el quiz sin guardar.
 
 Al guardar la partida, se guarda el estado del usuario, su puntaje, las preguntas que
-le han aparecido, el numero de pregunta en que va la dificultad escogida, el uso de comodines.
-Solo se puede tener una partida guardada, asi que si el usuario guarda una nueva, la 
-anterior sera eliminada.
+le han aparecido, el numero de pregunta en que va la dificultad escogida, solo se puede 
+tener una partida guardada, asi que si el usuario guarda una nueva, la anterior sera eliminada.
+
+Solo se podra usar 1 comodin por pregunta.
 
 Si decide cargar partida entonces el usuario comenzara desde la pregunta siguiente a la
 que respondio antes de guardar. En caso de perder la partida, el guardado de la partida desaparecera. 
