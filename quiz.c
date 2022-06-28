@@ -163,7 +163,7 @@ void AzarAlternatives(Pregunta* preg)
 		if(!Altt){Altt = firstList(preg->answerTrue);}
 	}
 
-	azar = rand() % 4; azar = azar % 3;
+	azar = rand() % 4; 
 	
 	switch(azar)
 	{	
