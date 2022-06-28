@@ -830,6 +830,7 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 
 	while (1){
 		
+		//Caso Normal donde no se uso la opcion comodin
 		if (volver == 0){
 			quizUser->cantQuestion++;
 		    contador++;
@@ -839,17 +840,19 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 			idQuestion = nextList(quizUser->selectedQuestions);
 			menu = quizMove();
 		    
-		}else if (volver == 1 && comodinUsando == false){
+		}else if (volver == 1 && comodinUsando == false){//Caso que se uso la opcion comodin y se eligio "volver" o el comodin siguiente pregunta
 			system ("cls");
 			volver = 0;
 			pregunta(quizUser->cantQuestion, aux);
 			menu = quizMove();
 		
-		}else if (volver == 1 && comodinUsando == true){
+		}else if (volver == 1 && comodinUsando == true){//Caso que se uso la opcion comodin y se eligio el comodin ayudame profe araya (aun el segundo comodin esta por ver)
 			
+			//Muestra las pregunta pero avisando que el comodin esta bloqueado
 			preguntaConComodin(quizUser->cantQuestion, aux);
 			comodinUsando = false;
 			volver = 0;
+			//Solo se mueve entre las alternativas sin contar la opcion Comodin
 			menu = quizWCom();
 		}
 
@@ -880,18 +883,21 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 			case 16://Comodin
                   wildcard = comodin (com);
 
-				   if (wildcard == 10){
+				   if (wildcard == 10){//Si se eligio la opcion volver
 					volver = 1;
 					break;
 				  }else if (wildcard == 1){//Caso ayudame profe araya
-					int counter = 0, random = 0, pos = 23;
-					bool a = true, b = true, c = true, d = true;
+					int counter = 0, random = 0, pos = 23;//el contador, el numero random y la posicion de las respuestas incorrectas
+					bool a = true, b = true, c = true, d = true;//Esta es para saber si ya se paso por una opcion o no
 					srand(time(NULL));
 					centrar ("Mensaje del profesor Araya :", 5, 20);
 					Sleep (1000);
 					sndPlaySound ("songs\\MSN", SND_ASYNC);
 					centrar ("Estas alternativas son incorrectas :",5, 21);
 					while (1){
+						//Aqui se usaran numeros al azar para pregunta si la opcion elegida es una respuesta correcta o no
+						//Si es correcta no ocurre nada
+						//Si es incorrecta esta se mostrara en pantalla (solo se mostraran 2)
 						random = rand() % 22;
 
 						if ( random >= 0 && random < 6){
@@ -967,10 +973,10 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 					break;
 				  }else if (wildcard == 3){//cambio de pregunta
 					system ("cls");
+					//Aqui solo ira a la siguiente pregunta
 					idQuestion = nextList(quizUser->selectedQuestions);
 					aux = searchHashMap(preguntasQuiz, idQuestion);
 					volver = 1;
-					comodinUsando = true;
 					break;
 				  }
 
