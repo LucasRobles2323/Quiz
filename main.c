@@ -126,20 +126,14 @@ void bienvenida(){
 void mostrarMenu(){
 	system ("COLOR 7D");
 	sndPlaySound ("songs\\Menu", SND_ASYNC | SND_LOOP);
-	centrar ("QUIEN QUIERE PASAR EL RAMO!!!!!!!!!!",24,0);
-	printf ("\n");
+	centrar ("Quiz",35,0);
+	centrar ("Interactivo",32,1);
 	centrar ("Comenzar Juego", 30,3);
-	printf ("\n");
 	centrar ("Cargar Juego", 30,5);
-	printf ("\n");
 	centrar ("Dificultad", 30,7);
-	printf ("\n");
 	centrar ("Top", 30,9);
-	printf ("\n");
 	centrar ("Reglas", 30,11);
-	printf ("\n");
 	centrar ("Salir", 30,13);
-	printf ("\n\n");
 }
 
 void mostrarDatosUsuario(Usuario *user, Dificultad *d){
@@ -394,9 +388,9 @@ int quizMove(){
 
 
 void pregunta(int contador, Pregunta *questionForNow){
-	gotoxy(0,0);
+	gotoxy(5,0);
 	printf ("Pregunta : %i", contador);
-	centrar (questionForNow->question, 15, 0);
+	centrar (questionForNow->question, 20, 0);
 
 	
 	centrar ("A.", 20, 4);
@@ -417,9 +411,9 @@ void pregunta(int contador, Pregunta *questionForNow){
 }
 
 void preguntaConComodin(int contador, Pregunta *questionForNow){
-	gotoxy(0,0);
+	gotoxy(5,0);
 	printf ("Pregunta : %i", contador);
-	centrar (questionForNow->question, 15, 0);
+	centrar (questionForNow->question, 20, 0);
 
 	
 	centrar ("A.", 20, 4);
