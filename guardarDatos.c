@@ -180,6 +180,7 @@ void guardarPartida(Usuario *USER, Dificultad *dif, char *archive){
 
 	char *id = firstList(USER->selectedQuestions);
 	fprintf(F, "%s", id);
+	id = nextList(USER->selectedQuestions);
 	while (id)
 	{
 		fprintf(F, ";%s", id);

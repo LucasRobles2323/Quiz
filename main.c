@@ -407,6 +407,11 @@ void pregunta(int contador, Pregunta *questionForNow){
 	centrar (questionForNow->D->alternative, 25, 13);
 	
 	centrar ("Comodin", 25, 16);
+
+	if (questionForNow->A->answer){centrar("La respuesta es la A", 25, 19);}
+	else if (questionForNow->B->answer){centrar("La respuesta es la B", 25, 19);}
+	else if (questionForNow->C->answer){centrar("La respuesta es la C", 25, 19);}
+	else if (questionForNow->D->answer){centrar("La respuesta es la D", 25, 19);}
 }
 
 void preguntaConComodin(int contador, Pregunta *questionForNow){
@@ -424,6 +429,11 @@ void preguntaConComodin(int contador, Pregunta *questionForNow){
 	centrar ("D.", 20, 13);
 	centrar (questionForNow->D->alternative, 25, 13);
 	centrar ("Comodin (bloqueado)", 25, 16);
+
+	if (questionForNow->A->answer){centrar("La respuesta es la A", 25, 19);}
+	else if (questionForNow->B->answer){centrar("La respuesta es la B", 25, 19);}
+	else if (questionForNow->C->answer){centrar("La respuesta es la C", 25, 19);}
+	else if (questionForNow->D->answer){centrar("La respuesta es la D", 25, 19);}
 }
 
 void menuEXIT (){

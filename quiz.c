@@ -47,7 +47,7 @@ void azarQuestion(Usuario* user, HashMap* map){
 
 	while(cont >= 0)
 	{
-		int azar = rand() % 37; azar = azar % 37;
+		int azar = rand() % 37;
 		preg = firstHashMap(map);
 		while(azar != 0)
 		{
@@ -152,7 +152,7 @@ void AzarAlternatives(Pregunta* preg)
 
 	//Seccion para true //
 	Altt = firstList(preg->answerTrue); 
-	int azar = randomNumber(0, preg->contTrue); azar = azar % (preg->contTrue);
+	int azar = randomNumber(0, preg->contTrue);
 
 	while(azar != 0)
 	{
@@ -161,7 +161,7 @@ void AzarAlternatives(Pregunta* preg)
 		if(!Altt){Altt = firstList(preg->answerTrue);}
 	}
 
-	azar = rand() % 4; azar = azar % 3;
+	azar = rand() % 4;
 
 	switch(azar)
 	{	
