@@ -278,3 +278,24 @@ TreeMap *crearTop(char *file){
 
 	return new;
 }
+
+void saveTop(char *file, TreeMap *top){
+	FILE *F = fopen(file, "w"); // Abre el archivo con el nombre recibido en modo lectura
+	if (!F){return;}// Si no existe el archivo, cierra el programa
+
+
+	int pos = 1;
+	Pair *auxiliar = firstTreeMap(top);
+	Top *aux = auxiliar->value;
+	while (aux)
+	{
+		fprintf(F, "%s;", aux->usuario);
+		fprintf(F, "%.3f\n", aux->puntaje);
+		pos++;
+		if (pos == 6){break;}
+		auxiliar = nextTreeMap(top);
+		aux = auxiliar->value;
+	}
+	
+	fclose(F);
+}

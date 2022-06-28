@@ -410,10 +410,10 @@ void pregunta(int contador, Pregunta *questionForNow){
 	
 	centrar ("Comodin", 25, 16);
 
-	if (questionForNow->A->answer){centrar("La respuesta es la A", 25, 19);}
+	/*if (questionForNow->A->answer){centrar("La respuesta es la A", 25, 19);}
 	else if (questionForNow->B->answer){centrar("La respuesta es la B", 25, 19);}
 	else if (questionForNow->C->answer){centrar("La respuesta es la C", 25, 19);}
-	else if (questionForNow->D->answer){centrar("La respuesta es la D", 25, 19);}
+	else if (questionForNow->D->answer){centrar("La respuesta es la D", 25, 19);}*/
 }
 
 void preguntaConComodin(int contador, Pregunta *questionForNow){
@@ -432,10 +432,10 @@ void preguntaConComodin(int contador, Pregunta *questionForNow){
 	centrar (questionForNow->D->alternative, 25, 13);
 	centrar ("Comodin (bloqueado)", 25, 16);
 
-	if (questionForNow->A->answer){centrar("La respuesta es la A", 25, 19);}
+	/*if (questionForNow->A->answer){centrar("La respuesta es la A", 25, 19);}
 	else if (questionForNow->B->answer){centrar("La respuesta es la B", 25, 19);}
 	else if (questionForNow->C->answer){centrar("La respuesta es la C", 25, 19);}
-	else if (questionForNow->D->answer){centrar("La respuesta es la D", 25, 19);}
+	else if (questionForNow->D->answer){centrar("La respuesta es la D", 25, 19);}*/
 }
 
 void menuEXIT (){
@@ -592,7 +592,7 @@ void preguntaCorrecta(Pregunta *questionForNow, int respuesta, bool correcto){
 	        centrar (questionForNow->C->alternative, 25, 10);
 	        centrar ("D.", 20, 13);
 	        centrar (questionForNow->D->alternative, 25, 13);
-			centrar (MAGENTA_T"LA RESPUESTA ES CORRECTA", 25, 16);
+			centrar (MAGENTA_T "LA RESPUESTA ES CORRECTA", 25, 16);
 			Sleep (3000);
 		}else{
 
@@ -605,8 +605,9 @@ void preguntaCorrecta(Pregunta *questionForNow, int respuesta, bool correcto){
 	            centrar (questionForNow->C->alternative, 25, 10);
 	            centrar ("D.", 20, 13);
 	            centrar (questionForNow->D->alternative, 25, 13);
-				centrar (MAGENTA_T"LA RESPUESTA ES INCORRECTA", 25, 16);
+				centrar (MAGENTA_T "LA RESPUESTA ES INCORRECTA", 25, 16);
 				Sleep (3000);
+			    system("COLOR 7D");
 			    return;
 			}
 
@@ -619,8 +620,9 @@ void preguntaCorrecta(Pregunta *questionForNow, int respuesta, bool correcto){
 	            centrar (questionForNow->C->alternative, 25, 10);
 	            centrar (ROJO_T"D.", 20, 13);
 	            centrar (questionForNow->D->alternative, 25, 13);
-				centrar (MAGENTA_T"LA RESPUESTA ES INCORRECTA", 25, 16);
+				centrar (MAGENTA_T "LA RESPUESTA ES INCORRECTA", 25, 16);
 				Sleep (3000);
+			    system("COLOR 7D");
 			    return;
 			}
 
@@ -633,8 +635,9 @@ void preguntaCorrecta(Pregunta *questionForNow, int respuesta, bool correcto){
 	            centrar (questionForNow->A->alternative, 25, 10);
 	            centrar (VERDE_T"D.", 20, 13);
 	            centrar (questionForNow->A->alternative, 25, 13);
-				centrar (MAGENTA_T"LA RESPUESTA ES INCORRECTA", 25, 16);
+				centrar (MAGENTA_T "LA RESPUESTA ES INCORRECTA", 25, 16);
 				Sleep (3000);
+			    system("COLOR 7D");
 			    return;
 			}			
 		}
@@ -651,9 +654,10 @@ void preguntaCorrecta(Pregunta *questionForNow, int respuesta, bool correcto){
 	        centrar (questionForNow->C->alternative, 25, 10);
 	        centrar ("D.", 20, 13);
 	        centrar (questionForNow->D->alternative, 25, 13);
-			centrar (MAGENTA_T"LA RESPUESTA ES CORRECTA", 25, 16);
+			centrar (MAGENTA_T "LA RESPUESTA ES CORRECTA", 25, 16);
 			Sleep (3000);
-			return;
+			system("COLOR 7D");
+			    return;
 		}else{
 
 			if (questionForNow->A->answer){
@@ -665,8 +669,9 @@ void preguntaCorrecta(Pregunta *questionForNow, int respuesta, bool correcto){
 	            centrar (questionForNow->C->alternative, 25, 10);
 	            centrar ("D.", 20, 13);
 	            centrar (questionForNow->D->alternative, 25, 13);
-				centrar (MAGENTA_T"LA RESPUESTA ES INCORRECTA", 25, 16);
+				centrar (MAGENTA_T "LA RESPUESTA ES INCORRECTA", 25, 16);
 				Sleep (3000);
+			    system("COLOR 7D");
 			    return;
 			}
 
@@ -679,8 +684,9 @@ void preguntaCorrecta(Pregunta *questionForNow, int respuesta, bool correcto){
 	            centrar (questionForNow->C->alternative, 25, 10);
 	            centrar (ROJO_T"D.", 20, 13);
 	            centrar (questionForNow->D->alternative, 25, 13);
-				centrar (MAGENTA_T"LA RESPUESTA ES INCORRECTA", 25, 16);
+				centrar (MAGENTA_T "LA RESPUESTA ES INCORRECTA", 25, 16);
 				Sleep (3000);
+			    system("COLOR 7D");
 			    return;
 			}
 
@@ -693,8 +699,9 @@ void preguntaCorrecta(Pregunta *questionForNow, int respuesta, bool correcto){
 	            centrar (questionForNow->C->alternative, 25, 10);
 	            centrar (VERDE_T"D.", 20, 13);
 	            centrar (questionForNow->D->alternative, 25, 13);
-				centrar (MAGENTA_T"LA RESPUESTA ES INCORRECTA", 25, 16);
+				centrar (MAGENTA_T "LA RESPUESTA ES INCORRECTA", 25, 16);
 				Sleep (3000);
+			    system("COLOR 7D");
 			    return;
 			}		
 		}
@@ -711,9 +718,10 @@ void preguntaCorrecta(Pregunta *questionForNow, int respuesta, bool correcto){
 	        centrar (questionForNow->C->alternative, 25, 10);
 	        centrar (ROJO_T"D.", 20, 13);
 	        centrar (questionForNow->D->alternative, 25, 13);
-			centrar (MAGENTA_T"LA RESPUESTA ES CORRECTA", 25, 16);
+			centrar (MAGENTA_T "LA RESPUESTA ES CORRECTA", 25, 16);
 			Sleep (3000);
-			return;
+			system("COLOR 7D");
+			    return;
 		}else{
 
 			if (questionForNow->A->answer){
@@ -725,8 +733,9 @@ void preguntaCorrecta(Pregunta *questionForNow, int respuesta, bool correcto){
 	            centrar (questionForNow->C->alternative, 25, 10);
 	            centrar ("D.", 20, 13);
 	            centrar (questionForNow->D->alternative, 25, 13);
-				centrar (MAGENTA_T"LA RESPUESTA ES INCORRECTA", 25, 16);
+				centrar (MAGENTA_T "LA RESPUESTA ES INCORRECTA", 25, 16);
 				Sleep (3000);
+			    system("COLOR 7D");
 			    return;
 			}
 
@@ -739,8 +748,9 @@ void preguntaCorrecta(Pregunta *questionForNow, int respuesta, bool correcto){
 	            centrar (questionForNow->C->alternative, 25, 10);
 	            centrar ("D.", 20, 13);
 	            centrar (questionForNow->D->alternative, 25, 13);
-				centrar (MAGENTA_T"LA RESPUESTA ES INCORRECTA", 25, 16);
+				centrar (MAGENTA_T "LA RESPUESTA ES INCORRECTA", 25, 16);
 				Sleep (3000);
+			    system("COLOR 7D");
 			    return;
 			}
 
@@ -753,8 +763,9 @@ void preguntaCorrecta(Pregunta *questionForNow, int respuesta, bool correcto){
 	            centrar (questionForNow->C->alternative, 25, 10);
 	            centrar (VERDE_T"D.", 20, 13);
 	            centrar (questionForNow->D->alternative, 25, 13);
-				centrar (MAGENTA_T"LA RESPUESTA ES INCORRECTA", 25, 16);
+				centrar (MAGENTA_T "LA RESPUESTA ES INCORRECTA", 25, 16);
 				Sleep (3000);
+			    system("COLOR 7D");
 			    return;
 			}
 		}
@@ -771,9 +782,10 @@ void preguntaCorrecta(Pregunta *questionForNow, int respuesta, bool correcto){
 	        centrar (questionForNow->C->alternative, 25, 10);
 	        centrar (VERDE_T"D.", 20, 13);
 	        centrar (questionForNow->D->alternative, 25, 13);
-			centrar (MAGENTA_T"LA RESPUESTA ES CORRECTA", 25, 16);
+			centrar (MAGENTA_T "LA RESPUESTA ES CORRECTA", 25, 16);
 			Sleep (3000);
-			return;
+			system("COLOR 7D");
+			    return;
 		}else{
 
 			if (questionForNow->A->answer){
@@ -785,8 +797,9 @@ void preguntaCorrecta(Pregunta *questionForNow, int respuesta, bool correcto){
 	            centrar (questionForNow->C->alternative, 25, 10);
 	            centrar ("D.", 20, 13);
 	            centrar (questionForNow->D->alternative, 25, 13);
-				centrar (MAGENTA_T"LA RESPUESTA ES INCORRECTA", 25, 16);
+				centrar (MAGENTA_T "LA RESPUESTA ES INCORRECTA", 25, 16);
 				Sleep (3000);
+			    system("COLOR 7D");
 			    return;
 			}
 
@@ -799,8 +812,9 @@ void preguntaCorrecta(Pregunta *questionForNow, int respuesta, bool correcto){
 	            centrar (questionForNow->C->alternative, 25, 10);
 	            centrar ("D.", 20, 13);
 	            centrar (questionForNow->D->alternative, 25, 13);
-				centrar (MAGENTA_T"LA RESPUESTA ES INCORRECTA", 25, 16);
+				centrar (MAGENTA_T "LA RESPUESTA ES INCORRECTA", 25, 16);
 				Sleep (3000);
+			    system("COLOR 7D");
 			    return;
 			}
 
@@ -813,8 +827,9 @@ void preguntaCorrecta(Pregunta *questionForNow, int respuesta, bool correcto){
 	            centrar (questionForNow->C->alternative, 25, 10);
 	            centrar (ROJO_T"D.", 20, 13);
 	            centrar (questionForNow->D->alternative, 25, 13);
-				centrar (MAGENTA_T"LA RESPUESTA ES INCORRECTA", 25, 16);
+				centrar (MAGENTA_T "LA RESPUESTA ES INCORRECTA", 25, 16);
 				Sleep (3000);
+				system("COLOR 7D");
 			    return;
 			}
 		}
@@ -1087,7 +1102,7 @@ int main(){
 	Usuario *user = crearUsuario(nombreUsuario("Usuario.txt"), d);
 	TreeMap *top = crearTop("./Save/Top.txt");
 	
-	Pregunta *aux =firstHashMap(questionsHash);
+	Pregunta *aux = firstHashMap(questionsHash);
 	while (aux)
 	{
 		AzarAlternatives(aux);
@@ -1128,6 +1143,14 @@ int main(){
 				partidaExiste("./Save/ExistePartida.txt", user->life);
 				guardarPartida(user, d, "./Save/Partida.txt");
 			}
+			
+			if(!user->life){
+				Top *NEW = (Top*) malloc (sizeof(Top));
+				NEW->usuario = _strdup(user->user);
+				NEW->puntaje = user->pts;
+				insertTreeMap(top, (void*)(&NEW->puntaje), NEW);
+				saveTop("./Save/Top.txt", top);
+			}
 			break;
 
 		case 5://Cargar partida
@@ -1148,6 +1171,14 @@ int main(){
 			else if (!user->life || user->cantQuestion == 15)
 			{
 				partidaExiste("./Save/ExistePartida.txt", false);
+			}
+
+			if(!user->life){
+				Top *NEWs = (Top*) malloc (sizeof(Top));
+				NEWs->usuario = _strdup(user->user);
+				NEWs->puntaje = user->pts;
+				insertTreeMap(top, (void*)(&NEWs->puntaje), NEWs);
+				saveTop("./Save/Top.txt", top);
 			}
 			break;
 

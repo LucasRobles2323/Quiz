@@ -19,3 +19,5 @@ void guardarPartida(Usuario *USER, Dificultad *dif, char *archive);
 void cargarPartida(char *fileName, Usuario *user, Dificultad *d);
 
 TreeMap *crearTop(char *file);
+
+void saveTop(char *file, TreeMap *top);

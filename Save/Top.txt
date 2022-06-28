@@ -1,5 +1,5 @@
-Ignacio Daniel Araya;45
-Majin Buu;0.001
-Luffy;2.004
-Goku;3
-Gintoki;3
+Ignacio Daniel Araya;45.000
+Goku;4.003
+Gintoki;3.003
+Mateo;3.000
+Luffy;2.001
