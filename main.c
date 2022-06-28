@@ -7,6 +7,7 @@
 #define TemaInicio 3
 #define TemaFin 9
 #define QuizFin 16
+#define QuizComodinFin 13
 #define QuizInicio 4 
 #define exitFin 5
 #define ROJO_T     "\x1b[31m"
@@ -341,6 +342,30 @@ void MostrarReglas(){
 	}
 }
 
+int quizWCom(){
+	int menu = 4;
+	while (1)
+	{
+		Sleep(200);
+
+		if (GetAsyncKeyState(VK_UP)){
+			menu = menu == QuizInicio ? QuizComodinFin: menu-3;
+			printf ("\r                    ");
+			gotoxy (15, LineaDeInicio + menu - 1);
+			printf ("->");
+		} else if (GetAsyncKeyState(VK_DOWN)){
+			menu = menu == QuizComodinFin ? QuizInicio: 3+menu;
+			printf ("\r                    ");
+			gotoxy (15, LineaDeInicio + menu - 1);
+			printf ("->");
+		 } else if (GetAsyncKeyState(VK_RETURN)){
+			break;
+		}
+	}
+
+	return menu;
+}
+
 int quizMove(){
 	int menu = 4;
 	while (1)
@@ -382,6 +407,23 @@ void pregunta(int contador, Pregunta *questionForNow){
 	centrar (questionForNow->D->alternative, 25, 13);
 	
 	centrar ("Comodin", 25, 16);
+}
+
+void preguntaConComodin(int contador, Pregunta *questionForNow){
+	gotoxy(0,0);
+	printf ("Pregunta : %i", contador);
+	centrar (questionForNow->question, 15, 0);
+
+	
+	centrar ("A.", 20, 4);
+	centrar (questionForNow->A->alternative, 25, 4);
+	centrar ("B.", 20, 7);
+	centrar (questionForNow->B->alternative, 25, 7);
+	centrar ("C.", 20, 10);
+	centrar (questionForNow->C->alternative, 25, 10);
+	centrar ("D.", 20, 13);
+	centrar (questionForNow->D->alternative, 25, 13);
+	centrar ("Comodin (bloqueado)", 25, 16);
 }
 
 void menuEXIT (){
@@ -771,6 +813,7 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 	Sleep (1500);
 	Comodin *com = quizUser->comodines;
 	int menu = 5, contador = 0, exit = 0, wildcard = 0, volver = 0;
+	bool comodinUsando =
 	system("cls");
 	char *idQuestion = firstList(quizUser->selectedQuestions);
 	if (quizUser->cantQuestion != 0)
@@ -787,14 +830,28 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 
 	while (1){
 		
-		quizUser->cantQuestion++;
-		contador++;
-		aux = searchHashMap(preguntasQuiz, idQuestion);
-		AzarAlternatives(aux);
-		pregunta(quizUser->cantQuestion, aux);
-		idQuestion = nextList(quizUser->selectedQuestions);
+		if (volver == 0){
+			quizUser->cantQuestion++;
+		    contador++;
+		    aux = searchHashMap(preguntasQuiz, idQuestion);
+			AzarAlternatives(aux);
+		    pregunta(quizUser->cantQuestion, aux);
+			idQuestion = nextList(quizUser->selectedQuestions);
+			menu = quizMove();
+		    
+		}else if (volver == 1 && comodinUsando == false){
+			system ("cls");
+			volver = 0;
+			pregunta(quizUser->cantQuestion, aux);
+			menu = quizMove();
 		
-		menu = quizMove();
+		}else if (volver == 1 && comodinUsando == true){
+			
+			preguntaConComodin(quizUser->cantQuestion, aux);
+			comodinUsando = false;
+			volver = 0;
+			menu = quizWCom();
+		}
 
 		switch(menu){
 			case 4://Opcion A
@@ -823,30 +880,106 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 			case 16://Comodin
                   wildcard = comodin (com);
 
-				  if (wildcard == 10){
+				   if (wildcard == 10){
 					volver = 1;
 					break;
-				  }else if (wildcard == 1){
-					centrar ("Ayudame profe aaaaaaaaaaaaaaaaaaaaaaaaaaa esta en la funcion comenzar partida", 5,5);
-					Sleep (2000);
+				  }else if (wildcard == 1){//Caso ayudame profe araya
+					int counter = 0, random = 0, pos = 23;
+					bool a = true, b = true, c = true, d = true;
+					srand(time(NULL));
+					centrar ("Mensaje del profesor Araya :", 5, 20);
+					Sleep (1000);
+					sndPlaySound ("songs\\MSN", SND_ASYNC);
+					centrar ("Estas alternativas son incorrectas :",5, 21);
+					while (1){
+						random = rand() % 22;
+
+						if ( random >= 0 && random < 6){
+							if (a){
+								if (!aux->A->answer){
+								   if (pos == 23){
+									    centrar (aux->A->alternative, 5, pos);
+									    pos = 25;
+								    }else{
+									     centrar (aux->A->alternative, 5, pos);
+								    }
+									counter++;
+							    }
+							    a = false;
+							}
+						}
+
+						if ( random >= 6 && random < 11){
+							if (b){
+								if (!aux->B->answer){
+								   if (pos == 23){
+									    centrar (aux->B->alternative, 5, pos);
+									    pos = 25;
+								    }else{
+									     centrar (aux->B->alternative, 5, pos);
+								    }
+									counter++;
+							    }
+								 b = false;
+							    
+							}
+						}
+
+						if ( random >= 11 && random < 16){
+							if (c){
+								if (!aux->C->answer){
+								   if (pos == 23){
+									    centrar (aux->C->alternative, 5, 22);
+									    pos = 25;
+								    }else{
+									     centrar (aux->C->alternative, 5, 23);
+								    }
+									counter++;
+							    }
+							    c = false;
+							}
+						}
+
+						if ( random >= 16 && random < 22){
+							if (d){
+								if (!aux->D->answer){
+								   if (pos == 23){
+									    centrar (aux->D->alternative, 5, pos);
+									    pos = 25;
+								    }else{
+									     centrar (aux->D->alternative, 5, pos);
+								    }
+									counter++;
+								}
+							    d = false;
+							}
+						}
+
+						if (counter == 2)break;
+					}
+					volver = 1;
+					comodinUsando = true;
 					break;
-				  }else if (wildcard == 2){
+				  }else if (wildcard == 2){//cambio de alternativa
 					system ("cls");
 					centrar ("Cambio de alternativa", 5,5);
-					Sleep (2000);
+					comodinUsando = true;
 					break;
-				  }else if (wildcard == 3){
+				  }else if (wildcard == 3){//cambio de pregunta
 					system ("cls");
-					centrar ("Cambio de Pregunta", 5,5);
-					Sleep (2000);
+					idQuestion = nextList(quizUser->selectedQuestions);
+					aux = searchHashMap(preguntasQuiz, idQuestion);
+					volver = 1;
+					comodinUsando = true;
 					break;
 				  }
 
 		}
 
-		system ("cls");
+		
 
 		if (volver == 0){
+			system ("cls");
 			if (!quizUser->life){return;}
 
 		    if (contador == 5 & quizUser->cantQuestion != 15){
