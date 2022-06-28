@@ -49,9 +49,9 @@ Las opciones Cargar juego, Dificultad, Top y Salir, funcionan de manera correcta
 
 Comenzar Juego presenta algunas peculiaridades, una de ellas es cuando se inicia el cuestionario, inicia todas las preguntas y genera todas las respuestas de manera correcta pero,
 de las 4 alternativas (siendo estas A, B C Y D) la "D" a demostrado tras muchos test ser la menos propensa a ser la verdadera, esto puede deberse a la función rand() y su gran dependencia
-de la hora del computador en conjunto de la propia codificación de las funciones encargadas de realizar la tarea de aleatorizar las alternativas, es probable que solo se marque como verdadera en un segundo especifico del minuto presente y por ello sea tan poco probable que esta sea la alternativa correcta.
+de la hora del computador en conjunto de la propia codificación de las funciones encargadas de realizar la tarea de aleatorizar las alternativas, es probable que solo se marque como verdadera en un segundo especifico del minuto presente y por ello sea tan poco probable en comparación que esta sea la alternativa correcta. Debido a su propia naturaleza, según la hora en la que el programa sea ejecutado esta peculiaridad puede ir cambiando entre las otras 3 alternativas aparte de la "D".
 
-Otra pecualiaridad se encuentra en el funcionamiento de los comodines, en ocasiones, 1 tipo de comodín puede ser 2 veces utilizado en una misma pregunta, esto es un error, ya que cada tipo de comodín solo puede usarse 1 vez por pregunta. Esto puede deberse a una falencia en la condisinantes que restringen este uso inapropiado de los comodines.
+Otra pecualiaridad se encuentra en el funcionamiento de los comodines, en ocasiones, 1 tipo de comodín puede ser 2 veces utilizado en una misma pregunta, esto es un error, ya que cada tipo de comodín solo puede usarse 1 vez por pregunta. Esto puede deberse a una falencia en la condicionantes que restringen este uso inapropiado de los comodines.
 
 
 
