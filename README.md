@@ -47,11 +47,11 @@ Recomendación: Si se desea crear un usuario con nombre propio se debe seguir la
 
 Las opciones Cargar juego, Dificultad, Top y Salir, funcionan de manera correcta. 
 
-Comenzar Juego presenta algunas peculiaridades, una de ellas es cuando se inicia el cuestionario, inicia todas las preguntas, genera todas las respuestas de manera correcta pero 
-de las 4 alternativas (A, B C Y D) la "D" a demostrado ser la menos propensa a ser la verdadera, esto puede deberse a la función rand() y su gran dependencia
-de la hora del computador en conjunto de la propia codificación de las funciones encargadas, posiblemente solo ocurra en un segundo especifico del minuto presente y por ello sea tan poco probable que esta sea la correcta.
+Comenzar Juego presenta algunas peculiaridades, una de ellas es cuando se inicia el cuestionario, inicia todas las preguntas y genera todas las respuestas de manera correcta pero,
+de las 4 alternativas (siendo estas A, B C Y D) la "D" a demostrado tras muchos test ser la menos propensa a ser la verdadera, esto puede deberse a la función rand() y su gran dependencia
+de la hora del computador en conjunto de la propia codificación de las funciones encargadas de realizar la tarea de aleatorizar las alternativas, es probable que solo se marque como verdadera en un segundo especifico del minuto presente y por ello sea tan poco probable que esta sea la alternativa correcta.
 
-Otra pecualiaridad se encuentra en el funcionamiento de los comodines, en ocasiones, 1 tipo de comodín puede ser 2 veces en una misma pregunta, esto es un error, ya que cada tipo solo puede ser usado 1 vez por pregunta. Esto puede deberse a una falencia en la condisinantes que restringen este uso inapropiado de los comodines.
+Otra pecualiaridad se encuentra en el funcionamiento de los comodines, en ocasiones, 1 tipo de comodín puede ser 2 veces utilizado en una misma pregunta, esto es un error, ya que cada tipo de comodín solo puede usarse 1 vez por pregunta. Esto puede deberse a una falencia en la condisinantes que restringen este uso inapropiado de los comodines.
 
 
 
