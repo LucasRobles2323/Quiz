@@ -1050,7 +1050,7 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz, Dificultad *d){
 			     if (exit == 1) break;
 		     }
 
-		    if (quizUser->cantQuestion == maxQuestions)break;
+		    if (quizUser->cantQuestion == maxQuestions){quizUser->life = false; break;}
 			
 		}
 	}
