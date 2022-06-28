@@ -408,10 +408,10 @@ void pregunta(int contador, Pregunta *questionForNow){
 	
 	centrar ("Comodin", 25, 16);
 
-	if (questionForNow->A->answer){centrar("La respuesta es la A", 25, 19);}
+	/*if (questionForNow->A->answer){centrar("La respuesta es la A", 25, 19);}
 	else if (questionForNow->B->answer){centrar("La respuesta es la B", 25, 19);}
 	else if (questionForNow->C->answer){centrar("La respuesta es la C", 25, 19);}
-	else if (questionForNow->D->answer){centrar("La respuesta es la D", 25, 19);}
+	else if (questionForNow->D->answer){centrar("La respuesta es la D", 25, 19);}*/
 }
 
 void preguntaConComodin(int contador, Pregunta *questionForNow){
@@ -430,10 +430,10 @@ void preguntaConComodin(int contador, Pregunta *questionForNow){
 	centrar (questionForNow->D->alternative, 25, 13);
 	centrar ("Comodin (bloqueado)", 25, 16);
 
-	if (questionForNow->A->answer){centrar("La respuesta es la A", 25, 19);}
+	/*if (questionForNow->A->answer){centrar("La respuesta es la A", 25, 19);}
 	else if (questionForNow->B->answer){centrar("La respuesta es la B", 25, 19);}
 	else if (questionForNow->C->answer){centrar("La respuesta es la C", 25, 19);}
-	else if (questionForNow->D->answer){centrar("La respuesta es la D", 25, 19);}
+	else if (questionForNow->D->answer){centrar("La respuesta es la D", 25, 19);}*/
 }
 
 void menuEXIT (){
@@ -819,10 +819,13 @@ void preguntaCorrecta(Pregunta *questionForNow, int respuesta, bool correcto){
 	}
 }
 
-void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
+void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz, Dificultad *d){
 	Sleep (1500);
 	Comodin *com = quizUser->comodines;
 	int menu = 5, contador = 0, exit = 0, wildcard = 0, volver = 0;
+	int maxQuestions;
+	if (d->easy){maxQuestions = 6;}
+	else{maxQuestions = 15;}
 	bool comodinUsando;
 	system("cls");
 	char *idQuestion = firstList(quizUser->selectedQuestions);
@@ -1010,14 +1013,14 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 			system ("cls");
 			if (!quizUser->life){return;}
 
-		    if (contador == 5 & quizUser->cantQuestion != 15){
+		    if (contador == 5 & quizUser->cantQuestion != maxQuestions){
 			     contador = 0;
 		         saveORexit(&exit);
 
 			     if (exit == 1) break;
 		     }
 
-		    if (quizUser->cantQuestion == 15)break;
+		    if (quizUser->cantQuestion == maxQuestions)break;
 			
 		}
 	}
@@ -1103,7 +1106,7 @@ int main(){
 			comodinesDificultad(user, d);
 			
 			user->cantQuestion = 0;
-			comenzarjuego(user, questionsHash);
+			comenzarjuego(user, questionsHash, d);
 			
 			if(user->life && user->cantQuestion != 15){
 				partidaExiste("./Save/ExistePartida.txt", user->life);
@@ -1120,7 +1123,7 @@ int main(){
 
 			mostrarDatosUsuario(user, d);
 
-			comenzarjuego(user, questionsHash);
+			comenzarjuego(user, questionsHash,d);
 
 			if(user->life && user->cantQuestion != 15){
 				partidaExiste("./Save/ExistePartida.txt", user->life);
