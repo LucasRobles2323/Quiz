@@ -125,7 +125,7 @@ void bienvenida(){
 
 void mostrarMenu(){
 	system ("COLOR 7D");
-	sndPlaySound ("songs\\BetterCallSaul", SND_ASYNC | SND_LOOP);
+	sndPlaySound ("songs\\Menu", SND_ASYNC | SND_LOOP);
 	centrar ("QUIEN QUIERE PASAR EL RAMO!!!!!!!!!!",24,0);
 	printf ("\n");
 	centrar ("Comenzar Juego", 30,3);
@@ -836,6 +836,13 @@ void preguntaCorrecta(Pregunta *questionForNow, int respuesta, bool correcto){
 	}
 }
 
+void youLOSE(){
+	system ("COLOR 4C");
+	sndPlaySound ("songs\\Lose", SND_ASYNC);
+	centrar (AZUL_T"HAS PERDIDO >:(", 30, 5);
+	Sleep (3000);
+}
+
 void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz, Dificultad *d){
 	Sleep (1500);
 	Comodin *com = quizUser->comodines;
@@ -864,7 +871,7 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz, Dificultad *d){
 
 	bool pasarSig = true;
 	Pregunta *aux;
-
+    sndPlaySound ("songs\\quiz", SND_ASYNC | SND_LOOP);
 	while (1){
 		
 		if (volver == 0){//Caso Normal donde no se uso la opcion comodin
@@ -933,7 +940,7 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz, Dificultad *d){
 					srand(time(NULL));
 					centrar ("Mensaje del profesor Araya :", 5, 20);
 					Sleep (1000);
-					sndPlaySound ("songs\\MSN", SND_ASYNC);
+					sndPlaySound ("songs\\MSN", SND_SYNC);
 					centrar ("Estas alternativas son incorrectas :",5, 21);
 					while (1){
 						//Aqui se usaran numeros al azar para pregunta si la opcion elegida es una respuesta correcta o no
@@ -1008,6 +1015,7 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz, Dificultad *d){
 					comodinUsando = true;
 					pasarSig = false;
 					quizUser->pts -= resta;
+					sndPlaySound ("songs\\quiz", SND_ASYNC | SND_LOOP);
 					break;
 				  }
 				  else if (wildcard == 2){//cambio de alternativa
@@ -1016,6 +1024,7 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz, Dificultad *d){
 					comodinUsando = true;
 					pasarSig = false;
 					quizUser->pts -= resta;
+					volver = 1;
 					break;
 				  }
 				  else if (wildcard == 3){//cambio de pregunta
@@ -1024,6 +1033,7 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz, Dificultad *d){
 					pasarSig = true;
 					quizUser->pts -= resta;
 					volver = 1;
+					comodinUsando = true;
 					break;
 				  }
 		}
@@ -1036,7 +1046,10 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz, Dificultad *d){
 			system ("cls");
 
 			quizUser->pts += pts;
-			if (!quizUser->life){return;}
+			if (!quizUser->life){
+				youLOSE();
+				return;
+			}
 
 		    if (contador == 5 & quizUser->cantQuestion != maxQuestions){
 			     contador = 0;
