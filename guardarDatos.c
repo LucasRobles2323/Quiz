@@ -290,9 +290,10 @@ void saveTop(char *file, TreeMap *top){
 	while (aux)
 	{
 		fprintf(F, "%s;", aux->usuario);
-		fprintf(F, "%.3f\n", aux->puntaje);
+		fprintf(F, "%.3f", aux->puntaje);
 		pos++;
 		if (pos == 6){break;}
+		fprintf(F, "\n");
 		auxiliar = nextTreeMap(top);
 		aux = auxiliar->value;
 	}
