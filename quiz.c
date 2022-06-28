@@ -47,7 +47,7 @@ void azarQuestion(Usuario* user, HashMap* map){
 
 	while(cont >= 0)
 	{
-		int azar = rand() % 31; azar = azar % 30;
+		int azar = rand() % 37; azar = azar % 37;
 		preg = firstHashMap(map);
 		while(azar != 0)
 		{
@@ -152,7 +152,7 @@ void AzarAlternatives(Pregunta* preg)
 
 	//Seccion para true //
 	Altt = firstList(preg->answerTrue); 
-	int azar = randomNumber(0, preg->contTrue-1); azar = azar % (preg->contTrue);
+	int azar = randomNumber(0, preg->contTrue); azar = azar % (preg->contTrue);
 
 	while(azar != 0)
 	{
@@ -196,34 +196,31 @@ void AzarAlternatives(Pregunta* preg)
 	while(cont != 0 && Altt != NULL)
 	{
 
-	Altt = firstList(preg->answerFalse);
-	bool pasa = FALSE;
+		Altt = firstList(preg->answerFalse);
+		bool pasa = false;
 
-	while(pasa != TRUE)
-	{
-		azar = randomNumber(0, preg->contFalse-1); 
-		
-		int comprobador;
-		if(is_valid_alt(repe, azar) == 1)
+		while(pasa != true)
 		{
-			comprobador = is_valid_alt(repe, azar);
+			azar = randomNumber(0, preg->contFalse); 
 		
-			repe[azar] = azar; 
-			while(azar != 0)
-			{	
-				pasa = TRUE;
-				Altt = nextList(preg->answerFalse);
-				azar--;	
-				if(!Altt){Altt = firstList(preg->answerTrue);}
-			}	
-					
+			int comprobador;
+			if(is_valid_alt(repe, azar) == 1)
+			{
+				comprobador = is_valid_alt(repe, azar);
+		
+				repe[azar] = azar; 
+				while(azar != 0)
+				{	
+					pasa = true;
+					Altt = nextList(preg->answerFalse);
+					azar--;	
+					if(!Altt){Altt = firstList(preg->answerTrue);}
+				}			
+			}
 		}
+		int i = 0;
+		SelectPlace(preg, Altt);
+		cont--;
 	}
-	int i = 0;
-	SelectPlace(preg, Altt);
-	cont--;
-
-
-}
 }
 	

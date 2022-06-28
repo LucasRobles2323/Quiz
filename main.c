@@ -813,36 +813,42 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 	Sleep (1500);
 	Comodin *com = quizUser->comodines;
 	int menu = 5, contador = 0, exit = 0, wildcard = 0, volver = 0;
-	bool comodinUsando =
+	bool comodinUsando;
 	system("cls");
 	char *idQuestion = firstList(quizUser->selectedQuestions);
 	if (quizUser->cantQuestion != 0)
 	{
 		int cont = 1;
-		while (cont != quizUser->cantQuestion)
+		while (cont != quizUser->questionSaw)
 		{
 			idQuestion = nextList(quizUser->selectedQuestions);
 			cont++;
 		}
 	}
 	
+
+	bool pasarSig = true;
 	Pregunta *aux;
 
 	while (1){
 		
-		//Caso Normal donde no se uso la opcion comodin
-		if (volver == 0){
+		if (volver == 0){//Caso Normal donde no se uso la opcion comodin
 			quizUser->cantQuestion++;
+			quizUser->questionSaw++;
 		    contador++;
+			pasarSig = true;
 		    aux = searchHashMap(preguntasQuiz, idQuestion);
 			AzarAlternatives(aux);
 		    pregunta(quizUser->cantQuestion, aux);
-			idQuestion = nextList(quizUser->selectedQuestions);
 			menu = quizMove();
 		    
 		}else if (volver == 1 && comodinUsando == false){//Caso que se uso la opcion comodin y se eligio "volver" o el comodin siguiente pregunta
 			system ("cls");
 			volver = 0;
+			if(!quizUser->comodines->questionChange){
+				aux = searchHashMap(preguntasQuiz, idQuestion);
+				AzarAlternatives(aux);
+			}
 			pregunta(quizUser->cantQuestion, aux);
 			menu = quizMove();
 		
@@ -883,10 +889,12 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 			case 16://Comodin
                   wildcard = comodin (com);
 
-				   if (wildcard == 10){//Si se eligio la opcion volver
+				  if (wildcard == 10){//Si se eligio la opcion volver
 					volver = 1;
+					pasarSig = true;
 					break;
-				  }else if (wildcard == 1){//Caso ayudame profe araya
+				  }
+				  else if (wildcard == 1){//Caso ayudame profe araya
 					int counter = 0, random = 0, pos = 23;//el contador, el numero random y la posicion de las respuestas incorrectas
 					bool a = true, b = true, c = true, d = true;//Esta es para saber si ya se paso por una opcion o no
 					srand(time(NULL));
@@ -965,24 +973,28 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz){
 					}
 					volver = 1;
 					comodinUsando = true;
+					pasarSig = false;
 					break;
-				  }else if (wildcard == 2){//cambio de alternativa
+				  }
+				  else if (wildcard == 2){//cambio de alternativa
 					system ("cls");
 					centrar ("Cambio de alternativa", 5,5);
 					comodinUsando = true;
+					pasarSig = false;
 					break;
-				  }else if (wildcard == 3){//cambio de pregunta
+				  }
+				  else if (wildcard == 3){//cambio de pregunta
 					system ("cls");
-					//Aqui solo ira a la siguiente pregunta
-					idQuestion = nextList(quizUser->selectedQuestions);
-					aux = searchHashMap(preguntasQuiz, idQuestion);
+					quizUser->questionSaw++;
+					pasarSig = true;
 					volver = 1;
 					break;
 				  }
-
 		}
 
-		
+		//Pasa o no a la siguiente pregunta
+		if (pasarSig){idQuestion = nextList(quizUser->selectedQuestions);}
+		else{pasarSig = true;}
 
 		if (volver == 0){
 			system ("cls");

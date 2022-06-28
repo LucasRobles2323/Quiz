@@ -26,6 +26,7 @@ typedef struct{
 	bool life;
 	List *selectedQuestions;
 	int cantQuestion;
+	int questionSaw;
 	Comodin *comodines;
 }Usuario;
 

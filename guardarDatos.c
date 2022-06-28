@@ -90,6 +90,7 @@ Usuario *crearUsuario(char *userName, Dificultad *dif){
 	Usuario *new = (Usuario*) malloc (sizeof(Usuario));
 	new->cantQuestion = 0;
 	new->pts = 0;
+	new->questionSaw = 0;
 	new->user = _strdup(userName);
 	new->comodines = (Comodin*) malloc (sizeof(Comodin));
 
@@ -158,8 +159,10 @@ void guardarPartida(Usuario *USER, Dificultad *dif, char *archive){
 	if (!F){return ;}// Si no existe el archivo, cierra el programa
 
 	fprintf(F, "%s;", USER->user);
-	fprintf(F, "%d;", USER->cantQuestion);
 	fprintf(F, "%.3f\n", USER->pts);
+
+	fprintf(F, "%d;", USER->cantQuestion);
+	fprintf(F, "%d\n", USER->questionSaw);
 
 	if(dif->easy){fprintf(F, "true;");}
 	else{fprintf(F, "false;");}
@@ -193,15 +196,21 @@ void cargarPartida(char *fileName, Usuario *user, Dificultad *d){
 	char linea[1024];
 	List *aux;
 
-	//nombre ; preguntas respondidas correctamente ; puntos del usuario
+	//nombre ; puntos del usuario
 	fgets(linea, 1023, F);
 	aux = separateLine(linea, ";");
 	// guarda el nombre de usuario, las cantidad de respondidas y el puntaje obtenido
 	user->user = _strdup(firstList(aux));
-	user->cantQuestion = atoi(nextList(aux));
 	List *ptj = separateLine(nextList(aux), ".");
 	user->pts = atoi(firstList(ptj));
 	user->pts += ( (float)atoi(nextList(ptj)) / 1000);
+
+	//pregunta en la que esta el usuario; preguntas ya leidas de las preparadas
+	fgets(linea, 1023, F);
+	aux = separateLine(linea, ";");
+	//guarda la pregunta en la que esta el usuario y la cantidad de preguntas ya leidas de las preparadas
+	user->cantQuestion = atoi(firstList(aux));
+	user->questionSaw = atoi(firstList(aux));
 
 
 	//dificultad: 	facil ; normal ; dificil
