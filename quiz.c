@@ -47,7 +47,7 @@ void azarQuestion(Usuario* user, HashMap* map){
 
 	while(cont >= 0)
 	{
-		int azar = rand() % 37; azar = azar % 37;
+		int azar = rand() % 36; azar = azar % 37;
 		preg = firstHashMap(map);
 		while(azar != 0)
 		{
@@ -69,48 +69,47 @@ int randomNumber(int lowerbound, int upperbound)
 
 void SelectPlace(Pregunta* preg, char* Altt)
 {	
-	int huachipato_value = 3;
-	while(huachipato_value >= 0)
+	int huachipato_value = 4;
+	while(huachipato_value > 0)
 	{ 
 		switch(huachipato_value)
 		{
-			case 0:
-			if(preg->A->alternative == NULL)
-			{
-				preg->A->alternative = _strdup(Altt);
-				preg->A->answer = false;	
-				return;
-			}
-			break;
-			
 			case 1:
-			if(preg->B->alternative == NULL)
-			{
-				preg->B->alternative = _strdup(Altt);
-				preg->B->answer = false;	
-				return;
-			}
-
-			break;
+				if(preg->A->alternative == NULL)
+				{
+					preg->A->alternative = _strdup(Altt);
+					preg->A->answer = false;	
+					return;
+				}
+				break;
+			
 			case 2:
+				if(preg->B->alternative == NULL)
+				{
+					preg->B->alternative = _strdup(Altt);
+					preg->B->answer = false;	
+					return;
+				}
+				break;
 
-			if(preg->C->alternative == NULL)
-			{
-				preg->C->alternative = _strdup(Altt);
-				preg->C->answer = false;	
-				return;
-			}
-
-			break;
 			case 3:
-			if(preg->D->alternative == NULL)
-			{
-				preg->D->alternative = _strdup(Altt);
-				preg->D->answer = false;	
-				return;
-			}
 
-			break;
+				if(preg->C->alternative == NULL)
+				{
+					preg->C->alternative = _strdup(Altt);
+					preg->C->answer = false;	
+					return;
+				}
+				break;
+
+			case 4:
+				if(preg->D->alternative == NULL)
+				{
+					preg->D->alternative = _strdup(Altt);
+					preg->D->answer = false;	
+					return;
+				}
+				break;
 		}
 
 		huachipato_value--;
@@ -137,23 +136,26 @@ void AzarAlternatives(Pregunta* preg)
 
 	preg->contFalse = 0;
 	preg->contTrue = 0;
-	char* Altt;
-	int cont = 2; 
-	while(cont != 0){
-		if(cont == 1){Altt = firstList(preg->answerFalse); }
-		if(cont == 2){Altt = firstList(preg->answerTrue);}
-		while(Altt != NULL)
-		{
-			if(cont == 1){Altt = nextList(preg->answerFalse); preg->contFalse++;}
-			if(cont == 2){Altt = nextList(preg->answerTrue); preg->contTrue++;}
-		}
-		cont--;
-	}
+	int cont;
 
+	char* Altt = firstList(preg->answerTrue);
+	while (Altt)
+	{
+		preg->contTrue++;
+		Altt = nextList(preg->answerTrue);
+	}
+	Altt = firstList(preg->answerFalse);
+	while (Altt)
+	{
+		preg->contFalse++;
+		Altt = nextList(preg->answerFalse);
+	}
+	
 	//Seccion para true //
 	Altt = firstList(preg->answerTrue); 
-	int azar = randomNumber(0, preg->contTrue); azar = azar % (preg->contTrue);
-
+	int azar;
+	if(azar != 1){azar = randomNumber(0, preg->contTrue); azar = azar % (preg->contTrue);}
+	else{azar = 0;}
 	while(azar != 0)
 	{
 		Altt = nextList(preg->answerTrue);
@@ -162,7 +164,7 @@ void AzarAlternatives(Pregunta* preg)
 	}
 
 	azar = rand() % 4; azar = azar % 3;
-
+	
 	switch(azar)
 	{	
 		case 0:
@@ -218,7 +220,6 @@ void AzarAlternatives(Pregunta* preg)
 				}			
 			}
 		}
-		int i = 0;
 		SelectPlace(preg, Altt);
 		cont--;
 	}

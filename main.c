@@ -18,6 +18,8 @@
 
 #pragma comment(lib,"winmm.lib")
 
+
+
 void goy (int y){
 	HANDLE hConsole = GetStdHandle (STD_OUTPUT_HANDLE);
 	COORD pos;
@@ -408,10 +410,10 @@ void pregunta(int contador, Pregunta *questionForNow){
 	
 	centrar ("Comodin", 25, 16);
 
-	/*if (questionForNow->A->answer){centrar("La respuesta es la A", 25, 19);}
+	if (questionForNow->A->answer){centrar("La respuesta es la A", 25, 19);}
 	else if (questionForNow->B->answer){centrar("La respuesta es la B", 25, 19);}
 	else if (questionForNow->C->answer){centrar("La respuesta es la C", 25, 19);}
-	else if (questionForNow->D->answer){centrar("La respuesta es la D", 25, 19);}*/
+	else if (questionForNow->D->answer){centrar("La respuesta es la D", 25, 19);}
 }
 
 void preguntaConComodin(int contador, Pregunta *questionForNow){
@@ -430,10 +432,10 @@ void preguntaConComodin(int contador, Pregunta *questionForNow){
 	centrar (questionForNow->D->alternative, 25, 13);
 	centrar ("Comodin (bloqueado)", 25, 16);
 
-	/*if (questionForNow->A->answer){centrar("La respuesta es la A", 25, 19);}
+	if (questionForNow->A->answer){centrar("La respuesta es la A", 25, 19);}
 	else if (questionForNow->B->answer){centrar("La respuesta es la B", 25, 19);}
 	else if (questionForNow->C->answer){centrar("La respuesta es la C", 25, 19);}
-	else if (questionForNow->D->answer){centrar("La respuesta es la D", 25, 19);}*/
+	else if (questionForNow->D->answer){centrar("La respuesta es la D", 25, 19);}
 }
 
 void menuEXIT (){
@@ -823,9 +825,14 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz, Dificultad *d){
 	Sleep (1500);
 	Comodin *com = quizUser->comodines;
 	int menu = 5, contador = 0, exit = 0, wildcard = 0, volver = 0;
-	int maxQuestions;
+	int maxQuestions, pts; float resta;
+	
 	if (d->easy){maxQuestions = 6;}
 	else{maxQuestions = 15;}
+	if(d->easy){pts = 1; resta = 0.15;}
+	else if (d->normal){pts = 2; resta = 0.25;}
+	else{pts = 3; resta = 0;}
+
 	bool comodinUsando;
 	system("cls");
 	char *idQuestion = firstList(quizUser->selectedQuestions);
@@ -851,7 +858,6 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz, Dificultad *d){
 		    contador++;
 			pasarSig = true;
 		    aux = searchHashMap(preguntasQuiz, idQuestion);
-			AzarAlternatives(aux);
 		    pregunta(quizUser->cantQuestion, aux);
 			menu = quizMove();
 		    
@@ -860,7 +866,6 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz, Dificultad *d){
 			volver = 0;
 			if(!quizUser->comodines->questionChange){
 				aux = searchHashMap(preguntasQuiz, idQuestion);
-				AzarAlternatives(aux);
 			}
 			pregunta(quizUser->cantQuestion, aux);
 			menu = quizMove();
@@ -987,6 +992,7 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz, Dificultad *d){
 					volver = 1;
 					comodinUsando = true;
 					pasarSig = false;
+					quizUser->pts -= resta;
 					break;
 				  }
 				  else if (wildcard == 2){//cambio de alternativa
@@ -994,12 +1000,14 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz, Dificultad *d){
 					centrar ("Cambio de alternativa", 5,5);
 					comodinUsando = true;
 					pasarSig = false;
+					quizUser->pts -= resta;
 					break;
 				  }
 				  else if (wildcard == 3){//cambio de pregunta
 					system ("cls");
 					quizUser->questionSaw++;
 					pasarSig = true;
+					quizUser->pts -= resta;
 					volver = 1;
 					break;
 				  }
@@ -1011,6 +1019,8 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz, Dificultad *d){
 
 		if (volver == 0){
 			system ("cls");
+
+			quizUser->pts += pts;
 			if (!quizUser->life){return;}
 
 		    if (contador == 5 & quizUser->cantQuestion != maxQuestions){
@@ -1070,14 +1080,19 @@ void mostrarTop(TreeMap *top){
 }
 
 int main(){
-	int menu = 3;
-	srand(time(NULL));
-
+	int menu = 3;srand(time(NULL)); rand();
 	
 	HashMap *questionsHash = GuardarPreguntas("./Datos/Preguntas.txt",100);
 	Dificultad *d = leerDificult("./Save/DifSelec.txt");
-	Usuario *user = crearUsuario(nombreUsuario("./Save/Usuario.txt"), d);
+	Usuario *user = crearUsuario(nombreUsuario("Usuario.txt"), d);
 	TreeMap *top = crearTop("./Save/Top.txt");
+	
+	Pregunta *aux =firstHashMap(questionsHash);
+	while (aux)
+	{
+		AzarAlternatives(aux);
+		aux = nextHashMap(questionsHash);
+	}
 
 	system ("COLOR 7D");
 	bienvenida();
@@ -1097,8 +1112,9 @@ int main(){
 		case 3://Comenzar partida
 		    system ("cls");
 			
-			azarQuestion(user, questionsHash);	
-			user->user = _strdup(nombreUsuario("./Save/Usuario.txt"));
+			azarQuestion(user, questionsHash);
+
+			user->user = _strdup(nombreUsuario("Usuario.txt"));
 			user->life = true;
 			
 			PresentarUser(user, d);
