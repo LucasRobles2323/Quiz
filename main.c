@@ -893,7 +893,7 @@ void comenzarjuego(Usuario *quizUser, HashMap* preguntasQuiz, Dificultad *d){
 			menu = quizMove();
 		
 		}else if (volver == 1 && comodinUsando == true){//Caso que se uso la opcion comodin y se eligio el comodin ayudame profe araya (aun el segundo comodin esta por ver)
-			
+			system ("cls");
 			//Muestra las pregunta pero avisando que el comodin esta bloqueado
 			preguntaConComodin(quizUser->cantQuestion, aux);
 			comodinUsando = false;
