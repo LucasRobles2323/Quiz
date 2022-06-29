@@ -115,9 +115,10 @@ void bienvenida(){
 	centrar (ROJO_T "Grande Huachipato", 20, 5);
 	centrar (AZUL_T "      PUCV", 20, 7);
 	Sleep (300);
-	centrar (MAGENTA_T"Se recomienda bajar el volumen para que el sonido no le moleste", 20, 9);
-	centrar ("Se recomienda agrandar la consola para leer mejor las preguntas", 20, 10);
-	Sleep (2000);
+	centrar (MAGENTA_T"Se recomienda bajar el volumen para que el sonido no le moleste", 15, 9);
+	centrar ("Se recomienda agrandar la consola para leer mejor las preguntas", 15, 10);
+	centrar ("Si desea cambiar el nombre del usuario, debe cambiarlo dentro de Usuario.txt en la carpeta del programa", 15, 11);
+	Sleep (4000);
 } 
 
 
