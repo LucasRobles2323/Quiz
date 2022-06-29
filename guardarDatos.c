@@ -6,8 +6,9 @@ Pregunta *crearPregunta(char *lineaPregunta, char *lineTrue, char *lineFalse){
 	List *aux = separateLine(lineaPregunta, ";");
 	new->id = _strdup(firstList(aux));
 	new->question = _strdup(nextList(aux));
-
-	new->answerTrue = separateLine(lineTrue,";");
+	
+	// Como estan en una linea separada por ; usan una funcion para crear la lista
+	new->answerTrue = separateLine(lineTrue,";"); 
 	new->answerFalse = separateLine(lineFalse,";");
 	
 	new->contFalse = 0;
@@ -36,12 +37,12 @@ HashMap *GuardarPreguntas(char *archive, int capacidad){
 	int indice = 0;
 
 	while (fgets(pregunta, 1023, F) != NULL) { 
-    	// Recorre el archivo leyendo linea por linea
-        // guardando los datos de cada linea en listas
+    	// Recorre el archivo leyendo linea por linea las preguntas y sus datos.
+        // Guarda los datos de cada 3 lineas en un hashMap
 		fgets(verdaderos, 1023, F);
 		fgets(falsos, 1023, F);
 
-		QUESTION = crearPregunta(pregunta,verdaderos,falsos);
+		QUESTION = crearPregunta(pregunta,verdaderos,falsos); 
 		insertHashMap(new, QUESTION->id, QUESTION);
 	}
 	
@@ -61,6 +62,7 @@ Dificultad *leerDificult(char *archive){
 	fgets(linea, 60, F);
 	List *auxList = separateLine(linea, ";");
 
+	// Solo una dificultada es verdadera, la escogida. Comprueba cual esta guardada
 	char *aux = firstList(auxList);
 	if(strcmp(aux,"false") == 0) {new->easy = false;}
 	else{new->easy = true;}
@@ -94,7 +96,7 @@ Usuario *crearUsuario(char *userName, Dificultad *dif){
 	new->user = _strdup(userName);
 	new->comodines = (Comodin*) malloc (sizeof(Comodin));
 
-	if (dif->hard){
+	if (dif->hard){ // Asigna si tiene o no comodines de acuerdo a la dificultad
 		new->comodines->alternativeChange = false;
 		new->comodines->HelpTeacher = false;
 		new->comodines->questionChange = false;
@@ -113,10 +115,10 @@ Usuario *crearUsuario(char *userName, Dificultad *dif){
 }
 
 void saveDificult(char *archive, Dificultad *guardar){
-	FILE *F = fopen(archive, "w"); // Abre el archivo con el nombre recibido en modo lectura
+	FILE *F = fopen(archive, "w"); // Abre el archivo con el nombre recibido en modo escritura
 	if (!F){return ;}// Si no existe el archivo, cierra el programa
 
-
+	// guarda la dificultad para su lectura posterior
 	if(guardar->easy) {fprintf(F, "%s", "true;");}
 	else{fprintf(F, "%s", "false;");}
 
@@ -129,13 +131,13 @@ void saveDificult(char *archive, Dificultad *guardar){
 	fclose(F);
 }
 
-bool noExistePartida(char *archive){
+bool noExistePartida(char *archive){ // Comprueba si existe o no partida para cargar
 	FILE *F = fopen(archive, "r"); // Abre el archivo con el nombre recibido en modo lectura
 	if (!F){return true;}// Si no existe el archivo, cierra el programa
 
 	char ToN[100];
 
-	fgets(ToN, 99, F);
+	fgets(ToN, 99, F); 
 	deleteLineBreak(ToN);
 	if (strcmp(ToN, "No") == 0){return true;}
 
@@ -146,6 +148,8 @@ void partidaExiste(char *archive, bool existe){
 	FILE *F = fopen(archive, "w"); // Abre el archivo con el nombre recibido en modo escritura
 	if (!F){return ;}// Si no existe el archivo, cierra el programa
 
+	// Si la partida termino escribe no, si puso guardar y salir, pone si
+	// De esta forma se sabe si existe o no partida guardada
 	if(existe){
 		fprintf(F, "Yes");
 	}
@@ -155,9 +159,10 @@ void partidaExiste(char *archive, bool existe){
 }
 
 void guardarPartida(Usuario *USER, Dificultad *dif, char *archive){
-	FILE *F = fopen(archive, "w"); // Abre el archivo con el nombre recibido en modo lectura
+	FILE *F = fopen(archive, "w"); // Abre el archivo con el nombre recibido en modo escritura
 	if (!F){return ;}// Si no existe el archivo, cierra el programa
 
+	// Guarda los datos de una partida en un txt para leer en cargar partida
 	fprintf(F, "%s;", USER->user);
 	fprintf(F, "%.3f\n", USER->pts);
 
@@ -178,6 +183,7 @@ void guardarPartida(Usuario *USER, Dificultad *dif, char *archive){
 	if(USER->comodines->HelpTeacher){fprintf(F, "true\n");}
 	else{fprintf(F, "false\n");}
 
+	// Guarda las id de las 16 preguntas generadas para el quiz
 	char *id = firstList(USER->selectedQuestions);
 	id = nextList(USER->selectedQuestions);
 	fprintf(F, "%s", id);
@@ -267,30 +273,31 @@ TreeMap *crearTop(char *file){
 		top = (Top*) malloc (sizeof(Top));
 		top->usuario = _strdup(firstList(aux));
 
+		// Lee el puntaje
 		ptj = separateLine(nextList(aux), ".");
 		top->puntaje = atoi(firstList(ptj));
 		top->puntaje += ( (float)atoi(nextList(ptj)) / 1000);
 
-		insertTreeMap(new, (void*)(&top->puntaje), top);
+		insertTreeMap(new, (void*)(&top->puntaje), top); // Inserta la informacion al TreeMap
 	}
 	
-	fclose(F);
+	fclose(F); // cierra el archivo
 
-	return new;
+	return new; // retorna el TreeMap
 }
 
 void saveTop(char *file, TreeMap *top){
 	FILE *F = fopen(file, "w"); // Abre el archivo con el nombre recibido en modo lectura
 	if (!F){return;}// Si no existe el archivo, cierra el programa
 
-
+	// Guarda el top 5 mejores usuarios que han completado el quiz
 	int pos = 1;
 	Pair *auxiliar = firstTreeMap(top);
 	Top *aux = auxiliar->value;
 	while (aux)
 	{
 		fprintf(F, "%s;", aux->usuario);
-		fprintf(F, "%.3f", aux->puntaje);
+		fprintf(F, "%.3f", aux->puntaje); // guarda los puntajes con 3 decimales
 		pos++;
 		if (pos == 6){break;}
 		fprintf(F, "\n");

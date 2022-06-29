@@ -12,7 +12,7 @@ void mostrarUsuario(Usuario *new, Dificultad *D){
 
 void comodinesDificultad(Usuario *user, Dificultad *condicion){
 	Comodin *cambiar = user->comodines;
-	if(condicion->hard)
+	if(condicion->hard) // cambia los comodines del usuario de acuerdo a la dificultad
 	{
 		cambiar->alternativeChange = false;
 		cambiar->HelpTeacher = false;
@@ -26,7 +26,7 @@ void comodinesDificultad(Usuario *user, Dificultad *condicion){
 }
 
 int is_valid(char *pregId, Usuario* user){
-	
+	// Comprueba repeticiones para no repetir preguntas en un mismo quiz	
 	char* idPregUsuario = firstList(user->selectedQuestions);
 
 	while(idPregUsuario != NULL)
@@ -40,6 +40,8 @@ int is_valid(char *pregId, Usuario* user){
 }
 
 void azarQuestion(Usuario* user, HashMap* map){
+	// Selecciona al azar 16 preguntas diferentes y guarda sus id en una lista dentro del
+	// struct usuario
 	Pregunta* preg;
 
 	int cont = 15;
@@ -68,7 +70,9 @@ int randomNumber(int lowerbound, int upperbound)
 }
 
 void SelectPlace(Pregunta* preg, char* Altt)
-{	
+{
+	// Funcion que selecciona si las alternativas incorrectas seran A, B, C o D.
+	// Y las guarda donde sea posible sin rescribir la correcta
 	int huachipato_value = 4;
 	while(huachipato_value > 0)
 	{ 
@@ -117,18 +121,16 @@ void SelectPlace(Pregunta* preg, char* Altt)
 }
 
 int is_valid_alt(int* repe, int azar)
-{
-
+{ // revisa si la posicion para que A B C D esta o no disponible
 	if(repe[azar] == -1)
 	{return 1;}
 	else{return 0;}
-
-
 }
 
 void AzarAlternatives(Pregunta* preg)
-{
-	// cuenta numero de respuestas presentes según la pregunta
+{ // Selecciona al azar las 4 alternativas de una pregunta dejando solo 1 correcta.
+	// Y tambien selecciona al azar si sera A B C o D la correcta
+	
 	preg->A = (Alternativa*) calloc (1,sizeof(Alternativa));
 	preg->B = (Alternativa*) calloc (1,sizeof(Alternativa));
 	preg->C = (Alternativa*) calloc (1,sizeof(Alternativa));
@@ -138,6 +140,7 @@ void AzarAlternatives(Pregunta* preg)
 	preg->contTrue = 0;
 	int cont;
 
+	// cuenta numero de respuestas correctas e incorrectas presentes según la pregunta
 	char* Altt = firstList(preg->answerTrue);
 	while (Altt)
 	{
@@ -163,7 +166,7 @@ void AzarAlternatives(Pregunta* preg)
 		if(!Altt){Altt = firstList(preg->answerTrue);}
 	}
 
-	azar = rand() % 4; 
+	azar = rand() % 4;// Selecciona si la correcta sera A B C o D
 	
 	switch(azar)
 	{	

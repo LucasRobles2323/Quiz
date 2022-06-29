@@ -85,12 +85,3 @@ List *separateLine(char *line, char* excluir){
     return newList;
 }
 //-----------------------------------------//
-
-void cronometro(int seg){
-    while (1)
-    {
-        Sleep(1000);
-        seg--;
-        if(0 == seg){break;}
-    }
-}

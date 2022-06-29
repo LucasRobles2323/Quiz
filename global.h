@@ -18,15 +18,15 @@ typedef struct{
 	bool questionChange;
 	bool alternativeChange;
 	bool HelpTeacher;
-}Comodin;
+}Comodin; // Si son true, los comodines estan disponibles
 
 typedef struct{
 	char *user;
 	float pts;
-	bool life;
-	List *selectedQuestions;
-	int cantQuestion;
-	int questionSaw;
+	bool life; // Para saber si termino el juego para el usuario
+	List *selectedQuestions; // Lista con id de 16 preguntas para el quiz
+	int cantQuestion; // Numero de la pregunta hecha 
+	int questionSaw; // El numero de pregunta que han aparecido en pantalla.
 	Comodin *comodines;
 }Usuario;
 
@@ -37,17 +37,17 @@ typedef struct{
 }Dificultad;
 
 typedef struct{
-	char *alternative;
-	bool answer;
+	char *alternative; // Es una alternativa
+	bool answer; // bool para saber si la alternativa es correcta o incorrecta
 }Alternativa;
 
 typedef struct{
-	char *id;
-	char *question;
-	List *answerTrue;
-	List *answerFalse;
-	int contTrue;
-	int contFalse;
+	char *id; // Forma de identificar la pregunta.
+	char *question; // Es la pregunta
+	List *answerTrue; // Lista de respuestas correctas
+	List *answerFalse; //Lista de respuestas incorrectas
+	int contTrue; // Contiene la cantidad de respuestas correctas en la pregunta
+	int contFalse; // Contiene la cantidad de respuestas incorrectas en la pregunta
 	Alternativa* A;
 	Alternativa* B;
 	Alternativa* C;
@@ -77,8 +77,6 @@ int compare(void * key1, void * key2);
 
 char * _strdup(const char * str);
 
-void deleteLineBreak(char *beta);
+void deleteLineBreak(char *beta); // Elimina salto de linea de un string
 
-List *separateLine(char *line, char* excluir);
-
-void cronometro(int segundos);
+List *separateLine(char *line, char* excluir); // Separa un string de acuerdo a un caracter recibido
