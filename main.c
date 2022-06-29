@@ -151,26 +151,19 @@ void mostrarDatosUsuario(Usuario *user, Dificultad *d){
 	else if(d->normal){printf("Dificultad Quiz           : Normal");}
 	else if(d->hard){printf("Dificultad Quiz           : Dificil");}
 
-	gotoxy(13,10);
-	if(user->comodines->questionChange){printf("Cambiar Pregunta          : Si");}
-	else {printf("Cambiar Pregunta          : No");}
-
+	gotoxy(10,10);
+	printf("Disponibilidad Comodines :");
 	gotoxy(13,11);
-	if(user->comodines->alternativeChange){printf("Cambiar Alternativas      : Si");}
-	else {printf("Cambiar Alternativas      : No");}
-	
-	gotoxy(13,12);
-	if(user->comodines->HelpTeacher){printf("Ayuda Profesor            : Si");}
-	else {printf("Ayuda Profesor            : No");}
+	if(user->comodines->questionChange){printf("- Cambiar Pregunta      : Si");}
+	else {printf("- Cambiar Pregunta      : No");}
 
-	char *id = firstList(user->selectedQuestions);
-	gotoxy(10,13);
-	while (id)
-	{
-		printf("%3s||", id);
-		id = nextList(user->selectedQuestions);
-	}
+	gotoxy(13,12);
+	if(user->comodines->alternativeChange){printf("- Cambiar Alternativas  : Si");}
+	else {printf("- Cambiar Alternativas  : No");}
 	
+	gotoxy(13,13);
+	if(user->comodines->HelpTeacher){printf("- Ayuda Profesor        : Si");}
+	else {printf("- Ayuda Profesor        : No");}
 }
 
 void descripcionDificultad(Dificultad *d){
